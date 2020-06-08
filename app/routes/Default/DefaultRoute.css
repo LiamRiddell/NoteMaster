@@ -1,0 +1,21 @@
+.container {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  overflow: hidden;
+}
+
+.editor {
+  display: flex;
+  flex-grow: 1;
+  color: white;
+  overflow: hidden;
+}

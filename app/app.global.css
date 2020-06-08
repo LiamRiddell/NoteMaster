@@ -1,0 +1,131 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/remixicon@2.4.0/fonts/remixicon.css');
+@import './styles/tippy.notemaster.css';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  border-radius: 3px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  background-color: transparent !important;
+}
+
+#root {
+  position: relative;
+  margin: 0;
+  padding: 0;
+
+  /* Width - border width */
+  width: 100vw;
+  height: 100vh;
+  border-radius: 6px;
+  background: #15181c;
+  overflow: hidden;
+  border: solid 1px #2a2d2e;
+}
+
+/*
+  Purpose: Remove the horrible sytax error bar from the right hand side of the editor
+  TODO: Find a way to turn this off in monaco!
+*/
+.monaco-editor .decorationsOverviewRuler {
+  display: none;
+}
+
+/* Offset Padding */
+.monaco-editor .overflow-guard > .margin {
+  /* padding-top: 10px; */
+}
+.monaco-editor .overflow-guard > .monaco-scrollable-element {
+  /* top: 10px; */
+}
+.monaco-editor .overflow-guard .lines-content {
+  padding-left: 10px;
+}
+.monaco-editor .view-overlays .current-line {
+  transform: translateX(-10px);
+}
+.monaco-editor .margin-view-overlays .line-numbers,
+.monaco-editor
+  .margin-view-overlays
+  .line-numbers
+  .relative-current-line-number {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/* Monaco Editor - Context Menu Styling */
+
+/* Box Shadow */
+.monaco-editor .context-view.monaco-menu-container .monaco-scrollable-element {
+  box-shadow: none !important;
+  box-shadow: 0 2px 5px rgba(10, 10, 11, 0.3) !important;
+  border: none !important;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.monaco-editor
+  .context-view.monaco-menu-container
+  .monaco-scrollable-element
+  .monaco-menu
+  .monaco-action-bar {
+  background: #202225 !important;
+  padding: 0 !important;
+}
+
+/* Menu Item */
+.monaco-editor
+  .context-view.monaco-menu-container
+  .monaco-scrollable-element
+  .monaco-menu
+  .monaco-action-bar
+  .action-menu-item {
+  transition: all 120ms ease !important;
+  color: #aebcc9 !important;
+}
+
+.monaco-editor
+  .context-view.monaco-menu-container
+  .monaco-scrollable-element
+  .monaco-menu
+  .monaco-action-bar
+  .action-menu-item:hover {
+  background: #303234 !important;
+  color: #d0d0d0 !important;
+}
+
+/* Global Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #27292c;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #43494f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 8px;
+  background: #d0d0d0;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #43494f;
+}

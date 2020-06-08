@@ -1,0 +1,118 @@
+.titlebar {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  height: 32px;
+  background-color: #202225;
+  z-index: 100;
+  color: white;
+  box-shadow: 0 5px 5px rgba(32, 34, 36, 0.15);
+
+  /* Allows electron to handle user drag */
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0;
+  font-weight: 500;
+  font-size: 11px;
+  color: #737373;
+}
+
+.menu {
+  display: inline-flex;
+  justify-content: flex-start;
+  padding: 0 8px 0 8px;
+}
+
+.menu:hover {
+  background: #2a2d32;
+}
+
+.actions {
+  display: inline-flex;
+  justify-content: flex-end;
+  flex: 1;
+  margin: 0 8px 0 0;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 24px;
+  color: #68747e;
+  transition: all 200ms ease;
+  -webkit-app-region: no-drag;
+}
+
+.actionActive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 24px;
+  transition: all 200ms ease;
+  -webkit-app-region: no-drag;
+  color: #d0d0d0;
+}
+
+.action i {
+  font-size: 17px;
+}
+
+.action:hover {
+  color: #d0d0d0;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.navigation {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation ul li {
+  margin: 0;
+}
+
+.navigation ul li a {
+  display: flex;
+
+  /* justify-content: center; */
+  align-items: center;
+  padding: 4px 8px 4px 8px;
+  text-decoration: none;
+  color: #c3c4c4;
+}
+
+.navigation ul li span {
+  display: flex;
+  padding: 4px 8px 8px 8px;
+  color: #777;
+  font-size: 10px;
+}
+
+.navigation ul li a i {
+  margin: 0 8px 0 0;
+  color: #68747e;
+  font-size: 18px;
+}
+
+.navigation ul li:hover a {
+  background-color: rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  color: #d0d0d0;
+}

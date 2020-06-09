@@ -49,7 +49,7 @@ $ yarn
 
 ## License
 
-GNU GPLv3 © [NoteMaster](https://github.com/LiamRiddell/NoteMaster/blob/master/LICENSE)
+GNU GPLv3+ © [NoteMaster](https://github.com/LiamRiddell/NoteMaster/blob/master/LICENSE)
 
 ## Appreciations
 

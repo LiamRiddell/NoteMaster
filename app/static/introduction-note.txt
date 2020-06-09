@@ -1,0 +1,17 @@
+# Welcome to NoteMaster 🔥
+NoteMaster is a minimalist persistent note-taking app to help boost productivity. NoteMaster was designed and built to help you stay organised and on task.
+
+# Note persistence
+Notes are saved as you work and persist between computer restarts! Feel free to close NoteMaster, it will be waiting in the tray for you when you need it - just press Win+N to open it up again and pick up where you left off.
+
+# Always on top functionality
+We've added pinning functionality to NoteMaster which keeps the window on top of all other windows. Just click the pin in the top right corner so you can always keep an eye on your notes!
+
+# Comments
+You can use the # or // symbol for making comments within your notes.
+
+# Exporting notes
+Need to save a note? Export through the menu in the top left corner or you can quickly export by right clicking and selecting "Export" in the context menu.
+
+# Search through your notes
+Hit Ctrl+F to search through your notes for individual words or use regex to get even more specific. Hit the drop down arrow on the left or the Search Bar to access the search and replace functionality.

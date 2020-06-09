@@ -1,0 +1,10 @@
+// Action Types
+// Window
+export const WINDOW_UPDATE = 'WINDOW_UPDATE';
+
+// Monaco
+export const MONACO_INSTANCE_UPDATE = 'MONACO_INSTANCE_UPDATE';
+
+// Preferences
+export const PREFERENCES_SAVE = 'PREFERENCES_SAVE';
+export const PREFERENCES_CONTENT_AUTOSAVE = 'PREFERENCES_CONTENT_AUTOSAVE';

@@ -1,0 +1,23 @@
+.container {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+}
+
+.preferences {
+  background: #15181c;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  color: white;
+  overflow: hidden;
+  padding: 8px 10px;
+}

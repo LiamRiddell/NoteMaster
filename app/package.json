@@ -1,0 +1,20 @@
+{
+  "name": "notemaster",
+  "productName": "NoteMaster",
+  "version": "0.2.2",
+  "description": "NoteMaster is a minimalist persistent note-taking app to help boost productivity.",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "NoteMaster Maintainers",
+    "email": "web@liamriddell.co.uk",
+    "url": "https://github.com/LiamRiddell/Numer"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "monaco-editor": "^0.20.0"
+  }
+}

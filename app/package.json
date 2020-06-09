@@ -2,7 +2,7 @@
   "name": "notemaster",
   "productName": "NoteMaster",
   "version": "0.2.2",
-  "description": "NoteMaster is a productivity tool built by two forgetful guys who are tired of losing their notes and have not found a program that has felt comfortable enough to use every day.",
+  "description": "NoteMaster is a minimalist persistent note-taking app to help boost productivity.",
   "main": "./main.prod.js",
   "author": {
     "name": "NoteMaster Maintainers",
@@ -13,7 +13,7 @@
     "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild"
   },
-  "license": "GPL-3.0+",
+  "license": "GPL-3.0-only",
   "dependencies": {
     "monaco-editor": "^0.20.0"
   }

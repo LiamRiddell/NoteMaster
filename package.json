@@ -2,7 +2,7 @@
   "name": "notemaster",
   "productName": "NoteMaster",
   "version": "0.2.2",
-  "description": "NoteMaster is a productivity tool built by two forgetful guys who are tired of losing their notes and have not found a program that has felt comfortable enough to use every day.",
+  "description": "NoteMaster is a minimalist persistent note-taking app to help boost productivity.",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
@@ -119,7 +119,7 @@
   "contributors": [
     "https://github.com/RonanLenehan"
   ],
-  "license": "GPL-3.0+",
+  "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/LiamRiddell/NoteMaster/issues"
   },
@@ -253,7 +253,6 @@
     "yarn": "^1.21.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.0",
     "@hot-loader/react-dom": "^16.11.0",
     "@monaco-editor/react": "^3.0.1",
     "@tippyjs/react": "^4.0.2",

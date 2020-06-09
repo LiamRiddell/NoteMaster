@@ -1,5 +1,9 @@
 <img src="internals/img/banner.png" width="100%" />
 
+<p align="center">
+  <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiamRiddell/NoteMaster&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/879120a5ade548ba8d93519622a62309"/></a>
+</p>
+
 # Introduction
 
 `NoteMaster` is a minimalist persistent note-taking app to help boost productivity.
@@ -25,10 +29,12 @@ NoteMaster is being developed continuously by the maintainers. Our vision is to 
 - Emoji Support - Yes... unreal, I know. You can now have so much fire in your notes.
 
 ## Supported Operating Systems
+
 NoteMaster is currently only available for Windows. We require additional developers to help us bring experience to both Linux and macOS.
 
 ## Download NoteMaster
-NoteMaster can be downloaded via [GitHub Releases](https://github.com/LiamRiddell/NoteMaster/releases). Please only download versions of NoteMaster that are hosted on GitHub. 
+
+NoteMaster can be downloaded via [GitHub Releases](https://github.com/LiamRiddell/NoteMaster/releases). Please only download versions of NoteMaster that are hosted on GitHub.
 
 ## Make NoteMaster Better
 
@@ -50,6 +56,8 @@ $ yarn
 ## License
 
 GNU GPLv3.0 © [NoteMaster](https://github.com/LiamRiddell/NoteMaster/blob/master/LICENSE)
+
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2FLiamRiddell%2FNoteMaster?ref=badge_large" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FLiamRiddell%2FNoteMaster.svg?type=large"/></a>
 
 ## Appreciations
 

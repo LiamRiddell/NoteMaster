@@ -52,6 +52,8 @@ And then install the dependencies with yarn.
 $ cd notemaster
 $ yarn
 ```
+## Report a Bug
+`NoteMaster` project is constantly finding ways to make you work more productive but while we implement new features bugs appear! [Report a bug.](https://github.com/LiamRiddell/NoteMaster/issues)
 
 ## License
 

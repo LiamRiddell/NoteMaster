@@ -2,7 +2,7 @@
 
 # Introduction
 
-`NoteMaster` is a productivity tool built by two forgetful guys who are tired of losing their notes and have not found a program that has felt comfortable enough to use every day.
+`NoteMaster` is a minimalist persistent note-taking app to help boost productivity.
 
 <p align="center">
   <img width="362px" src="internals/img/nm-app.png"/>
@@ -10,19 +10,25 @@
 
 ## Features
 
-NoteMaster is being constantly developed by the maintainers. Our vision is to create the best minimal open source note taking app to boost productivity.
+NoteMaster is being developed continuously by the maintainers. Our vision is to create the best minimal open-source note-taking app to boost productivity.
 
 - Dark UI - Save your damn eyes!
-- Persistent Notes - That's right! Your notes are saved as you type.
-- Magical Highlighting - Seperate the notes with them comments!
-- Pin Window - Make NoteMaster fly high above other apps so it's always visible.
-- Fullscreen - Dive deep and go full screen for the ultimate note minimal note making experience.
-- Global Shortcut - Summon Notemaster using `Windows + N`. Honestly it's magic.
+- Persistent Notes - That's right! Your notes are saved as you type. RIP Save.
+- Magical Highlighting - Separate the notes with them comments!
+- Pin Window - Make NoteMaster fly high above other apps, so it's always visible.
+- Fullscreen - Dive deep and go full screen for the ultimate note minimal note-making experience.
+- Global Shortcut - Summon Notemaster using `Windows + N`. Honestly, it's magic.
 - Preferences - It's a pick and mix of font size, font weight, line height, line numbers...
-- Export - You heard it! export them lovely notes to another place which you'll never open again.
+- Export - You heard it! Export them lovely notes to another place which you'll never open again.
 - Find/Replace - You've become such as a `NoteMaster`(wow, that was bad) that you need to search!
 - Search with Google - Quickly search your text selection on Google.
 - Emoji Support - Yes... unreal, I know. You can now have so much fire in your notes.
+
+## Supported Operating Systems
+NoteMaster is currently only available for Windows. We require additional developers to help us bring experience to both Linux and macOS.
+
+## Download NoteMaster
+NoteMaster can be downloaded via (GitHub Releases)[https://github.com/LiamRiddell/NoteMaster/releases]. Please only download versions of NoteMaster that are hosted on GitHub. 
 
 ## Make NoteMaster Better
 

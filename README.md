@@ -28,7 +28,7 @@ NoteMaster is being developed continuously by the maintainers. Our vision is to 
 NoteMaster is currently only available for Windows. We require additional developers to help us bring experience to both Linux and macOS.
 
 ## Download NoteMaster
-NoteMaster can be downloaded via (GitHub Releases)[https://github.com/LiamRiddell/NoteMaster/releases]. Please only download versions of NoteMaster that are hosted on GitHub. 
+NoteMaster can be downloaded via [GitHub Releases](https://github.com/LiamRiddell/NoteMaster/releases). Please only download versions of NoteMaster that are hosted on GitHub. 
 
 ## Make NoteMaster Better
 

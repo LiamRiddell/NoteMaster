@@ -9,6 +9,9 @@ import { debounce } from '../../utils/eventUtils';
 // LR: Actions
 import { preferencesContentAutosave } from '../../redux/actions/preferences';
 
+// LR Services
+import contextEvaluationService from '../../service/ContextEvaluationService';
+
 const { dialog } = require('electron').remote;
 const fs = require('fs');
 
@@ -36,13 +39,23 @@ function MonacoEditorComponent({
       attributes: true
     });
 
-    // Listen to model (content) changes from monaco
-    const onDidChangeModelContentDebounced = debounce(() => {
-      const content = valueGetter.current();
+    // LR: Auto Save debounce 300ms
+    const onDidChangeModelContentAutoSaveDebounced = debounce((e, content) => {
       autosaveContent(content);
     }, 300);
 
-    editor.onDidChangeModelContent(onDidChangeModelContentDebounced);
+    // Listen to model (content) changes from monaco
+    const onDidChangeModelContent = e => {
+      const content = valueGetter.current();
+
+      // LR: Parse the contents context
+      contextEvaluationService.parse(content);
+
+      // LR: Debounce the auto save
+      onDidChangeModelContentAutoSaveDebounced(e, content);
+    };
+
+    editor.onDidChangeModelContent(onDidChangeModelContent);
 
     // LR: Register Actions to context menu
     editor.addAction({

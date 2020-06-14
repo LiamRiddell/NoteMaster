@@ -266,6 +266,7 @@
     "history": "^4.10.1",
     "monaco-editor": "^0.19.2",
     "moo": "^0.5.1",
+    "nearley": "^2.19.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hot-loader": "^4.12.18",

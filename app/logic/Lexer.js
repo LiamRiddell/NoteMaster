@@ -8,12 +8,10 @@ const lexer = moo.compile({
 
   float: {
     match: /(?:^\+|-?)(?:[1-9]\d{0,4}|0|)\.\d/,
-    lineBreaks: true,
     value: x => parseFloat(x)
   },
   int: {
     match: /(?:[+-]?)(?:\d+)/,
-    lineBreaks: true,
     value: x => parseInt(x, 10)
   },
 

@@ -1,10 +1,8 @@
+import nearley from 'nearley';
 import lexer from '../logic/Lexer';
+import grammar from '../static/grammars/arithemtic-grammar';
 
 class ContextEvaluationService {
-  constructor() {
-    console.log('[ContextEvaluationService] Setup');
-  }
-
   parseLine = (lineNumber, content) => {
     console.groupCollapsed(`Line ${lineNumber}`);
 
@@ -18,6 +16,27 @@ class ContextEvaluationService {
     for (const token of lexer) {
       console.log(`[${lineNumber}] =>`, token.value, `\t\t(${token.type})`);
     }
+
+    // LR: Parse the line through nearley
+    try {
+      const ans = new nearley.Parser(
+        nearley.Grammar.fromCompiled(grammar)
+      ).feed(content);
+
+      if (ans.results.length > 0) {
+        console.log(
+          '[Nearley] Result:',
+          ans.results,
+          '# Results:',
+          ans.results.length
+        );
+      } else {
+        console.log('[Nearley] No Results');
+      }
+    } catch (e) {
+      console.log('[Nearley] Exception', e);
+    }
+
     console.groupEnd();
   };
 

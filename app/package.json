@@ -15,6 +15,7 @@
   },
   "license": "GPL-3.0-only",
   "dependencies": {
-    "monaco-editor": "^0.20.0"
+    "monaco-editor": "^0.20.0",
+    "moo": "^0.5.1"
   }
 }

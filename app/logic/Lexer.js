@@ -40,11 +40,4 @@ const lexer = moo.compile({
   period: '.'
 });
 
-// LR: ignore whitespace in output tokenization
-// lexer.next = ((next) => () => {
-//   let tok;
-//   while ((tok = next.call(lexer)) && tok.type === "ws") {}
-//   return tok;
-// })(lexer.next);
-
 export default lexer;

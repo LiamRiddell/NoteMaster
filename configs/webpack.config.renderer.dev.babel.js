@@ -198,6 +198,11 @@ export default merge.smart(baseConfig, {
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
         use: 'url-loader'
+      },
+      // Nearley Grammars .ne
+      {
+        test: /\.ne$/,
+        use: ['nearley-loader']
       }
     ]
   },

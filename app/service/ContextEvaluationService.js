@@ -1,6 +1,6 @@
-import nearley from 'nearley';
+import { Parser, Grammar } from 'nearley';
 import lexer from '../logic/Lexer';
-import grammar from '../static/grammars/arithemtic-grammar';
+import grammar from '../nearley/arithmetic.ne';
 
 class ContextEvaluationService {
   parseLine = (lineNumber, content) => {
@@ -19,9 +19,7 @@ class ContextEvaluationService {
 
     // LR: Parse the line through nearley
     try {
-      const ans = new nearley.Parser(
-        nearley.Grammar.fromCompiled(grammar)
-      ).feed(content);
+      const ans = new Parser(Grammar.fromCompiled(grammar)).feed(content);
 
       if (ans.results.length > 0) {
         console.log(

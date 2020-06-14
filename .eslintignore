@@ -54,6 +54,3 @@ __snapshots__
 # Package.json
 package.json
 .travis.yml
-
-# Ignore generated grammars for Nearley
-app/static/grammars/*

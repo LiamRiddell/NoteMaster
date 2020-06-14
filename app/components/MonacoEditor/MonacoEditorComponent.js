@@ -8,6 +8,10 @@ import { debounce } from '../../utils/eventUtils';
 
 // LR: Actions
 import { preferencesContentAutosave } from '../../redux/actions/preferences';
+import {
+  parserUpdateResults,
+  parserUpdateContentWidgets
+} from '../../redux/actions/parser';
 
 // LR Services
 import contextEvaluationService from '../../service/ContextEvaluationService';
@@ -19,8 +23,11 @@ function MonacoEditorComponent({
   // eslint-disable-next-line no-unused-vars
   window,
   preferences,
-  autosaveContent
-}: object) {
+  parser,
+  autosaveContent,
+  // eslint-disable-next-line flowtype/no-weak-types
+  updateResults
+}: Object) {
   // eslint-disable-next-line no-unused-vars
   const [isEditorReady, setIsEditorReady] = useState(false);
   // const [viewportColumnWidth, setViewportColumnWidth] = useState(true);
@@ -44,15 +51,24 @@ function MonacoEditorComponent({
       autosaveContent(content);
     }, 300);
 
+    const onDidChangeModelContentParseDebounced = debounce((e, content) => {
+      // LR: Parse the contents context
+      const lineParseResultsArray = contextEvaluationService.parse(content);
+
+      // LR: Dispath all the results to the store
+      if (lineParseResultsArray.length > 0) {
+        updateResults(lineParseResultsArray);
+      }
+    }, 100);
+
     // Listen to model (content) changes from monaco
     const onDidChangeModelContent = e => {
       const content = valueGetter.current();
 
-      // LR: Parse the contents context
-      contextEvaluationService.parse(content);
-
       // LR: Debounce the auto save
       onDidChangeModelContentAutoSaveDebounced(e, content);
+
+      onDidChangeModelContentParseDebounced(e, content);
     };
 
     editor.onDidChangeModelContent(onDidChangeModelContent);
@@ -114,11 +130,20 @@ function MonacoEditorComponent({
         return null;
       }
     });
+
+    // LR: Trigget parse
+    onDidChangeModelContentParseDebounced(null, valueGetter.current());
   }
 
-  function hookEditorResize() {
+  function hookEditorResize(e) {
     const editor = monacoEditor.current;
     editor.layout();
+
+    // LR: Get the line width - used for results
+    document.documentElement.style.setProperty(
+      '--nm-var-linewidth',
+      `${e[0].target.clientWidth}px`
+    );
   }
 
   const { fontSize, fontWeight, lineHeight, lineNumbers } = preferences;
@@ -127,6 +152,54 @@ function MonacoEditorComponent({
   // Window Updates will not cause the editor to layout.
   if (monacoEditor.current) {
     monacoEditor.current.layout();
+
+    // LR: Clear any content widget that does not have a result
+    const lineCount = monacoEditor.current.getModel().getLineCount();
+
+    for (let i = 0; i < lineCount; i += 1) {
+      monacoEditor.current.removeContentWidget({
+        getId() {
+          return `nmrl-${i}`;
+        }
+      });
+    }
+
+    parser.results.map(parseResult => {
+      const [value] = parseResult.results;
+
+      const contentWidget = {
+        domNode: null,
+        getId() {
+          return `nmrl-${parseResult.lineNumber}`;
+        },
+        getDomNode() {
+          if (!this.domNode) {
+            this.domNode = document.createElement('div');
+            this.domNode.classList.add('nm-result');
+
+            this.domNode2 = document.createElement('div');
+            this.domNode.appendChild(this.domNode2);
+            this.domNode2.innerText = value;
+          }
+          return this.domNode;
+        },
+        getPosition() {
+          return {
+            position: {
+              lineNumber: parseResult.lineNumber
+            },
+            preference: [0]
+          };
+        }
+      };
+
+      monacoEditor.current.removeContentWidget(contentWidget);
+
+      if (parseResult.lineContent.length > 0)
+        monacoEditor.current.addContentWidget(contentWidget);
+
+      return null;
+    });
   }
 
   return (
@@ -182,12 +255,14 @@ function MonacoEditorComponent({
 
 const mapStateToProps = state => ({
   window: state.window,
-  preferences: state.preferences
+  preferences: state.preferences,
+  parser: state.parser
 });
 
 const mapDispatchToProps = dispatch => ({
-  autosaveContent: (content: string) =>
-    dispatch(preferencesContentAutosave(content))
+  autosaveContent: content => dispatch(preferencesContentAutosave(content)),
+  updateResults: results => dispatch(parserUpdateResults(results)),
+  updateContentWidgets: widgets => dispatch(parserUpdateContentWidgets(widgets))
 });
 
 export default connect(

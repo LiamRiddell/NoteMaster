@@ -28,9 +28,17 @@ class ContextEvaluationService {
           '# Results:',
           ans.results.length
         );
-      } else {
-        console.log('[Nearley] No Results');
+
+        console.groupEnd();
+
+        return {
+          lineNumber,
+          lineContent: content,
+          results: ans.results
+        };
       }
+
+      console.log('[Nearley] No Results');
     } catch (e) {
       console.log('[Nearley] Exception', e);
     }
@@ -45,14 +53,26 @@ class ContextEvaluationService {
     const lines = content.split('\n');
     console.log(`Parsing ${lines.length} line(s)`);
 
+    const lineParseResultsArray = [];
+
+    // LR: Parse content line by line
     for (let i = 0; i < lines.length; i += 1) {
       const line = lines[i];
 
-      if (line.length > 0) this.parseLine(i + 1, line);
+      // LR: if the line has content then parse it - if not skip
+      if (line.length > 0) {
+        const result = this.parseLine(i + 1, line);
+        if (typeof result !== 'undefined') lineParseResultsArray.push(result);
+      }
     }
+
+    console.log(`Parsed ${lines.length} line(s)`, lineParseResultsArray);
 
     // LR: End logging group
     console.groupEnd();
+
+    // LR: Return the parsed results
+    return lineParseResultsArray;
   };
 }
 

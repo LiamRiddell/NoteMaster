@@ -129,3 +129,41 @@ body {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: #43494f;
 }
+
+/* NoteMaster result styling */
+.nm-result {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  /* This is set in the MonacoEditor */
+  width: var(--nm-var-linewidth);
+
+  /* Match the text editor lineheight */
+  height: 24px;
+  font-size: 13px;
+
+  /* Monaco Hacks */
+  max-width: 100000px !important;
+
+  /* Make this div 100% width of the editor and clickable */
+  pointer-events: none;
+  user-select: none;
+}
+
+.nm-result > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(34, 206, 153, 0.35);
+  border-radius: 3px;
+  text-align: center;
+  color: #22ce99;
+  height: 19px;
+  padding: 0 5px 1px 5px;
+  margin-right: 20px;
+
+  /* Make this selectable */
+  pointer-events: all;
+  user-select: all;
+}

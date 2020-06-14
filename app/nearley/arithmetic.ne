@@ -18,6 +18,18 @@
         division: ["/", "divide", "divide by"],
         addition: ["+", "add", "plus"],
         subtraction: ["-", "subtract", "minus"],
+        sin: ["sin"],
+        cos: ["cos"],
+        tan: ["tan"],
+
+        asin: ["asin"],
+        acos: ["acos"],
+        atan: ["atan"],
+
+        pi: ["pi"],
+        radian: ["radian"],
+        sqrt: ["sqrt"],
+        ln: ["ln"]
     });
 %}
 
@@ -48,18 +60,18 @@ AS -> AS _ %addition _ MD {% function(d) {return d[0]+d[4]; } %}
 # A number or a function of a number
 N ->  %int         {% id %}
     | %float       {% id %}
-    | "sin"  _ P    {% function(d) {return Math.sin(d[2]); } %}
-    | "cos" _ P     {% function(d) {return Math.cos(d[2]); } %}
-    | "tan" _ P     {% function(d) {return Math.tan(d[2]); } %}
+    | %sin _ P    {% function(d) {return Math.sin(d[2]); } %}
+    | %cos _ P     {% function(d) {return Math.cos(d[2]); } %}
+    | %tan _ P     {% function(d) {return Math.tan(d[2]); } %}
 
-    | "asin" _ P    {% function(d) {return Math.asin(d[2]); } %}
-    | "acos" _ P    {% function(d) {return Math.acos(d[2]); } %}
-    | "atan" _ P    {% function(d) {return Math.atan(d[2]); } %}
+    | %asin _ P    {% function(d) {return Math.asin(d[2]); } %}
+    | %acos _ P    {% function(d) {return Math.acos(d[2]); } %}
+    | %atan _ P    {% function(d) {return Math.atan(d[2]); } %}
 
-    | "pi"          {% function(d) {return Math.PI; } %}
-    | "e"           {% function(d) {return Math.E; } %}
-    | "sqrt" _ P    {% function(d) {return Math.sqrt(d[2]); } %}
-    | "ln" _ P      {% function(d) {return Math.log(d[2]); }  %}
+    | %pi         {% function(d) {return Math.PI; } %}
+    | %radian          {% function(d) {return Math.E; } %}
+    | %sqrt _ P    {% function(d) {return Math.sqrt(d[2]); } %}
+    | %ln _ P      {% function(d) {return Math.log(d[2]); }  %}
 
 
 _ -> %ws:*

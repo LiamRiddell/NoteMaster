@@ -180,7 +180,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }: object) => {
                 Auto Launch
               </Label>
               <Select
-                defaultValue={autoLaunch ? 'Off' : 'On'}
+                defaultValue={autoLaunch ? 'true' : 'false'}
                 onChange={autoLaunchChange}
               >
                 <option value="false">Off</option>

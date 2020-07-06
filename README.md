@@ -6,7 +6,7 @@
 
 # Introduction
 
-`NoteMaster` is a minimalist persistent note-taking app to help boost productivity.
+`NoteMaster` is a minimalistic persistent note-taking app to help boost productivity.
 
 <p align="center">
   <img width="362px" src="internals/img/nm-app.png"/>

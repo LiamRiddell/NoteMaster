@@ -1,8 +1,7 @@
 <img src="internals/img/banner.png" width="100%" />
 
 <p align="center">
-  <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiamRiddell/NoteMaster&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/879120a5ade548ba8d93519622a62309"/></a>
-  <a href="https://www.producthunt.com/posts/notemaster?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-notemaster" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=213162&theme=dark" alt="NoteMaster - Minimalistic note-taking app to help boost productivity. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
+  <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiamRiddell/NoteMaster&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/879120a5ade548ba8d93519622a62309" height/></a>
 </p>
 
 # Introduction
@@ -11,6 +10,10 @@
 
 <p align="center">
   <img width="362px" src="internals/img/nm-app.png"/>
+</p>
+
+<p align="center">
+  <a href="https://www.producthunt.com/posts/notemaster?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-notemaster" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=213162&theme=dark" alt="NoteMaster - Minimalistic note-taking app to help boost productivity. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
 </p>
 
 ## Features

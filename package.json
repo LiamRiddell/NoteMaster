@@ -102,8 +102,8 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "notemaster",
-      "repo": "notemaster",
+      "owner": "LiamRiddell",
+      "repo": "NoteMaster",
       "private": false
     }
   },

@@ -104,7 +104,8 @@
       "provider": "github",
       "owner": "LiamRiddell",
       "repo": "NoteMaster",
-      "private": false
+      "private": false,
+      "releaseType": "prerelease"
     }
   },
   "repository": {

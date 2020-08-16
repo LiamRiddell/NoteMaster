@@ -1,15 +1,19 @@
 <img src="internals/img/banner.png" width="100%" />
 
 <p align="center">
-  <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiamRiddell/NoteMaster&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/879120a5ade548ba8d93519622a62309"/></a>
+  <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiamRiddell/NoteMaster&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/879120a5ade548ba8d93519622a62309" height/></a>
 </p>
 
 # Introduction
 
-`NoteMaster` is a minimalist persistent note-taking app to help boost productivity.
+`NoteMaster` is a minimalistic persistent note-taking app to help boost productivity.
 
 <p align="center">
   <img width="362px" src="internals/img/nm-app.png"/>
+</p>
+
+<p align="center">
+  <a href="https://www.producthunt.com/posts/notemaster?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-notemaster" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=213162&theme=dark" alt="NoteMaster - Minimalistic note-taking app to help boost productivity. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
 </p>
 
 ## Features
@@ -35,6 +39,19 @@ NoteMaster is currently only available for Windows. We require additional develo
 ## Download NoteMaster
 
 NoteMaster can be downloaded via [GitHub Releases](https://github.com/LiamRiddell/NoteMaster/releases). Please only download versions of NoteMaster that are hosted on GitHub.
+
+
+## Lost Note? Blank Screen? Reset NoteMaster?
+We're sorry this happened! NoteMaster is still in Alpha, please make sure you backup important notes external of NoteMaster. Create a ticket on [NoteMaster Issue Tracker](https://github.com/LiamRiddell/NoteMaster/issues). 
+
+**IMPORTANT: THIS WILL REMOVE ANY PREFERENCES OR NOTES!**
+
+Resetting NoteMaster is easy and only takes a few steps. Please follow the guide specific your operating system.
+
+**Windows:**
+1. Close NoteMaster Completely
+2. Delete the `%appdata%\Roaming\NoteMaster` directory. 
+3. NoteMaster will now be reset on the next launch.
 
 ## Make NoteMaster Better
 

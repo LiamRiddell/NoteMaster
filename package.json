@@ -103,7 +103,7 @@
       "owner": "LiamRiddell",
       "repo": "NoteMaster",
       "private": false,
-      "releaseType": "release"
+      "releaseType": "prerelease"
     }
   },
   "repository": {

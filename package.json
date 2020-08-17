@@ -1,7 +1,7 @@
 {
   "name": "notemaster",
   "productName": "NoteMaster",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "NoteMaster is a minimalist persistent note-taking app to help boost productivity.",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -90,8 +90,6 @@
     },
     "linux": {
       "target": [
-        "deb",
-        "rpm",
         "AppImage"
       ],
       "category": "Development"
@@ -105,7 +103,7 @@
       "owner": "LiamRiddell",
       "repo": "NoteMaster",
       "private": false,
-      "releaseType": "prerelease"
+      "releaseType": "release"
     }
   },
   "repository": {

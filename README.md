@@ -33,8 +33,11 @@ NoteMaster is being developed continuously by the maintainers. Our vision is to 
 - Emoji Support - Yes... unreal, I know. You can now have so much fire in your notes.
 
 ## Supported Operating Systems
+NoteMaster is now available on the following platforms:
+- Windows (Stable)
+- Linux (Untested)
+- Mac (Untested)
 
-NoteMaster is currently only available for Windows. We require additional developers to help us bring experience to both Linux and macOS.
 
 ## Download NoteMaster
 

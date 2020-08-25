@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useRef } from 'react';
@@ -14,7 +15,7 @@ import {
 } from '../../redux/actions/parser';
 
 // LR Services
-import contextEvaluationService from '../../service/ContextEvaluationService';
+import contextEvaluationService from '../../logic/ContextEvaluation';
 
 const { dialog } = require('electron').remote;
 const fs = require('fs');
@@ -23,11 +24,11 @@ function MonacoEditorComponent({
   // eslint-disable-next-line no-unused-vars
   window,
   preferences,
-  parser,
-  autosaveContent,
+  // parser,
+  autosaveContent
   // eslint-disable-next-line flowtype/no-weak-types
-  updateResults
-}: Object) {
+  // updateResults
+}) {
   // eslint-disable-next-line no-unused-vars
   const [isEditorReady, setIsEditorReady] = useState(false);
   // const [viewportColumnWidth, setViewportColumnWidth] = useState(true);
@@ -51,15 +52,15 @@ function MonacoEditorComponent({
       autosaveContent(content);
     }, 300);
 
-    const onDidChangeModelContentParseDebounced = debounce((e, content) => {
-      // LR: Parse the contents context
-      const lineParseResultsArray = contextEvaluationService.parse(content);
+    // const onDidChangeModelContentParseDebounced = debounce((e, content) => {
+    //   // LR: Parse the contents context
+    //   const lineParseResultsArray = contextEvaluationService.parse(content);
 
-      // LR: Dispath all the results to the store
-      if (lineParseResultsArray.length > 0) {
-        updateResults(lineParseResultsArray);
-      }
-    }, 100);
+    //   // LR: Dispath all the results to the store
+    //   if (lineParseResultsArray.length > 0) {
+    //     updateResults(lineParseResultsArray);
+    //   }
+    // }, 100);
 
     // Listen to model (content) changes from monaco
     const onDidChangeModelContent = e => {
@@ -67,8 +68,10 @@ function MonacoEditorComponent({
 
       // LR: Debounce the auto save
       onDidChangeModelContentAutoSaveDebounced(e, content);
+      // onDidChangeModelContentParseDebounced(e, content);
 
-      onDidChangeModelContentParseDebounced(e, content);
+      // LR: Pass the event to the ContextEvaluationService.
+      contextEvaluationService.onDidChangeModelContent(e, content);
     };
 
     editor.onDidChangeModelContent(onDidChangeModelContent);
@@ -132,7 +135,7 @@ function MonacoEditorComponent({
     });
 
     // LR: Trigget parse
-    onDidChangeModelContentParseDebounced(null, valueGetter.current());
+    // onDidChangeModelContentParseDebounced(null, valueGetter.current());
   }
 
   function hookEditorResize(e) {
@@ -150,57 +153,57 @@ function MonacoEditorComponent({
 
   // HACK: LR - Fixes an issue when the preferences are loaded from the disk and the editor does not resize.
   // Window Updates will not cause the editor to layout.
-  if (monacoEditor.current) {
-    monacoEditor.current.layout();
+  // if (monacoEditor.current) {
+  //   monacoEditor.current.layout();
 
-    // LR: Clear any content widget that does not have a result
-    const lineCount = monacoEditor.current.getModel().getLineCount();
+  //   // LR: Clear any content widget that does not have a result
+  //   const lineCount = monacoEditor.current.getModel().getLineCount();
 
-    for (let i = 0; i < lineCount; i += 1) {
-      monacoEditor.current.removeContentWidget({
-        getId() {
-          return `nmrl-${i}`;
-        }
-      });
-    }
+  //   for (let i = 0; i < lineCount; i += 1) {
+  //     monacoEditor.current.removeContentWidget({
+  //       getId() {
+  //         return `nmrl-${i}`;
+  //       }
+  //     });
+  //   }
 
-    parser.results.map(parseResult => {
-      const [value] = parseResult.results;
+  //   parser.results.map(parseResult => {
+  //     const [value] = parseResult.results;
 
-      const contentWidget = {
-        domNode: null,
-        getId() {
-          return `nmrl-${parseResult.lineNumber}`;
-        },
-        getDomNode() {
-          if (!this.domNode) {
-            this.domNode = document.createElement('div');
-            this.domNode.classList.add('nm-result');
+  //     const contentWidget = {
+  //       domNode: null,
+  //       getId() {
+  //         return `nmrl-${parseResult.lineNumber}`;
+  //       },
+  //       getDomNode() {
+  //         if (!this.domNode) {
+  //           this.domNode = document.createElement('div');
+  //           this.domNode.classList.add('nm-result');
 
-            this.domNode2 = document.createElement('div');
-            this.domNode.appendChild(this.domNode2);
-            this.domNode2.innerText = value;
-          }
-          return this.domNode;
-        },
-        getPosition() {
-          return {
-            position: {
-              lineNumber: parseResult.lineNumber
-            },
-            preference: [0]
-          };
-        }
-      };
+  //           this.domNode2 = document.createElement('div');
+  //           this.domNode.appendChild(this.domNode2);
+  //           this.domNode2.innerText = value;
+  //         }
+  //         return this.domNode;
+  //       },
+  //       getPosition() {
+  //         return {
+  //           position: {
+  //             lineNumber: parseResult.lineNumber
+  //           },
+  //           preference: [0]
+  //         };
+  //       }
+  //     };
 
-      monacoEditor.current.removeContentWidget(contentWidget);
+  //     monacoEditor.current.removeContentWidget(contentWidget);
 
-      if (parseResult.lineContent.length > 0)
-        monacoEditor.current.addContentWidget(contentWidget);
+  //     if (parseResult.lineContent.length > 0)
+  //       monacoEditor.current.addContentWidget(contentWidget);
 
-      return null;
-    });
-  }
+  //     return null;
+  //   });
+  // }
 
   return (
     <>

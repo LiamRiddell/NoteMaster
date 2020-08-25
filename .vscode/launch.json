@@ -1,0 +1,46 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Electron: Main",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "args": [],
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}\\node_modules\\.bin\\electron.cmd"
+      },
+      "preLaunchTask": "Start Webpack Dev",
+      "runtimeArgs": [
+        "--remote-debugging-port=9223",
+        "-r",
+        "@babel/register",
+        "./app/main.dev.js"
+      ],
+      "env": {
+        "NODE_ENV": "development",
+        "HOT": "1",
+        "HIDE_DEV_TOOLS": "1"
+      },
+      "protocol": "inspector",
+      "sourceMaps": true,
+      "outFiles": [],
+      "timeout": 150000
+    },
+    {
+      "name": "Electron: Renderer",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9223,
+      "webRoot": "${workspaceFolder}",
+      "timeout": 150000
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Electron: All",
+      "configurations": ["Electron: Main", "Electron: Renderer"]
+    }
+  ]
+}

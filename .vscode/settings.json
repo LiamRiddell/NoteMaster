@@ -28,5 +28,15 @@
     "test/**/__snapshots__": true,
     "yarn.lock": true
   },
-  "files.exclude": {}
+  "files.exclude": {
+    "app\\.vscode": true,
+    "app\\dist": true,
+    "app\\node_modules": true,
+    "app\\main.prod.js": true,
+    "app\\main.prod.js.map": true,
+    "dll": true,
+    "node_modules": true,
+    ".eslintcache": true,
+    "yarn-error.log": true
+  }
 }

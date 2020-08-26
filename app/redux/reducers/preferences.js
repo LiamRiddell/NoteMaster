@@ -51,7 +51,7 @@ export function preferencesReducer(state = initialState, action: string) {
     case PREFERENCES_CONTENT_AUTOSAVE:
       return {
         ...state,
-        autosaveContent: action.payload
+        autosaveContent: payload
       };
 
     case PREFERENCES_SAVE:

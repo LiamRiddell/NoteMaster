@@ -9,10 +9,7 @@ import { debounce } from '../../utils/eventUtils';
 
 // LR: Actions
 import { preferencesContentAutosave } from '../../redux/actions/preferences';
-import {
-  parserUpdateResults,
-  parserUpdateContentWidgets
-} from '../../redux/actions/parser';
+import { contextEvaluationUpdateContentWidgets } from '../../redux/actions/context-evaluation';
 
 // LR Services
 import contextEvaluationService from '../../logic/ContextEvaluation';
@@ -24,10 +21,9 @@ function MonacoEditorComponent({
   // eslint-disable-next-line no-unused-vars
   window,
   preferences,
-  // parser,
-  autosaveContent
-  // eslint-disable-next-line flowtype/no-weak-types
-  // updateResults
+  autosaveContent,
+  // eslint-disable-next-line no-unused-vars
+  updateContentWidgets
 }) {
   // eslint-disable-next-line no-unused-vars
   const [isEditorReady, setIsEditorReady] = useState(false);
@@ -52,23 +48,12 @@ function MonacoEditorComponent({
       autosaveContent(content);
     }, 300);
 
-    // const onDidChangeModelContentParseDebounced = debounce((e, content) => {
-    //   // LR: Parse the contents context
-    //   const lineParseResultsArray = contextEvaluationService.parse(content);
-
-    //   // LR: Dispath all the results to the store
-    //   if (lineParseResultsArray.length > 0) {
-    //     updateResults(lineParseResultsArray);
-    //   }
-    // }, 100);
-
     // Listen to model (content) changes from monaco
     const onDidChangeModelContent = e => {
       const content = valueGetter.current();
 
       // LR: Debounce the auto save
       onDidChangeModelContentAutoSaveDebounced(e, content);
-      // onDidChangeModelContentParseDebounced(e, content);
 
       // LR: Pass the event to the ContextEvaluationService.
       contextEvaluationService.onDidChangeModelContent(e, content);
@@ -134,8 +119,11 @@ function MonacoEditorComponent({
       }
     });
 
-    // LR: Trigget parse
-    // onDidChangeModelContentParseDebounced(null, valueGetter.current());
+    // LR: Trigger parse on intial render
+    contextEvaluationService.onDidChangeModelContent(
+      null,
+      valueGetter.current()
+    );
   }
 
   function hookEditorResize(e) {
@@ -264,8 +252,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   autosaveContent: content => dispatch(preferencesContentAutosave(content)),
-  updateResults: results => dispatch(parserUpdateResults(results)),
-  updateContentWidgets: widgets => dispatch(parserUpdateContentWidgets(widgets))
+  updateContentWidgets: widgets =>
+    dispatch(contextEvaluationUpdateContentWidgets(widgets))
 });
 
 export default connect(

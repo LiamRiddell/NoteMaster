@@ -7,7 +7,7 @@ import type { HashHistory } from 'history';
 import { windowReducer } from './reducers/window';
 import { monacoReducer } from './reducers/monaco';
 import { preferencesReducer } from './reducers/preferences';
-import { parserReducer } from './reducers/parser';
+import { contextEvaluationReducer } from './reducers/context-evaluation';
 
 // Root reducer
 export default function createRootReducer(history: HashHistory) {
@@ -16,6 +16,6 @@ export default function createRootReducer(history: HashHistory) {
     window: windowReducer,
     monaco: monacoReducer,
     preferences: preferencesReducer,
-    parser: parserReducer
+    contextEvaluation: contextEvaluationReducer
   });
 }

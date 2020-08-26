@@ -54,7 +54,14 @@ class ContextEvaluationService {
 
   // Model Change Event types
   onMultiChangeEvent = e => {
-    console.error("I've received MultiChangeEvent from", e);
+    e.changes.forEach(change => {
+      // LR: Is it a Single Line change? -> ProcessSingleLineChange
+      if (e.changes.range.startLineNumber === e.changes.range.endLineNumber) {
+        this.onSingleLineModelChange(change);
+      } else {
+        this.onMultiLineModelChange(change);
+      }
+    });
   };
 
   onSingleChangeEvent = e => {
@@ -66,11 +73,11 @@ class ContextEvaluationService {
     ) {
       this.onSingleLineModelChange(change);
     } else {
-      this.onMultiLineModelChange(e.changes);
+      this.onMultiLineModelChange(change);
     }
   };
 
-  // Edits
+  // Single Line Change
   onSingleLineModelChange = change => {
     console.log('Single line edit', change.range.startLineNumber, change);
 
@@ -95,10 +102,34 @@ class ContextEvaluationService {
     }
   };
 
-  onMultiLineModelChange = changes => {
-    changes.forEach(change => {
-      this.onSingleLineModelChange(change);
-    });
+  // Multi Line Change
+  onMultiLineModelChange = change => {
+    for (
+      let lineIndex = change.range.startLineNumber - 1;
+      lineIndex <= change.range.endLineNumber - 1;
+      // eslint-disable-next-line no-plusplus
+      lineIndex++
+    ) {
+      // LR: Get the current the line from the content
+      const line = this.currentContentLines[lineIndex];
+
+      // LR: Contains variable?
+      if (this.stringContainsVariable(line)) {
+        console.debug(
+          `onMultiLineModelChange -> This line contains variable -> Rebuilding Parser Cache for Lines ${change.range.startLineNumber} to ${this.currentContentLines.length}`
+        );
+
+        this.contextualize(
+          change.range.startLineNumber,
+          this.currentContentLines.length - 1
+        );
+      } else {
+        this.contextualize(
+          change.range.startLineNumber,
+          change.range.endLineNumber
+        );
+      }
+    }
   };
 
   // Contextualizer

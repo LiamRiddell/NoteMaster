@@ -26,21 +26,25 @@ class ContextEvaluationService {
 
     // LR: No cached results?
     if (this.cachedParserResults.length <= 0) {
+      console.debug('Destroyed Cache -> No Results');
       this.destroyAndRebuildParserCache();
     }
 
     // LR: Redoing, Undoing, or Flush?
     if (e.isRedoing || e.isUndoing || e.isFlush) {
+      console.debug('Destroyed Cache -> A Redoing, Undoing, or Flush Happened');
       this.destroyAndRebuildParserCache();
     }
 
     // LR: No Lines?
     if (this.currentContentLines.length <= 0) {
+      console.debug('Destroyed Cache -> No Content Lines');
       this.destroyAndRebuildParserCache();
     }
 
     // LR: Line count changed?
     if (this.currentContentLines.length !== this.previousContentLines.length) {
+      console.debug('Destroyed Cache -> Line Count Changed');
       this.destroyAndRebuildParserCache();
     }
 

@@ -118,8 +118,6 @@ class ContextEvaluationService {
 
   // Single Line Change
   onSingleLineModelChange = change => {
-    console.log('Single line edit', change.range.startLineNumber, change);
-
     // LR: Get the current the line from the content
     const line = this.currentContentLines[change.range.startLineNumber - 1];
 
@@ -130,7 +128,7 @@ class ContextEvaluationService {
       );
 
       this.contextualize(
-        change.range.startLineNumber,
+        change.range.startLineNumber - 1,
         this.currentContentLines.length - 1
       );
     } else if (this.editorLinesIncreased) {
@@ -139,13 +137,13 @@ class ContextEvaluationService {
       );
 
       this.contextualize(
-        change.range.startLineNumber,
+        change.range.startLineNumber - 1,
         this.currentContentLines.length - 1
       );
     } else {
       this.contextualize(
-        change.range.startLineNumber,
-        change.range.endLineNumber
+        change.range.startLineNumber - 1,
+        change.range.endLineNumber - 1
       );
     }
   };
@@ -168,13 +166,13 @@ class ContextEvaluationService {
         );
 
         this.contextualize(
-          change.range.startLineNumber,
+          change.range.startLineNumber - 1,
           this.currentContentLines.length - 1
         );
       } else {
         this.contextualize(
-          change.range.startLineNumber,
-          change.range.endLineNumber
+          change.range.startLineNumber - 1,
+          change.range.endLineNumber - 1
         );
       }
     }
@@ -189,12 +187,7 @@ class ContextEvaluationService {
       lineIndex++
     ) {
       // LR: Get the line content
-      let lineContent = this.currentContentLines[lineIndex];
-
-      // LR: If the line content is null or undefined replace with empty string
-      if (lineContent === null || typeof lineContent === 'undefined') {
-        lineContent = '';
-      }
+      const lineContent = this.currentContentLines[lineIndex];
 
       // LR: Get the line from cache
       const cachedContextualizedLine = this.getCachedContextualizedLine(
@@ -214,7 +207,8 @@ class ContextEvaluationService {
         cachedContextualizedLine.parse();
 
         console.debug(
-          `Reset Cached Context for line ${cachedContextualizedLine.lineNumber}`,
+          `Reset Cached Context for line ${cachedContextualizedLine.lineNumber} | ${lineIndex}`,
+          lineContent,
           cachedContextualizedLine
         );
 

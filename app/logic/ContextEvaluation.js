@@ -96,7 +96,9 @@ class ContextEvaluationService {
   };
 
   onMultiLineModelChange = changes => {
-    console.log('Multi line edit', changes.length);
+    changes.forEach(change => {
+      this.onSingleLineModelChange(change);
+    });
   };
 
   // Contextualizer

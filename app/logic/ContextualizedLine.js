@@ -25,6 +25,9 @@ export default class ContextualizedLine {
   // Stores whether this line contains a identifier
   containsVariable;
 
+  // Stores whether line should be visible
+  isVisible;
+
   constructor(lineNumberIndex, lineContent) {
     // LR: Core properties
     this.lineNumberIndex = lineNumberIndex;
@@ -44,7 +47,7 @@ export default class ContextualizedLine {
 
     // LR: Boolean flags
     this.isEmpty = this.lineContent.length <= 0;
-    this.containsVariable = this.containsVariable();
+    this.containsVariable = this.doesContainVariable();
   };
 
   parse = () => {
@@ -52,11 +55,25 @@ export default class ContextualizedLine {
     this.parsedSuccessful = true;
 
     // LR: Fake value for now
-    return 10;
+    this.parsed = Math.floor(Math.random() * 100);
+
+    // LR: If the value is invalid hide the line
+    this.isVisible = this.shouldBeVisible();
+  };
+
+  shouldBeVisible = () => {
+    // Null or undefined value?
+    if (this.parsed === null || typeof this.parsed === 'undefined')
+      return false;
+
+    // The line content is empty?
+    if (this.lineContent.length === 0) return false;
+
+    return true;
   };
 
   // Helpers
-  containsVariable = () => {
+  doesContainVariable = () => {
     // LR: Lex the line content
     lexer.reset(this.lineContent);
 

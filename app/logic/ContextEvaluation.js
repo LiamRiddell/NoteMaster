@@ -15,6 +15,15 @@ class ContextEvaluationService {
   // Stores the cached parsed line results
   cachedContexualisedLines = [];
 
+  // Stores whether the editor lines decresed
+  editorLinesDecreased = false;
+
+  // Stores whether the editor lines increased
+  editorLinesIncreased = false;
+
+  // Stores whether the editor lines equal between states
+  editorLinesEqual = false;
+
   // Event is propogated from MonacoEditor and debounced for 100ms to increase performance
   onDidChangeModelContent = (e, content) => {
     // LR: Null Content? -> Ignore
@@ -26,14 +35,20 @@ class ContextEvaluationService {
     // LR: Update the currentContentLines
     this.currentContentLines = content.split('\n');
 
+    // LR: Calculate line movement
+    this.editorLinesDecreased =
+      this.currentContentLines.length < this.previousContentLines.length;
+
+    this.editorLinesIncreased =
+      this.currentContentLines.length > this.previousContentLines.length;
+
+    this.editorLinesEqual =
+      this.currentContentLines.length === this.previousContentLines.length;
+
     // LR: Null Event? The editor has just been instantiated
     if (e === null || typeof e === 'undefined') {
       console.debug('Destroyed Cache -> No Results');
       this.destroyAndRebuildParserCache();
-
-      // LR: Update the redux state on cache rebuilds
-      this.updateContextEvaluationReduxState();
-
       return;
     }
 
@@ -41,10 +56,6 @@ class ContextEvaluationService {
     if (this.cachedContexualisedLines.length <= 0) {
       console.debug('Destroyed Cache -> No Results');
       this.destroyAndRebuildParserCache();
-
-      // LR: Update the redux state on cache rebuilds
-      this.updateContextEvaluationReduxState();
-
       return;
     }
 
@@ -52,10 +63,6 @@ class ContextEvaluationService {
     if (e.isRedoing || e.isUndoing || e.isFlush) {
       console.debug('Destroyed Cache -> A Redoing, Undoing, or Flush Happened');
       this.destroyAndRebuildParserCache();
-
-      // LR: Update the redux state on cache rebuilds
-      this.updateContextEvaluationReduxState();
-
       return;
     }
 
@@ -63,21 +70,13 @@ class ContextEvaluationService {
     if (this.currentContentLines.length <= 0) {
       console.debug('Destroyed Cache -> No Content Lines');
       this.destroyAndRebuildParserCache();
-
-      // LR: Update the redux state on cache rebuilds
-      this.updateContextEvaluationReduxState();
-
       return;
     }
 
-    // LR: Line count changed?
-    if (this.currentContentLines.length !== this.previousContentLines.length) {
-      console.debug('Destroyed Cache -> Line Count Changed');
+    // LR: Line count decreased?
+    if (this.editorLinesDecreased) {
+      console.debug('Destroyed Cache -> Line Count Decreased');
       this.destroyAndRebuildParserCache();
-
-      // LR: Update the redux state on cache rebuilds
-      this.updateContextEvaluationReduxState();
-
       return;
     }
 
@@ -134,6 +133,15 @@ class ContextEvaluationService {
         change.range.startLineNumber,
         this.currentContentLines.length - 1
       );
+    } else if (this.editorLinesIncreased) {
+      console.debug(
+        `The lines below are out of sync -> Rebuilding Parser Cache for Lines ${change.range.startLineNumber} to ${this.currentContentLines.length}`
+      );
+
+      this.contextualize(
+        change.range.startLineNumber,
+        this.currentContentLines.length - 1
+      );
     } else {
       this.contextualize(
         change.range.startLineNumber,
@@ -181,7 +189,12 @@ class ContextEvaluationService {
       lineIndex++
     ) {
       // LR: Get the line content
-      const lineContent = this.currentContentLines[lineIndex];
+      let lineContent = this.currentContentLines[lineIndex];
+
+      // LR: If the line content is null or undefined replace with empty string
+      if (lineContent === null || typeof lineContent === 'undefined') {
+        lineContent = '';
+      }
 
       // LR: Get the line from cache
       const cachedContextualizedLine = this.getCachedContextualizedLine(
@@ -196,6 +209,9 @@ class ContextEvaluationService {
         // LR: Reset the line to use the new content
         // Note: Reset is smart and does checks before processing.
         cachedContextualizedLine.reset(lineContent);
+
+        // LR: Reparse the line
+        cachedContextualizedLine.parse();
 
         console.debug(
           `Reset Cached Context for line ${cachedContextualizedLine.lineNumber}`,
@@ -224,6 +240,9 @@ class ContextEvaluationService {
 
     // LR: Recalculate all lines
     this.contextualize(0, this.currentContentLines.length - 1);
+
+    // LR: Update the redux state on cache rebuilds
+    this.updateContextEvaluationReduxState();
   };
 
   getCachedContextualizedLine = lineNumberIndex => {

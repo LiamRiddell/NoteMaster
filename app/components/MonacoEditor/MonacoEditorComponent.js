@@ -21,6 +21,7 @@ function MonacoEditorComponent({
   // eslint-disable-next-line no-unused-vars
   window,
   preferences,
+  contextEvaluation,
   autosaveContent,
   // eslint-disable-next-line no-unused-vars
   updateContentWidgets
@@ -141,57 +142,56 @@ function MonacoEditorComponent({
 
   // HACK: LR - Fixes an issue when the preferences are loaded from the disk and the editor does not resize.
   // Window Updates will not cause the editor to layout.
-  // if (monacoEditor.current) {
-  //   monacoEditor.current.layout();
+  if (monacoEditor.current) {
+    monacoEditor.current.layout();
 
-  //   // LR: Clear any content widget that does not have a result
-  //   const lineCount = monacoEditor.current.getModel().getLineCount();
+    // LR: Clear any content widget that does not have a result
+    const lineCount = monacoEditor.current.getModel().getLineCount();
 
-  //   for (let i = 0; i < lineCount; i += 1) {
-  //     monacoEditor.current.removeContentWidget({
-  //       getId() {
-  //         return `nmrl-${i}`;
-  //       }
-  //     });
-  //   }
+    for (let i = 0; i < lineCount; i += 1) {
+      monacoEditor.current.removeContentWidget({
+        getId() {
+          return `nmrl-${i}`;
+        }
+      });
+    }
 
-  //   parser.results.map(parseResult => {
-  //     const [value] = parseResult.results;
+    contextEvaluation.cachedContexualisedLines.forEach(contextualizedLine => {
+      if (contextualizedLine.isVisible) {
+        const contentWidget = {
+          domNode: null,
+          getId() {
+            return `nmrl-${contextualizedLine.lineNumber}`;
+          },
+          getDomNode() {
+            if (!this.domNode) {
+              this.domNode = document.createElement('div');
+              this.domNode.classList.add('nm-result');
 
-  //     const contentWidget = {
-  //       domNode: null,
-  //       getId() {
-  //         return `nmrl-${parseResult.lineNumber}`;
-  //       },
-  //       getDomNode() {
-  //         if (!this.domNode) {
-  //           this.domNode = document.createElement('div');
-  //           this.domNode.classList.add('nm-result');
+              this.domNode2 = document.createElement('div');
+              this.domNode.appendChild(this.domNode2);
+              this.domNode2.innerText = contextualizedLine.parsed;
+            }
+            return this.domNode;
+          },
+          getPosition() {
+            return {
+              position: {
+                lineNumber: contextualizedLine.lineNumber
+              },
+              preference: [0]
+            };
+          }
+        };
 
-  //           this.domNode2 = document.createElement('div');
-  //           this.domNode.appendChild(this.domNode2);
-  //           this.domNode2.innerText = value;
-  //         }
-  //         return this.domNode;
-  //       },
-  //       getPosition() {
-  //         return {
-  //           position: {
-  //             lineNumber: parseResult.lineNumber
-  //           },
-  //           preference: [0]
-  //         };
-  //       }
-  //     };
+        // LR: Remove the widget
+        // monacoEditor.current.removeContentWidget(contentWidget);
 
-  //     monacoEditor.current.removeContentWidget(contentWidget);
-
-  //     if (parseResult.lineContent.length > 0)
-  //       monacoEditor.current.addContentWidget(contentWidget);
-
-  //     return null;
-  //   });
-  // }
+        // LR: Register the widget to monaco editor
+        monacoEditor.current.addContentWidget(contentWidget);
+      }
+    });
+  }
 
   return (
     <>
@@ -247,7 +247,7 @@ function MonacoEditorComponent({
 const mapStateToProps = state => ({
   window: state.window,
   preferences: state.preferences,
-  parser: state.parser
+  contextEvaluation: state.contextEvaluation
 });
 
 const mapDispatchToProps = dispatch => ({

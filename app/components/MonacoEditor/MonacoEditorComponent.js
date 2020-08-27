@@ -25,7 +25,6 @@ function MonacoEditorComponent({
 }) {
   // eslint-disable-next-line no-unused-vars
   const [isEditorReady, setIsEditorReady] = useState(false);
-  // const [viewportColumnWidth, setViewportColumnWidth] = useState(true);
   const monacoEditor = useRef(null);
   const valueGetter = useRef(null);
   const viewZoneObserver = new MutationObserver(hookEditorResize);
@@ -180,7 +179,8 @@ function MonacoEditorComponent({
 
           // Word Wrapping
           wordWrap: 'on', // 'wordWrapColumn',
-          // wordWrapColumn: viewportColumnWidth,
+          wordWrapColumn: 80,
+          wrappingStratergy: 'advanced',
 
           // Disable Suggestions
           quickSuggestions: false,

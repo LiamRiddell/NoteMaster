@@ -281,6 +281,10 @@ class ContextEvaluationService {
       this.editorActiveContentWidgets = [];
     }
 
+    // LR: Calculate the max width for content
+    const textModel = monacoEditor.getModel();
+    console.log(monacoEditor, textModel, monacoEditor.editor, textModel.editor);
+
     // LR: Iterate the newly-updated contextualised lines and render the results
     this.cachedContexualisedLines.forEach(contextualizedLine => {
       // LR: Only display lines that are marked as visible
@@ -294,11 +298,11 @@ class ContextEvaluationService {
         // LR: Register the widget to monaco editor
         // TODO: Swap to Zones?
         monacoEditor.addContentWidget(contentWidget);
-
-        // LR: Re-layout monaco editor
-        monacoEditor.layout();
       }
     });
+
+    // LR: Recalculate the text wrap column
+    this.updateDynamicTextWrapping(monacoEditor);
   };
 
   createContentWidget = contextualizedLine => {
@@ -335,6 +339,23 @@ class ContextEvaluationService {
         };
       }
     };
+  };
+
+  // Monaco
+  updateDynamicTextWrapping = monacoEditor => {
+    // LR: Get the font info (id 34)
+    // https://github.com/Microsoft/monaco-editor/blob/master/monaco.d.ts#L3702
+    const {
+      typicalHalfwidthCharacterWidth,
+      typicalFullwidthCharacterWidth
+    } = monacoEditor.getOption(34);
+
+    // LR: Get the longest cached result length
+    // TODO: ^
+    console.log(typicalHalfwidthCharacterWidth, typicalFullwidthCharacterWidth);
+
+    // LR: Re-layout monaco editor
+    monacoEditor.layout();
   };
 
   // Redux

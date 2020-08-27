@@ -54,9 +54,8 @@ export default class ContextualizedLine {
   };
 
   parse = () => {
-    setTimeout(() => {
-      console.log('Fake Parsing!');
-    }, 100);
+    // HACK: Remove me later
+    setTimeout(() => {}, 100);
 
     // TODO: Implement this later
     this.parsedSuccessful = true;

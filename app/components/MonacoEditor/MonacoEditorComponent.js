@@ -160,6 +160,7 @@ function MonacoEditorComponent({
       if (contextualizedLine.isVisible) {
         const contentWidget = {
           domNode: null,
+          allowEditorOverflow: false,
           getId() {
             return `nmrl-${contextualizedLine.lineNumber}`;
           },

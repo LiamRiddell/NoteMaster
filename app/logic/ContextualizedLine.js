@@ -55,7 +55,7 @@ export default class ContextualizedLine {
     this.parsedSuccessful = true;
 
     // LR: Fake value for now
-    this.parsed = Math.floor(Math.random() * 100);
+    this.parsed = `$${Math.floor(Math.random() * 100)}`;
 
     // LR: If the value is invalid hide the line
     this.isVisible = this.shouldBeVisible();

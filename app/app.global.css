@@ -43,14 +43,22 @@ body {
 }
 
 /* Offset Padding */
-.monaco-editor .overflow-guard > .margin {
-  /* padding-top: 10px; */
-}
-.monaco-editor .overflow-guard > .monaco-scrollable-element {
-  /* top: 10px; */
+
+/* .monaco-editor .overflow-guard > .margin {
+  padding-top: 10px;
+} */
+
+/* .monaco-editor .overflow-guard > .monaco-scrollable-element {
+  top: 10px;
+}  */
+
+.monaco-editor .margin {
+  /* background-color: #27292c; */
+  background-color: transparent !important;
+  border-right: dotted 1px #27292c;
 }
 .monaco-editor .overflow-guard .lines-content {
-  padding-left: 10px;
+  padding-left: 8px;
 }
 .monaco-editor .view-overlays .current-line {
   transform: translateX(-10px);
@@ -141,7 +149,10 @@ body {
 
   /* Match the text editor lineheight */
   height: 24px;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 500;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-family: 'Roboto', sans-serif;
 
   /* Monaco Hacks */
   max-width: 100000px !important;
@@ -155,13 +166,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(34, 206, 153, 0.35);
+  background: rgba(34, 206, 153, 0.05);
   border-radius: 3px;
-  text-align: center;
-  color: #22ce99;
-  height: 19px;
-  padding: 0 5px 1px 5px;
-  margin-right: 20px;
+  text-align: right;
+  color: #16d499;
+  height: 22px;
+  padding: 0 5px;
+  margin-right: 16px;
+  letter-spacing: 0.07pt;
 
   /* Make this selectable */
   pointer-events: all;

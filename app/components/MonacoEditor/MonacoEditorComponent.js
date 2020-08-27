@@ -9,7 +9,6 @@ import { debounce } from '../../utils/eventUtils';
 
 // LR: Actions
 import { preferencesContentAutosave } from '../../redux/actions/preferences';
-import { contextEvaluationUpdateContentWidgets } from '../../redux/actions/context-evaluation';
 
 // LR Services
 import contextEvaluationService from '../../logic/ContextEvaluation';
@@ -21,10 +20,8 @@ function MonacoEditorComponent({
   // eslint-disable-next-line no-unused-vars
   window,
   preferences,
-  contextEvaluation,
-  autosaveContent,
-  // eslint-disable-next-line no-unused-vars
-  updateContentWidgets
+  // contextEvaluation,
+  autosaveContent
 }) {
   // eslint-disable-next-line no-unused-vars
   const [isEditorReady, setIsEditorReady] = useState(false);
@@ -143,55 +140,11 @@ function MonacoEditorComponent({
   // HACK: LR - Fixes an issue when the preferences are loaded from the disk and the editor does not resize.
   // Window Updates will not cause the editor to layout.
   if (monacoEditor.current) {
+    // LR: Force monaco editor to re-layout
     monacoEditor.current.layout();
 
-    // LR: Clear any content widget that does not have a result
-    const lineCount = monacoEditor.current.getModel().getLineCount();
-
-    for (let i = 0; i < lineCount; i += 1) {
-      monacoEditor.current.removeContentWidget({
-        getId() {
-          return `nmrl-${i}`;
-        }
-      });
-    }
-
-    contextEvaluation.cachedContexualisedLines.forEach(contextualizedLine => {
-      if (contextualizedLine.isVisible) {
-        const contentWidget = {
-          domNode: null,
-          allowEditorOverflow: false,
-          getId() {
-            return `nmrl-${contextualizedLine.lineNumber}`;
-          },
-          getDomNode() {
-            if (!this.domNode) {
-              this.domNode = document.createElement('div');
-              this.domNode.classList.add('nm-result');
-
-              this.domNode2 = document.createElement('div');
-              this.domNode.appendChild(this.domNode2);
-              this.domNode2.innerText = contextualizedLine.parsed;
-            }
-            return this.domNode;
-          },
-          getPosition() {
-            return {
-              position: {
-                lineNumber: contextualizedLine.lineNumber
-              },
-              preference: [0]
-            };
-          }
-        };
-
-        // LR: Remove the widget
-        // monacoEditor.current.removeContentWidget(contentWidget);
-
-        // LR: Register the widget to monaco editor
-        monacoEditor.current.addContentWidget(contentWidget);
-      }
-    });
+    // LR: Add the content widgets
+    contextEvaluationService.manageContentWidgets(monacoEditor.current);
   }
 
   return (
@@ -252,9 +205,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  autosaveContent: content => dispatch(preferencesContentAutosave(content)),
-  updateContentWidgets: widgets =>
-    dispatch(contextEvaluationUpdateContentWidgets(widgets))
+  autosaveContent: content => dispatch(preferencesContentAutosave(content))
 });
 
 export default connect(

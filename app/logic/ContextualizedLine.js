@@ -12,8 +12,11 @@ export default class ContextualizedLine {
   lineContent;
 
   // -- Parsing
-  // Stores the parser result from Nearley
-  parsed;
+  // Stores the parser result from Nearley (this will most-likely become an object)
+  parsedValue;
+
+  // Stores the charcter length of the result (used for calculating text wrapping width)
+  parsedValueCharacterLength;
 
   // Stores boolean value of whether the line was parsed successfully
   parsedSuccessful;
@@ -51,11 +54,18 @@ export default class ContextualizedLine {
   };
 
   parse = () => {
+    setTimeout(() => {
+      console.log('Fake Parsing!');
+    }, 100);
+
     // TODO: Implement this later
     this.parsedSuccessful = true;
 
     // LR: Fake value for now
-    this.parsed = `$${Math.floor(Math.random() * 100)}`;
+    this.parsedValue = `$${Math.floor(Math.random() * 1000000)}.00`;
+
+    // LR: Calculate the parsed value length
+    this.parsedValueCharacterLength = this.parsedValue.length;
 
     // LR: If the value is invalid hide the line
     this.isVisible = this.shouldBeVisible();
@@ -63,7 +73,7 @@ export default class ContextualizedLine {
 
   shouldBeVisible = () => {
     // Null or undefined value?
-    if (this.parsed === null || typeof this.parsed === 'undefined')
+    if (this.parsedValue === null || typeof this.parsedValue === 'undefined')
       return false;
 
     // The line content is empty?
@@ -71,6 +81,8 @@ export default class ContextualizedLine {
 
     return true;
   };
+
+  supportsParallelProcessing = () => {};
 
   // Helpers
   doesContainVariable = () => {

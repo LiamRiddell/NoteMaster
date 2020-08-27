@@ -24,6 +24,9 @@ class ContextEvaluationService {
   // Stores whether the editor lines equal between states
   editorLinesEqual = false;
 
+  // Stores the active content widgets on editor
+  editorActiveContentWidgets = [];
+
   // Event is propogated from MonacoEditor and debounced for 100ms to increase performance
   onDidChangeModelContent = (e, content) => {
     // LR: Null Content? -> Ignore
@@ -263,6 +266,75 @@ class ContextEvaluationService {
       ...this.cachedContexualisedLines,
       contextualizedLine
     ];
+  };
+
+  // Content Widgets
+  // TODO: Optimize by adding cache and reusing already registered widgets
+  manageContentWidgets = monacoEditor => {
+    // LR: Clear old content widgets
+    if (this.editorActiveContentWidgets.length > 0) {
+      for (let i = 0; i < this.editorActiveContentWidgets.length; i += 1) {
+        monacoEditor.removeContentWidget(this.editorActiveContentWidgets[i]);
+      }
+
+      // LR: Reset the internal active content widgets array
+      this.editorActiveContentWidgets = [];
+    }
+
+    // LR: Iterate the newly-updated contextualised lines and render the results
+    this.cachedContexualisedLines.forEach(contextualizedLine => {
+      // LR: Only display lines that are marked as visible
+      if (contextualizedLine.isVisible) {
+        // LR: Create the content widget for this line
+        const contentWidget = this.createContentWidget(contextualizedLine);
+
+        // LR: Add the content widget to the tracking array
+        this.editorActiveContentWidgets.push(contentWidget);
+
+        // LR: Register the widget to monaco editor
+        // TODO: Swap to Zones?
+        monacoEditor.addContentWidget(contentWidget);
+
+        // LR: Re-layout monaco editor
+        monacoEditor.layout();
+      }
+    });
+  };
+
+  createContentWidget = contextualizedLine => {
+    // LR: Define the content widget
+    return {
+      domNode: null,
+      allowEditorOverflow: false,
+
+      // LR: The widget Id uses the format nmcl-linenumber (nmcl -> NoteMaste ContextualizedLine)
+      getId() {
+        return `nmcl-${contextualizedLine.lineNumber}`;
+      },
+
+      // LR: Create a dom node for the content widget when it's first initialized
+      getDomNode() {
+        if (!this.domNode) {
+          this.domNode = document.createElement('div');
+          this.domNode.classList.add('nm-result');
+
+          this.domNode2 = document.createElement('div');
+          this.domNode.appendChild(this.domNode2);
+          this.domNode2.innerText = contextualizedLine.parsedValue;
+        }
+        return this.domNode;
+      },
+
+      // LR: The position is defined by the line number
+      getPosition() {
+        return {
+          position: {
+            lineNumber: contextualizedLine.lineNumber
+          },
+          preference: [0]
+        };
+      }
+    };
   };
 
   // Redux

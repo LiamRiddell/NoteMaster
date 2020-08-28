@@ -148,7 +148,7 @@ function MonacoEditorComponent({
 
   return (
     <div className="nm-editor-wrapper">
-      <div className="nm-editor-results-seprator" />
+      <div className="nm-editor-results-seperator" />
       <Editor
         className="nm-editor"
         height="100%"
@@ -180,8 +180,8 @@ function MonacoEditorComponent({
           renderLineHighlight: 'all',
 
           // Word Wrapping
-          wordWrap: 'on', // 'wordWrapColumn',
-          wordWrapColumn: 80,
+          wordWrap: 'bounded',
+          // wordWrapColumn: 80,
           wrappingStratergy: 'advanced',
 
           // Disable Suggestions

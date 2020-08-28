@@ -199,10 +199,10 @@ body {
   height: 100%;
 }
 
-.nm-editor-results-seprator {
+.nm-editor-results-seperator {
   position: fixed;
   top: 1px;
-  right: var(--nm-results-position-right);
+  right: var(--nm-results-column-width);
   bottom: 1px;
   background-color: transparent !important;
   border-right: dotted 1px #27292c;

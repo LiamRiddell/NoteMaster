@@ -61,7 +61,7 @@ export default class ContextualizedLine {
     this.parsedSuccessful = true;
 
     // LR: Fake value for now
-    const randomValue = Math.floor(Math.random() * 10000000);
+    const randomValue = Math.floor(Math.random() * 1000);
     this.parsedValue = `$${randomValue}`.replace(
       /(\d)(?=(\d{3})+(?!\d))/g,
       '$1,'

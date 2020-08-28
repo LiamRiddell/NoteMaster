@@ -281,10 +281,6 @@ class ContextEvaluationService {
       this.editorActiveContentWidgets = [];
     }
 
-    // LR: Calculate the max width for content
-    const textModel = monacoEditor.getModel();
-    console.log(monacoEditor, textModel, monacoEditor.editor, textModel.editor);
-
     // LR: Iterate the newly-updated contextualised lines and render the results
     this.cachedContexualisedLines.forEach(contextualizedLine => {
       // LR: Only display lines that are marked as visible
@@ -343,45 +339,78 @@ class ContextEvaluationService {
 
   // Monaco
   updateDynamicTextWrapping = monacoEditor => {
-    // LR: Get the font info (id 34)
-    // https://github.com/Microsoft/monaco-editor/blob/master/monaco.d.ts#L3702
-    const {
-      typicalHalfwidthCharacterWidth,
-      typicalFullwidthCharacterWidth
-    } = monacoEditor.getOption(34);
+    // LR: Get the longest line
+    let longestContextualizedLine = null;
+    this.cachedContexualisedLines.forEach(contextualizedLine => {
+      // LR: Interate only visible and non-empty results
+      if (contextualizedLine.isVisible && !contextualizedLine.isEmpty) {
+        // LR: If the longest line is null then we've just started search
+        if (longestContextualizedLine === null) {
+          longestContextualizedLine = contextualizedLine;
+          return;
+        }
 
-    // LR: Get the longest cached result length
-    let longestCharacterLength = this.cachedContexualisedLines
-      // LR: Parsed Value Length
-      .map(x => x.parsedValueCharacterLength)
-      // LR: Sort by descending and return the first value
-      .sort((a, b) => b - a)[0];
+        // LR: If the current lines length is greater then set it as longest.
+        if (
+          longestContextualizedLine.parsedValueCharacterLength <
+          contextualizedLine.parsedValueCharacterLength
+        )
+          longestContextualizedLine = contextualizedLine;
+      }
+    });
 
-    // LR: If the value is null or undefined we'll default to 0
+    // LR: If the value is null or undefined we'll stop
     if (
-      longestCharacterLength === null ||
-      typeof longestCharacterLength === 'undefined'
+      longestContextualizedLine === null ||
+      typeof longestContextualizedLine === 'undefined'
     )
-      longestCharacterLength = 0;
+      return;
 
-    // LR: Calculate the average pixel width
-    const averageCharacterWidth =
-      (typicalFullwidthCharacterWidth + typicalHalfwidthCharacterWidth) / 2;
+    // LR: Find the dom node for this line
+    const resultDomNode = document.querySelectorAll(
+      `.nm-result[widgetid="nmcl-${longestContextualizedLine.lineNumber}"] > div`
+    )[0];
+
+    // LR: Unable to find the dom node
+    if (resultDomNode === null || typeof resultDomNode === 'undefined') return;
+
+    // LR: Get the bounding client rect
+    const parentClientRect = resultDomNode.parentNode.getBoundingClientRect();
+    const clientRect = resultDomNode.getBoundingClientRect();
+
+    // LR: Calculate the right offset using the line width and bounding rect
+    const resultPaddingRight = (parentClientRect.right - clientRect.right) / 2;
 
     // LR: Calulate the results column pixel width, furthermore add 8px for padding from right side
-    const pixelWidth = longestCharacterLength * averageCharacterWidth - 2;
+    const pixelWidth = clientRect.width + resultPaddingRight * 2;
 
-    // LR: Log the longest value length
-    console.log(
-      typicalHalfwidthCharacterWidth,
-      typicalFullwidthCharacterWidth,
-      longestCharacterLength,
-      pixelWidth
-    );
+    // LR: Get the font info (id 34)
+    // https://github.com/Microsoft/monaco-editor/blob/master/monaco.d.ts#L3702
+    const { maxDigitWidth } = monacoEditor.getOption(34);
+
+    // LR: Calculate the line length
+    const lineLengthInPixels =
+      // Line Width
+      parentClientRect.width -
+      // Column Width
+      pixelWidth -
+      // Line Start padding
+      resultPaddingRight -
+      // Padding from column
+      resultPaddingRight * 2;
+
+    // LR: Calculate the line length using character width and the line length
+    const wordWrapColumn = Math.ceil(lineLengthInPixels / maxDigitWidth);
+
+    // LR: Update the monaco-editor word wrap
+    monacoEditor.updateOptions({
+      // eslint-disable-next-line object-shorthand
+      wordWrapColumn
+    });
 
     // LR: Update the results column width
     document.documentElement.style.setProperty(
-      '--nm-results-position-right',
+      '--nm-results-column-width',
       `${pixelWidth}px`
     );
 

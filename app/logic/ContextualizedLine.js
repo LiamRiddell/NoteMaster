@@ -61,7 +61,11 @@ export default class ContextualizedLine {
     this.parsedSuccessful = true;
 
     // LR: Fake value for now
-    this.parsedValue = `$${Math.floor(Math.random() * 1000000)}.00`;
+    const randomValue = Math.floor(Math.random() * 10000000);
+    this.parsedValue = `$${randomValue}`.replace(
+      /(\d)(?=(\d{3})+(?!\d))/g,
+      '$1,'
+    );
 
     // LR: Calculate the parsed value length
     this.parsedValueCharacterLength = this.parsedValue.length;

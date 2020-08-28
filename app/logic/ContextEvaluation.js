@@ -351,8 +351,39 @@ class ContextEvaluationService {
     } = monacoEditor.getOption(34);
 
     // LR: Get the longest cached result length
-    // TODO: ^
-    console.log(typicalHalfwidthCharacterWidth, typicalFullwidthCharacterWidth);
+    let longestCharacterLength = this.cachedContexualisedLines
+      // LR: Parsed Value Length
+      .map(x => x.parsedValueCharacterLength)
+      // LR: Sort by descending and return the first value
+      .sort((a, b) => b - a)[0];
+
+    // LR: If the value is null or undefined we'll default to 0
+    if (
+      longestCharacterLength === null ||
+      typeof longestCharacterLength === 'undefined'
+    )
+      longestCharacterLength = 0;
+
+    // LR: Calculate the average pixel width
+    const averageCharacterWidth =
+      (typicalFullwidthCharacterWidth + typicalHalfwidthCharacterWidth) / 2;
+
+    // LR: Calulate the results column pixel width, furthermore add 8px for padding from right side
+    const pixelWidth = longestCharacterLength * averageCharacterWidth - 2;
+
+    // LR: Log the longest value length
+    console.log(
+      typicalHalfwidthCharacterWidth,
+      typicalFullwidthCharacterWidth,
+      longestCharacterLength,
+      pixelWidth
+    );
+
+    // LR: Update the results column width
+    document.documentElement.style.setProperty(
+      '--nm-results-position-right',
+      `${pixelWidth}px`
+    );
 
     // LR: Re-layout monaco editor
     monacoEditor.layout();

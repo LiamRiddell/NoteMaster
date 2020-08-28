@@ -147,8 +147,10 @@ function MonacoEditorComponent({
   }
 
   return (
-    <>
+    <div className="nm-editor-wrapper">
+      <div className="nm-editor-results-seprator" />
       <Editor
+        className="nm-editor"
         height="100%"
         width="100%"
         language="notemaster"
@@ -194,7 +196,7 @@ function MonacoEditorComponent({
           lineNumbersMinChars: 3 // Default: 3
         }}
       />
-    </>
+    </div>
   );
 }
 

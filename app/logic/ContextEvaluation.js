@@ -1,6 +1,6 @@
 // import { Parser, Grammar } from 'nearley';
 import { store } from '../store/store';
-import lexer from '../nearley/lexer/Lexer';
+import lexer from '../nearley/lexer/lexer';
 import ContextualizedLine from './ContextualizedLine';
 import { contextEvaluationUpdateContextualisedLinesCache } from '../redux/actions/context-evaluation';
 // import grammar from '../nearley/arithmetic.ne';
@@ -298,7 +298,7 @@ class ContextEvaluationService {
     });
 
     // LR: Recalculate the text wrap column
-    this.updateDynamicTextWrapping(monacoEditor);
+    this.calculateDynamicTextWrapping(monacoEditor);
   };
 
   createContentWidget = contextualizedLine => {
@@ -338,7 +338,7 @@ class ContextEvaluationService {
   };
 
   // Monaco
-  updateDynamicTextWrapping = monacoEditor => {
+  calculateDynamicTextWrapping = monacoEditor => {
     // LR: Get the longest line
     let longestContextualizedLine = null;
     this.cachedContexualisedLines.forEach(contextualizedLine => {
@@ -359,12 +359,39 @@ class ContextEvaluationService {
       }
     });
 
-    // LR: If the value is null or undefined we'll stop
+    // LR: Get the font info (id 34)
+    // https://github.com/Microsoft/monaco-editor/blob/master/monaco.d.ts#L3702
+    const { maxDigitWidth } = monacoEditor.getOption(34);
+
+    // LR: If the value is null or undefined we'll hide the sidebar
     if (
       longestContextualizedLine === null ||
       typeof longestContextualizedLine === 'undefined'
-    )
+    ) {
+      // LR: Get the line width
+      const lineLengthInPixels = Number(
+        document.documentElement.style
+          .getPropertyValue('--nm-var-linewidth')
+          .replace('px', '')
+      );
+
+      // LR: Calculate the line length using character width and the line length
+      const wordWrapColumn = Math.ceil(lineLengthInPixels / maxDigitWidth);
+
+      // LR: Update the monaco-editor word wrap
+      monacoEditor.updateOptions({
+        // eslint-disable-next-line object-shorthand
+        wordWrapColumn
+      });
+
+      // LR: Update the results column width
+      document.documentElement.style.setProperty(
+        '--nm-results-column-width',
+        `-1px`
+      );
+
       return;
+    }
 
     // LR: Find the dom node for this line
     const resultDomNode = document.querySelectorAll(
@@ -383,10 +410,6 @@ class ContextEvaluationService {
 
     // LR: Calulate the results column pixel width, furthermore add 8px for padding from right side
     const pixelWidth = clientRect.width + resultPaddingRight * 2;
-
-    // LR: Get the font info (id 34)
-    // https://github.com/Microsoft/monaco-editor/blob/master/monaco.d.ts#L3702
-    const { maxDigitWidth } = monacoEditor.getOption(34);
 
     // LR: Calculate the line length
     const lineLengthInPixels =

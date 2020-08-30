@@ -30,14 +30,12 @@ class NMLParserService {
         };
       }
 
-      console.log('NLP Result -> No Parsable Action');
-
       return {
         parsedSuccessful: false
       };
-    } catch (error) {
-      console.log('NLP -> Ignored', error);
-    }
+
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
   };
 }
 

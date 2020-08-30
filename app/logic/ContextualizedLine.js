@@ -1,4 +1,4 @@
-import lexer from '../nearley/lexer/Lexer';
+import lexer from '../nearley/lexer/lexer';
 import NMLParserService from '../nearley/NMLParserService';
 
 export default class ContextualizedLine {
@@ -60,7 +60,6 @@ export default class ContextualizedLine {
 
     // TODO: Implement this later
     const result = NMLParserService.parse(this.lineContent);
-    console.log(result);
 
     if (result === null || typeof result === 'undefined') {
       this.parsedSuccessful = false;

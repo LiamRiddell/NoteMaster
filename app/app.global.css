@@ -62,7 +62,6 @@ body {
 }
 .monaco-editor .view-overlays .current-line {
   position: absolute;
-  z-index: 11;
   transform: translateX(-8px);
 }
 .monaco-editor .margin-view-overlays .line-numbers,

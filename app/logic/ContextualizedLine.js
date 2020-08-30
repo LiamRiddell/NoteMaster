@@ -1,4 +1,5 @@
-import lexer from './Lexer';
+import lexer from '../nearley/lexer/Lexer';
+import NMLParserService from '../nearley/NMLParserService';
 
 export default class ContextualizedLine {
   // -- Core
@@ -58,20 +59,35 @@ export default class ContextualizedLine {
     setTimeout(() => {}, 100);
 
     // TODO: Implement this later
-    this.parsedSuccessful = true;
+    const result = NMLParserService.parse(this.lineContent);
+    console.log(result);
 
-    // LR: Fake value for now
-    const randomValue = Math.floor(Math.random() * 1000);
-    this.parsedValue = `$${randomValue}`.replace(
-      /(\d)(?=(\d{3})+(?!\d))/g,
-      '$1,'
-    );
+    if (result === null || typeof result === 'undefined') {
+      this.parsedSuccessful = false;
+      this.parsedValue = '';
+      this.parsedValueCharacterLength = 0;
+      this.isVisible = false;
+      return;
+    }
 
-    // LR: Calculate the parsed value length
-    this.parsedValueCharacterLength = this.parsedValue.length;
+    if (result.parsedSuccessful) {
+      // LR: Set the parse as successful
+      this.parsedSuccessful = true;
 
-    // LR: If the value is invalid hide the line
-    this.isVisible = this.shouldBeVisible();
+      // LR: Set the parsed value result
+      this.parsedValue = result.parsedValue;
+
+      // LR: Calculate the parsed value length
+      this.parsedValueCharacterLength = String(this.parsedValue).length;
+
+      // LR: If the value is invalid hide the line
+      this.isVisible = this.shouldBeVisible();
+    } else {
+      this.parsedSuccessful = false;
+      this.parsedValue = '';
+      this.parsedValueCharacterLength = 0;
+      this.isVisible = false;
+    }
   };
 
   shouldBeVisible = () => {

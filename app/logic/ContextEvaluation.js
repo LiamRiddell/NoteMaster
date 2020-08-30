@@ -1,6 +1,6 @@
 // import { Parser, Grammar } from 'nearley';
 import { store } from '../store/store';
-import lexer from './Lexer';
+import lexer from '../nearley/lexer/Lexer';
 import ContextualizedLine from './ContextualizedLine';
 import { contextEvaluationUpdateContextualisedLinesCache } from '../redux/actions/context-evaluation';
 // import grammar from '../nearley/arithmetic.ne';

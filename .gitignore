@@ -53,3 +53,5 @@ npm-debug.log.*
 flow-typed/
 
 app/nearley/grammar/compiled/
+
+*.lock

@@ -7,7 +7,7 @@
   "author": {
     "name": "NoteMaster Maintainers",
     "email": "web@liamriddell.co.uk",
-    "url": "https://github.com/LiamRiddell/Numer"
+    "url": "https://github.com/LiamRiddell/NoteMaster"
   },
   "scripts": {
     "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",

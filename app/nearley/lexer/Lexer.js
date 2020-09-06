@@ -22,7 +22,7 @@ const lexer = moo.compile({
     value: x => parseInt(x, 16) // 0xFF -> 255
   },
   decimal: {
-    match: /(?:^\+|-?)(?:[1-9]\d{0,4}|0|)\.\d/,
+    match: /(?:^\+|-?)(?:[1-9]{0,8}|0|)\.(?:[0-9]\d{0,8})/,
     lineBreaks: true,
     value: x => parseFloat(x) // "10.0" -> 10.0f
   },

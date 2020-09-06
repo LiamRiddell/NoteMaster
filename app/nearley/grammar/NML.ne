@@ -16,9 +16,9 @@
 @lexer lexer
 
 # Grammar Imports
-@include "./grammar/includes/whitespace.ne"
-@include "./grammar/includes/arithmetic.ne"
-@include "./grammar/includes/variable.ne"
+@include "./includes/whitespace.ne"
+@include "./includes/arithmetic.ne"
+@include "./includes/variable.ne"
 
 # Grammar Entry
 main

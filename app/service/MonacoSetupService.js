@@ -13,23 +13,19 @@ const { app } = require('electron').remote;
 // eslint-disable-next-line flowtype/no-weak-types
 export default function RegisterMonacoService(store: any) {
   // LR: Monaco Editor Paths
-  const monacoLoaderPath = path.join(
-    app.getAppPath(),
-    '/node_modules/monaco-editor/min/vs/loader.js'
-  );
   const monacoBasePath = path.join(
     app.getAppPath(),
     '/node_modules/monaco-editor/min/vs'
   );
 
   // LR: Initialise monaco
+  monaco.config({
+    paths: {
+      vs: uriFromPath(monacoBasePath)
+    }
+  });
+
   monaco
-    .config({
-      urls: {
-        monacoLoader: uriFromPath(monacoLoaderPath),
-        monacoBase: uriFromPath(monacoBasePath)
-      }
-    })
     .init()
     .then(monacoInstance => {
       console.log('[Global]', 'Setting up monaco', monacoInstance);

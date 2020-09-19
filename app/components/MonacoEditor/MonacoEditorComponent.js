@@ -196,6 +196,7 @@ function MonacoEditorComponent({
           wordWrap: 'bounded',
           // wordWrapColumn: 80,
           wrappingStratergy: 'advanced',
+          wrappingIndent: 'indent',
 
           // Disable Suggestions
           quickSuggestions: false,

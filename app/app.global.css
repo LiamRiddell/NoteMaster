@@ -92,6 +92,7 @@ body {
   .monaco-action-bar {
   background: #202225 !important;
   padding: 0 !important;
+  line-height: var(--nm-var-lineheight);
 }
 
 /* Menu Item */

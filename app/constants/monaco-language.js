@@ -265,6 +265,9 @@ const NOTEMASTER_LANGUAGE = {
       // Operators
       { include: '@operators' },
 
+      // Constants
+      { include: '@constants' },
+
       // Functions
       { include: '@functions' },
 
@@ -310,6 +313,10 @@ const NOTEMASTER_LANGUAGE = {
       // [/<</, 'operator'],
       // [/>>/, 'operator'],
       // [/%/, 'operator']
+    ],
+    constants: [
+      [/\b(?:Pi)\b/, 'constant'],
+      [/\b(?:E)\b/, 'constant']
     ],
     functions: [
       [/\b(?:sin)\b/, 'function'],

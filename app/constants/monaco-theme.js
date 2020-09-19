@@ -13,6 +13,8 @@ const NUMER_DARK_THEME = {
     { token: 'label', foreground: 'F2C94C' },
     // Operators
     { token: 'operator', foreground: 'CD9965' },
+    // Constant
+    { token: 'constant', foreground: 'E9C273' },
     // Functions
     { token: 'function', foreground: 'F2C94C' },
     // Keywords

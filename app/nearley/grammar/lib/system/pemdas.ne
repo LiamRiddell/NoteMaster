@@ -6,7 +6,7 @@
 # PEMDAS!
 # We define each level of precedence as a nonterminal.
 
-PEMDAS
+PemdasSystem
     -> _ AS _ {% (d) => d[1] %}
 
 # Parentheses
@@ -28,18 +28,23 @@ AS -> AS _ %add _ MD {% d => ast.add(d[0], d[4]) %}
     | MD            {% id %}
 
 # A number or a function of a number
-N ->  %decimal      {% d => d[0].value %}
-    | %integer      {% d => d[0].value %}
-    | %hex          {% d => d[0].value %}
-    | %identifier   {% d => ast.variable(d[0]) %}
+N ->  unit          {% id %}
+    | currency      {% id %}
+    | percent       {% id %}
+    | %integer      {% d => ast.number(d[0]) %}
+    | %decimal      {% d => ast.number(d[0]) %}
+    | %hex          {% d => d[0].value %}  
+    | %identifier   {% d => ast.variable(d[0]) %} 
+
+    #Functions
     | "sin" _ P     {% d => ast.sin(d[2]) %}
     | "cos" _ P     {% d => ast.cos(d[2]) %}
-    | "tan" _ P     {% d => ast.tan(d[2]) %}
-    
+    | "tan" _ P     {% d => ast.tan(d[2]) %}   
     | "asin" _ P    {% d => ast.asin(d[2]) %}
     | "acos" _ P    {% d => ast.acos(d[2]) %}
     | "atan" _ P    {% d => ast.atan(d[2]) %}
-
+    
+    # Constants
     | "pi"          {% d => Math.PI %}
     | "e"           {% d => Math.E %}
     | "sqrt" _ P    {% d => ast.sqrt(d[2]) %}

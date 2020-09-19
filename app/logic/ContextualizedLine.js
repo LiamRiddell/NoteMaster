@@ -1,4 +1,4 @@
-import lexer from '../nearley/lexer/lexer';
+import lexer from '../nearley/lexer/Lexer';
 import NMLParserService from '../nearley/NMLParserService';
 
 export default class ContextualizedLine {
@@ -13,11 +13,14 @@ export default class ContextualizedLine {
   lineContent;
 
   // -- Parsing
+  // Stores the parser object result (these will be instances of NMLBaseUnit)
+  unitResult;
+
   // Stores the parser result from Nearley (this will most-likely become an object)
-  parsedValue;
+  unitResultValue;
 
   // Stores the charcter length of the result (used for calculating text wrapping width)
-  parsedValueCharacterLength;
+  unitResultValueCharacterLength;
 
   // Stores boolean value of whether the line was parsed successfully
   parsedSuccessful;
@@ -56,9 +59,9 @@ export default class ContextualizedLine {
 
   parse = () => {
     // HACK: Remove me later
-    setTimeout(() => {}, 100);
+    // setTimeout(() => {}, 100);
 
-    // TODO: Implement this later
+    // LR: Pass to the NML language parser
     const result = NMLParserService.parse(this.lineContent);
 
     if (result === null || typeof result === 'undefined') {
@@ -73,11 +76,14 @@ export default class ContextualizedLine {
       // LR: Set the parse as successful
       this.parsedSuccessful = true;
 
+      // LR: Set the parsed unit
+      this.unitResult = result.unit;
+
       // LR: Set the parsed value result
-      this.parsedValue = result.parsedValue;
+      this.unitResultValue = this.unitResult.prettify();
 
       // LR: Calculate the parsed value length
-      this.parsedValueCharacterLength = String(this.parsedValue).length;
+      this.unitResultValueCharacterLength = String(this.unitResultValue).length;
 
       // LR: If the value is invalid hide the line
       this.isVisible = this.shouldBeVisible();
@@ -91,7 +97,7 @@ export default class ContextualizedLine {
 
   shouldBeVisible = () => {
     // Null or undefined value?
-    if (this.parsedValue === null || typeof this.parsedValue === 'undefined')
+    if (this.unitResult === null || typeof this.unitResult === 'undefined')
       return false;
 
     // The line content is empty?

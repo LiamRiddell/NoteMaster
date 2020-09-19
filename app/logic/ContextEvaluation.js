@@ -326,7 +326,7 @@ class ContextEvaluationService {
 
           // LR: Value
           this.domNode3 = document.createElement('div');
-          this.domNode3.innerText = contextualizedLine.parsedValue;
+          this.domNode3.innerText = contextualizedLine.unitResultValue;
           this.domNode2.appendChild(this.domNode3);
         }
         return this.domNode;
@@ -359,8 +359,8 @@ class ContextEvaluationService {
 
         // LR: If the current lines length is greater then set it as longest.
         if (
-          longestContextualizedLine.parsedValueCharacterLength <
-          contextualizedLine.parsedValueCharacterLength
+          longestContextualizedLine.unitResultValueCharacterLength <
+          contextualizedLine.unitResultValueCharacterLength
         )
           longestContextualizedLine = contextualizedLine;
       }

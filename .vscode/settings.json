@@ -37,6 +37,7 @@
     "node_modules": true,
     ".eslintcache": true,
     "yarn-error.log": true,
-    "app\\dist": true
+    "app\\dist": true,
+    "app\\nearley\\grammar\\compiled": true
   }
 }

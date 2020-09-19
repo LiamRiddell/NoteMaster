@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import nearley from 'nearley';
 import grammar from './grammar/compiled/nml';
 
 class NMLParserService {
+  // eslint-disable-next-line consistent-return
   parse = content => {
     try {
       // LR: Create Parser
@@ -21,12 +23,12 @@ class NMLParserService {
 
       if (parser.results.length === 1) {
         // LR: Get the result from the results array
-        const ast = parser.results[0];
+        const ast = parser.results[0][0];
         console.log('NLP Result -> Valid Statement -> Result:', ast);
 
         return {
           parsedSuccessful: true,
-          parsedValue: ast
+          unit: ast
         };
       }
 

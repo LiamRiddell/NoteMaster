@@ -15,14 +15,23 @@
 # Lexer: Moo
 @lexer lexer
 
-# Grammar Imports
-@include "./includes/whitespace.ne"
-@include "./includes/arithmetic.ne"
-@include "./includes/variable.ne"
+# Grammar Types
+@include "./lib/type/whitespace.ne"
+@include "./lib/type/number.ne"
+@include "./lib/type/conversion.ne"
+
+# Grammar Systems
+@include "./lib/system/variable.ne"
+@include "./lib/system/pemdas.ne"
+@include "./lib/system/uom.ne"
+@include "./lib/system/currency.ne"
+@include "./lib/system/percentage.ne"
 
 # Grammar Entry
 main
-    -> variable
-    | PEMDAS
-
+    -> VariableSystem
+    | PemdasSystem
+    | PercentageSystem
+    | UoMSystem
+    | CurrencySystem
 

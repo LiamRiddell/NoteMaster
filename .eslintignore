@@ -54,3 +54,6 @@ __snapshots__
 # Package.json
 package.json
 .travis.yml
+
+# Ignore the runtime parser
+app/nearley/*

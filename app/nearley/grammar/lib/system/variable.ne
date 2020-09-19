@@ -1,8 +1,10 @@
 # Lexer: Moo
 @lexer lexer
 
+# Variable System - Entry
+VariableSystem -> variable {% id %}
 
-# Variables
+# Variable Definition
 # 1. $variableName = 100
 # 2. $variableName = 100 + 20 - 20 * 10 / 100
 # 3. $variableName = 100 + 20 - 20 * (10 / 100)
@@ -11,4 +13,4 @@ variable
 
 # variable_value -> A set of values with operators joining them
 variable_value
-    -> _ AS _ {% (d) => d[1] %}
+    -> PemdasSystem {% id %}

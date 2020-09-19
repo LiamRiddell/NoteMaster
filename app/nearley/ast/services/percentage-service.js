@@ -104,7 +104,7 @@ class PercentageService {
 
   percentOf = (v, population) => {
     const percentageOfValue = (population.value / 100) * v.value;
-    console.log(v, population);
+
     // LR: UoM
     if (population instanceof NMLUnitResult)
       return new NMLUnitResult(percentageOfValue, population.unitToken);

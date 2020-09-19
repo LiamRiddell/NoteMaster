@@ -146,6 +146,16 @@ function MonacoEditorComponent({
 
     // LR: Add the content widgets
     contextEvaluationService.manageContentWidgets(monacoEditor.current);
+
+    // LR: Setup CSS vars
+    document.documentElement.style.setProperty(
+      '--nm-var-fontsize',
+      `${fontSize}px`
+    );
+    document.documentElement.style.setProperty(
+      '--nm-var-lineheight',
+      `${lineHeight}px`
+    );
   }
 
   return (

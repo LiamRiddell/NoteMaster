@@ -1,4 +1,7 @@
-/* eslint-disable flowtype/no-weak-types */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -28,7 +31,7 @@ import { ContainerComponent } from '../../components/Container/ContainerComponen
 // LR: Import styles
 import styles from './PreferencesRoute.css';
 
-const PreferencesRoute = ({ preferences, updatePreferences }: object) => {
+const PreferencesRoute = ({ preferences, updatePreferences }) => {
   const history = useHistory();
 
   const fontSizeChange = e => {
@@ -68,7 +71,6 @@ const PreferencesRoute = ({ preferences, updatePreferences }: object) => {
   };
 
   const autoLaunchChange = e => {
-    console.log(e.target.value);
     updatePreferences({
       autoLaunch: e.target.value === 'true',
       // HACK: If the initial content is updated to match the existing autosaveContent then the user will lose all changes

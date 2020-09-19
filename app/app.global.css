@@ -152,8 +152,8 @@ body {
   width: var(--nm-var-linewidth);
 
   /* Match the text editor lineheight */
-  height: 24px;
-  font-size: 14px;
+  height: var(--nm-var-lineheight);
+  font-size: var(--nm-var-fontsize);
   font-weight: 500;
   -webkit-font-smoothing: subpixel-antialiased;
   font-family: 'Fira Code', 'Roboto', sans-serif;
@@ -172,7 +172,7 @@ body {
   justify-content: flex-start;
   background: rgba(34, 206, 153, 0.05);
   color: #16d499;
-  height: 24px;
+  height: var(--nm-var-lineheight);
   letter-spacing: 0.07pt;
   width: var(--nm-results-column-width);
   margin: 0;

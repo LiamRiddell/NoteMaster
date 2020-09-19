@@ -33,17 +33,17 @@ N ->  unit          {% id %}
     | percent       {% id %}
     | %integer      {% d => ast.number(d[0]) %}
     | %decimal      {% d => ast.number(d[0]) %}
-    | %hex          {% d => d[0].value %}  
-    | %identifier   {% d => ast.variable(d[0]) %} 
+    | %hex          {% d => d[0].value %}
+    | variable      {% id %}
 
     #Functions
     | "sin" _ P     {% d => ast.sin(d[2]) %}
     | "cos" _ P     {% d => ast.cos(d[2]) %}
-    | "tan" _ P     {% d => ast.tan(d[2]) %}   
+    | "tan" _ P     {% d => ast.tan(d[2]) %}
     | "asin" _ P    {% d => ast.asin(d[2]) %}
     | "acos" _ P    {% d => ast.acos(d[2]) %}
     | "atan" _ P    {% d => ast.atan(d[2]) %}
-    
+
     # Constants
     | "pi"          {% d => Math.PI %}
     | "e"           {% d => Math.E %}

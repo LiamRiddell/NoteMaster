@@ -12,7 +12,7 @@ const NUMER_DARK_THEME = {
     { token: 'variable', foreground: 'F2C94C' },
     { token: 'label', foreground: 'F2C94C' },
     // Operators
-    { token: 'operator', foreground: 'CD9965' },
+    { token: 'operator', foreground: 'C5C6C7' },
     // Constant
     { token: 'constant', foreground: 'E9C273' },
     // Functions

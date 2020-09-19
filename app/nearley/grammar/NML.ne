@@ -29,9 +29,9 @@
 
 # Grammar Entry
 main
-    -> VariableSystem
-    | PemdasSystem
-    | PercentageSystem
-    | UoMSystem
-    | CurrencySystem
+    -> VariableSystem {% id %}
+    | PemdasSystem {% id %}
+    | PercentageSystem {% id %}
+    | UoMSystem {% id %}
+    | CurrencySystem {% id %}
 

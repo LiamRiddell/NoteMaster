@@ -13,6 +13,9 @@ unit -> number _ unitOfMeasurement {% ([v,,u]) => ast.unit(v, u) %}
 convertUoMToUoM
     -> unit _ convertTo _ unitOfMeasurement {% ([v,,,,b]) => ast.unitConversion(v, b) %}
 
+    # Variable Support
+    | variable _ convertTo _ unitOfMeasurement {% ([v,,,,b]) => ast.unitConversion(v, b) %}
+
 # Define all the metric system as one rule
 unitOfMeasurement
     # Length

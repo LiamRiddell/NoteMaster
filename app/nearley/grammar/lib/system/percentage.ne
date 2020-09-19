@@ -18,6 +18,7 @@ percentageOf
     | percent _ "of" _ unit {% ([v,,,,p]) => ast.percentOf(v, p) %}
     | percent _ "of" _ currency {% ([v,,,,p]) => ast.percentOf(v, p) %}
     # Variable Support
+    | percent _ "of" _ variable {% ([v,,,,p]) => ast.percentOf(v, p) %}
     | variable _ "of" _ number {% ([v,,,,p]) => ast.percentOf(v, p) %}
     | variable _ "of" _ unit {% ([v,,,,p]) => ast.percentOf(v, p) %}
     | variable _ "of" _ currency {% ([v,,,,p]) => ast.percentOf(v, p) %}

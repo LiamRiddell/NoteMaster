@@ -289,7 +289,7 @@ const NOTEMASTER_LANGUAGE = {
         'link'
       ],
       [/\$[a-zA-Z][a-zA-Z_0-9]*/, 'variable'],
-      [/\b[a-zA-Z][a-zA-Z_0-9]*\b:/, 'label'],
+      [/^[a-zA-Z][a-zA-Z_0-9]*\b:/, 'label'],
       [/`.*?`/, 'underline']
     ],
     dataTypes: [

@@ -81,7 +81,7 @@ class AST {
       return unitService.subtract(v1, v2);
 
     // LR: Currency
-    if (v1 instanceof NMLCurrencyResult && v2 instanceof NMLCurrencyResult)
+    if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.subtract(v1, v2);
 
     return new NMLComputedResult(v1.value - v2.value);
@@ -97,7 +97,7 @@ class AST {
       return unitService.multiply(v1, v2);
 
     // LR: Currency
-    if (v1 instanceof NMLCurrencyResult && v2 instanceof NMLCurrencyResult)
+    if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.multiply(v1, v2);
 
     return new NMLComputedResult(v1.value * v2.value);

@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 // import { Parser, Grammar } from 'nearley';
 import { store } from '../store/store';
-import lexer from '../nearley/lexer/lexer';
+import lexer from '../nearley/lexer/Lexer';
 import ContextualizedLine from './ContextualizedLine';
 import { contextEvaluationUpdateContextualisedLinesCache } from '../redux/actions/context-evaluation';
 // import grammar from '../nearley/arithmetic.ne';
@@ -315,12 +316,18 @@ class ContextEvaluationService {
       // LR: Create a dom node for the content widget when it's first initialized
       getDomNode() {
         if (!this.domNode) {
+          // LR: Position
           this.domNode = document.createElement('div');
           this.domNode.classList.add('nm-result');
 
+          // LR: Visual
           this.domNode2 = document.createElement('div');
           this.domNode.appendChild(this.domNode2);
-          this.domNode2.innerText = contextualizedLine.parsedValue;
+
+          // LR: Value
+          this.domNode3 = document.createElement('div');
+          this.domNode3.innerText = contextualizedLine.parsedValue;
+          this.domNode2.appendChild(this.domNode3);
         }
         return this.domNode;
       },
@@ -395,18 +402,19 @@ class ContextEvaluationService {
 
     // LR: Find the dom node for this line
     const resultDomNode = document.querySelectorAll(
-      `.nm-result[widgetid="nmcl-${longestContextualizedLine.lineNumber}"] > div`
+      `.nm-result[widgetid="nmcl-${longestContextualizedLine.lineNumber}"] > div > div`
     )[0];
 
     // LR: Unable to find the dom node
     if (resultDomNode === null || typeof resultDomNode === 'undefined') return;
 
     // LR: Get the bounding client rect
-    const parentClientRect = resultDomNode.parentNode.getBoundingClientRect();
+    const parentClientRect = resultDomNode.parentNode.parentNode.getBoundingClientRect();
     const clientRect = resultDomNode.getBoundingClientRect();
 
     // LR: Calculate the right offset using the line width and bounding rect
-    const resultPaddingRight = (parentClientRect.right - clientRect.right) / 2;
+    // LR: No longer need t calculat the padding since new design.
+    const resultPaddingRight = 8;
 
     // LR: Calulate the results column pixel width, furthermore add 8px for padding from right side
     const pixelWidth = clientRect.width + resultPaddingRight * 2;

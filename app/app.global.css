@@ -156,7 +156,7 @@ body {
   font-size: 14px;
   font-weight: 500;
   -webkit-font-smoothing: subpixel-antialiased;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Fira Code', 'Roboto', sans-serif;
 
   /* Monaco Hacks */
   max-width: 100000px !important;
@@ -169,15 +169,17 @@ body {
 .nm-result > div {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: rgba(34, 206, 153, 0.05);
-  border-radius: 3px;
-  text-align: right;
   color: #16d499;
-  height: 22px;
-  padding: 0 5px;
-  margin-right: 16px;
+  height: 24px;
   letter-spacing: 0.07pt;
+  width: var(--nm-results-column-width);
+  margin: 0;
+  padding: 0 0 0 8px;
+  margin-right: 7px;
+  text-align: left;
+  border-left: solid 1px #00cd7b;
 
   /* Make this selectable */
   pointer-events: all;

@@ -58,13 +58,14 @@ export default class ContextualizedLine {
   };
 
   parse = () => {
-    // HACK: Remove me later
-    // setTimeout(() => {}, 100);
-
     // LR: Pass to the NML language parser
     const result = NMLParserService.parse(this.lineContent);
 
-    if (result === null || typeof result === 'undefined') {
+    if (
+      result === null ||
+      typeof result === 'undefined' ||
+      result.unitResult === null
+    ) {
       this.parsedSuccessful = false;
       this.parsedValue = '';
       this.parsedValueCharacterLength = 0;

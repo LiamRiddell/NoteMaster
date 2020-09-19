@@ -14,11 +14,13 @@ convertUoMToUoM
     -> unit _ convertTo _ unitOfMeasurement {% ([v,,,,b]) => ast.unitConversion(v, b) %}
 
 # Define all the metric system as one rule
-unitOfMeasurement 
+unitOfMeasurement
     # Length
     -> %uom_mm {% id %}
     | %uom_cm {% id %}
     | "in" {% id %}
+    | "inch" {% id %}
+    | "inches" {% id %}
     | %uom_ftus {% id %}
     | %uom_ft {% id %}
     | %uom_mi {% id %}

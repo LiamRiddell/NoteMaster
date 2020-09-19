@@ -4,22 +4,31 @@ const NUMER_DARK_THEME = {
   base: 'vs-dark',
   inherit: false,
   rules: [
-    { token: '', foreground: 'C5C6C7' }, // Default
-    { token: 'comment', foreground: '5F6872' },
+    // Default
+    { token: '', foreground: 'C5C6C7' },
+    { token: 'header', foreground: '9EA4AE' },
+    { token: 'comment', foreground: '74B478' },
     { token: 'link', foreground: '358FEB' },
-    { token: 'date', foreground: 'F58F63' },
-    { token: 'hex', foreground: '22CE99' },
-    { token: 'decimal', foreground: 'FFFFFF' },
-    { token: 'integer', foreground: 'FFFFFF' },
-    { token: 'integer.posneg', foreground: 'FF3131' },
-    { token: 'percent', foreground: 'FFFFFF' },
-    { token: 'currency', foreground: 'D0D0D0' },
-    {
-      token: 'keyword',
-      foreground: 'ffa500',
-      background: '#ffa500',
-      fontStyle: 'underline'
-    }
+    { token: 'variable', foreground: 'F2C94C' },
+    { token: 'label', foreground: 'F2C94C' },
+    // Operators
+    { token: 'operator', foreground: 'CD9965' },
+    // Functions
+    { token: 'function', foreground: 'F2C94C' },
+    // Keywords
+    { token: 'keyword', foreground: 'CD9965' },
+    // Units
+    { token: 'currency', foreground: '93C2F1' },
+    { token: 'date', foreground: '93C2F1' },
+    { token: 'hex', foreground: '93C2F1' },
+    { token: 'unit', foreground: '93C2F1' },
+    // Data Types
+    { token: 'decimal', foreground: 'C5C6C7' },
+    { token: 'integer', foreground: 'C5C6C7' },
+    { token: 'integer.posneg', foreground: 'C5C6C7' },
+    { token: 'percent', foreground: 'C5C6C7' },
+    // Underline
+    { token: 'underline', foreground: 'F2C94C', fontStyle: 'underline' }
   ],
   colors: {
     'editor.background': '#15181C',
@@ -30,7 +39,7 @@ const NUMER_DARK_THEME = {
     // Line Numbers
     'editorGutter.background': '#27292C',
     'editor.lineHighlightBackground': '#ffffff08',
-    'editorLineNumber.foreground': '#6D7985',
+    'editorLineNumber.foreground': '#9CA5AB',
 
     // Cursor
     'editorCursor.foreground': '#666666',

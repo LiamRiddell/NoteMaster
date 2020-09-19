@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-underscore-dangle */
@@ -27,6 +29,7 @@ function MonacoEditorComponent({
   const [isEditorReady, setIsEditorReady] = useState(false);
   const monacoEditor = useRef(null);
   const valueGetter = useRef(null);
+  // eslint-disable-next-line no-use-before-define
   const viewZoneObserver = new MutationObserver(hookEditorResize);
 
   // LR: Monaco editor has mounted
@@ -105,11 +108,10 @@ function MonacoEditorComponent({
           .then(result => {
             // eslint-disable-next-line promise/always-return
             if (result.canceled) return;
-
-            return fs.writeFileSync(result.filePath, noteContent, 'utf8');
+            fs.writeFileSync(result.filePath, noteContent, 'utf8');
           })
           .catch(err => {
-            console.log(err);
+            throw err;
           });
 
         return null;
@@ -170,9 +172,10 @@ function MonacoEditorComponent({
           },
 
           // Font
-          fontFamily: 'Roboto',
+          fontFamily: 'Fira Code',
           fontWeight,
           fontSize,
+          fontLigatures: true,
           lineHeight,
           overviewRulerBorder: false,
           hideCursorInOverviewRuler: true,

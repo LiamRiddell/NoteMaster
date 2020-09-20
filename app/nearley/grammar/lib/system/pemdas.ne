@@ -31,9 +31,9 @@ AS -> AS _ %add _ MD {% d => ast.add(d[0], d[4]) %}
 N ->  unit          {% id %}
     | currency      {% id %}
     | percent       {% id %}
-    | %integer      {% d => ast.number(d[0]) %}
-    | %decimal      {% d => ast.number(d[0]) %}
-    | %hex          {% d => d[0].value %}
+    | integer       {% id %}
+    | decimal       {% id %}
+    | hex           {% id %}
     | variable      {% id %}
 
     #Functions

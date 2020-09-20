@@ -36,7 +36,10 @@ const operators = {
   multiply: ['*', 'x', 'multiply', 'times'],
   divide: ['/', 'divide'],
   exponent: ['^', 'power', 'exponent'],
-  modulus: ['%', 'modulus']
+  modulus: ['%', 'modulus', 'mod'],
+  bitwiserightunsigned: ['>>>'],
+  bitwiseleft: ['<<'],
+  bitwiseright: ['>>'],
 };
 
 // Mathmatical Functions

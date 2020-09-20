@@ -26,6 +26,7 @@
 @include "./lib/system/uom.ne"
 @include "./lib/system/currency.ne"
 @include "./lib/system/percentage.ne"
+@include "./lib/system/hex.ne"
 
 # Grammar Entry
 main
@@ -34,4 +35,4 @@ main
     | PercentageSystem {% id %}
     | UoMSystem {% id %}
     | CurrencySystem {% id %}
-
+    | HexSystem {% id %}

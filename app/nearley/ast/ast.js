@@ -6,11 +6,13 @@ const NMLUnitResult = require('./result/nml-unit-result');
 const NMLCurrencyResult = require('./result/nml-currency-result');
 const NMLComputedResult = require('./result/nml-computed-result');
 const NMLPercentResult = require('./result/nml-percent-result');
+const NMLHexResult = require('./result/nml-hex-result');
 
 // Services
 const unitService = require('./services/unit-service');
 const currencyService = require('./services/currency-service');
 const percentageService = require('./services/percentage-service');
+const hexService = require('./services/hex-service');
 
 class AST {
   variables = {};
@@ -54,6 +56,10 @@ class AST {
     return new NMLPercentResult(token.value, token);
   };
 
+  hex = token => {
+    return new NMLHexResult(token.value, token);
+  }
+
   // PEMDAS
   add = (v1, v2) => {
     // LR: Percentage
@@ -66,6 +72,10 @@ class AST {
     // LR: Currency
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.add(v1, v2);
+
+    // LR: Hex
+    if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
+      return hexService.add(v1, v2);
 
     // LR: Default
     return new NMLComputedResult(v1.value + v2.value);
@@ -84,6 +94,10 @@ class AST {
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.subtract(v1, v2);
 
+    // LR: Hex
+    if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
+      return hexService.subtract(v1, v2);
+
     return new NMLComputedResult(v1.value - v2.value);
   };
 
@@ -100,6 +114,10 @@ class AST {
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.multiply(v1, v2);
 
+    // LR: Hex
+    if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
+      return hexService.multiply(v1, v2);
+
     return new NMLComputedResult(v1.value * v2.value);
   };
 
@@ -115,6 +133,10 @@ class AST {
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.divide(v1, v2);
 
+    // LR: Hex
+    if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
+      return hexService.divide(v1, v2);
+
     return new NMLComputedResult(v1.value / v2.value);
   };
 
@@ -125,6 +147,10 @@ class AST {
     // LR: Currency
     if (v instanceof NMLCurrencyResult)
       return currencyService.exponent(v, exponent);
+
+    // LR: Hex
+    if (v1 instanceof NMLHexResult)
+      return hexService.exponent(v, exponent);
 
     return new NMLComputedResult(Math.pow(v.value, exponent));
   };
@@ -237,6 +263,19 @@ class AST {
     );
     return new NMLCurrencyResult(conversionValue, b);
   };
+
+  // Hex Service
+  bitwiseShiftRight = (hex, bits) => {
+    return hexService.bitwiseShiftRight(hex, bits);
+  }
+
+  bitwiseShiftLeft = (hex, bits) => {
+    return hexService.bitwiseShiftLeft(hex, bits);
+  }
+
+  bitwiseShiftRightUnsigned = (hex, bits) => {
+    return hexService.bitwiseShiftRightUnsigned(hex, bits);
+  }
 }
 
 const ast = new AST();

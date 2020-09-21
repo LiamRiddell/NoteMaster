@@ -83,8 +83,8 @@ class HexService {
     subtract64 = (v1, v2) => new NMLHex64Result(v1.value.subtract(v2.value), v1.unitToken);
     multiply64 = (v1, v2) => new NMLHex64Result(v1.value.multiply(v2.value), v1.unitToken);
     divide64 = (v1, v2) => new NMLHex64Result(v1.value.divide(v2.value), v1.unitToken);
-    bitwiseShiftLeft64 = (v1, bytes) => new NMLHex64Result(v1.value.shiftLeft(bytes), v1.unitToken);
-    bitwiseShiftRight64 = (v1, bytes) => new NMLHex64Result(v1.value.shiftRight(bytes), v1.unitToken);
+    bitwiseShiftLeft64 = (v1, bytes) => new NMLHex64Result(v1.value.shiftLeft(bytes.value), v1.unitToken);
+    bitwiseShiftRight64 = (v1, bytes) => new NMLHex64Result(v1.value.shiftRight(bytes.value), v1.unitToken);
 
 }
 

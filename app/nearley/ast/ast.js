@@ -7,6 +7,7 @@ const NMLCurrencyResult = require('./result/nml-currency-result');
 const NMLComputedResult = require('./result/nml-computed-result');
 const NMLPercentResult = require('./result/nml-percent-result');
 const NMLHexResult = require('./result/nml-hex-result');
+const NMLHex64Result = require('./result/nml-hex64-result');
 
 // Services
 const unitService = require('./services/unit-service');
@@ -56,12 +57,23 @@ class AST {
     return new NMLPercentResult(token.value, token);
   };
 
-  hex = token => {
+  hex32 = token => {
     return new NMLHexResult(token.value, token);
+  }
+
+  hex64 = token => {
+    return new NMLHex64Result(token.value, token);
   }
 
   // PEMDAS
   add = (v1, v2) => {
+    // LR: Hex 64-Bit
+    if (v1 instanceof NMLHex64Result && v2 instanceof NMLHex64Result)
+      return hexService.add64(v1, v2);
+
+    if (v1 instanceof NMLHex64Result || v2 instanceof NMLHex64Result)
+      throw 'You cannot mix 64-Bit with 32-Bit Types!';
+
     // LR: Percentage
     if (v2 instanceof NMLPercentResult) return percentageService.add(v1, v2);
 
@@ -73,15 +85,24 @@ class AST {
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.add(v1, v2);
 
-    // LR: Hex
+    // LR: Hex 32-Bit
     if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
       return hexService.add(v1, v2);
+
+
 
     // LR: Default
     return new NMLComputedResult(v1.value + v2.value);
   };
 
   subtract = (v1, v2) => {
+    // LR: Hex 64-Bit
+    if (v1 instanceof NMLHex64Result && v2 instanceof NMLHex64Result)
+      return hexService.subtract(v1, v2);
+
+    if (v1 instanceof NMLHex64Result || v2 instanceof NMLHex64Result)
+      throw 'You cannot mix 64-Bit with 32-Bit Types!';
+
     // LR: Percentage
     if (v2 instanceof NMLPercentResult)
       return percentageService.subtract(v1, v2);
@@ -94,7 +115,7 @@ class AST {
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.subtract(v1, v2);
 
-    // LR: Hex
+    // LR: Hex 32-Bit
     if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
       return hexService.subtract(v1, v2);
 
@@ -102,6 +123,13 @@ class AST {
   };
 
   multiply = (v1, v2) => {
+    // LR: Hex 64-Bit
+    if (v1 instanceof NMLHex64Result && v2 instanceof NMLHex64Result)
+      return hexService.multiply64(v1, v2);
+
+    if (v1 instanceof NMLHex64Result || v2 instanceof NMLHex64Result)
+      throw 'You cannot mix 64-Bit with 32-Bit Types!';
+
     // LR: Percentages
     if (v2 instanceof NMLPercentResult)
       return percentageService.multiply(v1, v2);
@@ -114,7 +142,7 @@ class AST {
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.multiply(v1, v2);
 
-    // LR: Hex
+    // LR: Hex 32-Bit
     if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
       return hexService.multiply(v1, v2);
 
@@ -122,6 +150,13 @@ class AST {
   };
 
   divide = (v1, v2) => {
+    // LR: Hex 64-Bit
+    if (v1 instanceof NMLHex64Result && v2 instanceof NMLHex64Result)
+      return hexService.divide64(v1, v2);
+
+    if (v1 instanceof NMLHex64Result || v2 instanceof NMLHex64Result)
+      throw 'You cannot mix 64-Bit with 32-Bit Types!';
+
     // LR: Percentages
     if (v2 instanceof NMLPercentResult) return percentageService.divide(v1, v2);
 
@@ -133,7 +168,7 @@ class AST {
     if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
       return currencyService.divide(v1, v2);
 
-    // LR: Hex
+    // LR: Hex 32-bit
     if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
       return hexService.divide(v1, v2);
 
@@ -141,6 +176,10 @@ class AST {
   };
 
   exponent = (v, exponent) => {
+    // LR: Hex 32/64-Bit
+    if (v instanceof NMLHex64Result)
+      throw 'You cannot mix 64-Bit with 32-Bit Types!';
+
     // LR: UoM
     if (v instanceof NMLUnitResult) return unitService.exponent(v, exponent);
 
@@ -266,14 +305,28 @@ class AST {
 
   // Hex Service
   bitwiseShiftRight = (hex, bits) => {
+    // LR: Hex 64-Bit
+    if (hex instanceof NMLHex64Result)
+      return hexService.bitwiseShiftRight64(hex, bits);
+
+    // LR: Hex 32-Bit
     return hexService.bitwiseShiftRight(hex, bits);
   }
 
   bitwiseShiftLeft = (hex, bits) => {
+    // LR: Hex 64-Bit
+    if (hex instanceof NMLHex64Result)
+      return hexService.bitwiseShiftLeft64(hex, bits);
+
+    // LR: Hex 32-Bit
     return hexService.bitwiseShiftLeft(hex, bits);
   }
 
   bitwiseShiftRightUnsigned = (hex, bits) => {
+    // LR: Hex 64-Bit
+    if (hex instanceof NMLHex64Result)
+      throw 'You cannot mix 64-Bit with 32-Bit Types!';
+
     return hexService.bitwiseShiftRightUnsigned(hex, bits);
   }
 }

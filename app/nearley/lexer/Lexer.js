@@ -1,13 +1,18 @@
 import moo from 'moo';
-
+import Long from 'long';
 // Data Types
 const dataTypes = {
   // Date - These will clash with number parsing. This is why it takes precedence -> date-tokens.js
   date: /(?:[0-2][0-9]|(?:3)[0-1])(?:\/)(?:(?:(?:0)[0-9])|(?:(?:1)[0-2]))(?:\/)\d{4}/,
 
   // Basic Types - Order of precedence
-  hex: {
-    match: /0[xX][0-9a-fA-F]+/,
+  hex64: {
+    match: /0[xX][0-9a-fA-F]{9,16}/,
+    lineBreaks: true,
+    value: v => Long.fromString(v, 16)
+  },
+  hex32: {
+    match: /0[xX][0-9a-fA-F]{1,8}/,
     lineBreaks: true,
     value: v => parseInt(v, 16) // 0xFF -> 255
   },

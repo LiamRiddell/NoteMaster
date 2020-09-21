@@ -33,7 +33,8 @@ N ->  unit          {% id %}
     | percent       {% id %}
     | integer       {% id %}
     | decimal       {% id %}
-    | hex           {% id %}
+    | hex32         {% id %}
+    | hex64         {% id %}
     | variable      {% id %}
 
     #Functions

@@ -270,6 +270,7 @@
     "eslint-plugin-react-hooks": "^4.1.0",
     "history": "^4.10.1",
     "immutable": "^4.0.0-rc.12",
+    "long": "^4.0.0",
     "monaco-editor": "^0.20.0",
     "money": "^0.2.0",
     "moo": "^0.5.1",

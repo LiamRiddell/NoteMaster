@@ -37,7 +37,9 @@ class NMLParserService {
       };
 
       // eslint-disable-next-line no-empty
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 }
 

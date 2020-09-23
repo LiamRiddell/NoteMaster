@@ -21,3 +21,11 @@
   overflow: hidden;
   padding: 8px 10px;
 }
+
+.smartOptionsActive {
+  opacity: 1;
+}
+
+.smartOptionsHidden {
+  opacity: 0.5;
+}

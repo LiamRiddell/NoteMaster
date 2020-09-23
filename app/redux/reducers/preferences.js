@@ -34,7 +34,8 @@ const initialState = !isFirstLaunch
       lineHeight: preferences.lineHeight || 24,
       lineNumbers: preferences.lineNumbers || 'off',
       autoLaunch: preferences.autoLaunch || true,
-      nmlEnabled: preferences.nmlEnabled || true
+      nmlEnabled: preferences.nmlEnabled || true,
+      nmlBaseCurrency: preferences.nmlBaseCurrency || 'USD'
     }
   : {
       editorContent: introductionNoteContent,
@@ -46,7 +47,8 @@ const initialState = !isFirstLaunch
       lineHeight: 24,
       lineNumbers: 'off',
       autoLaunch: true,
-      nmlEnabled: true
+      nmlEnabled: true,
+      nmlBaseCurrency: 'USD'
     };
 
 // Reducer

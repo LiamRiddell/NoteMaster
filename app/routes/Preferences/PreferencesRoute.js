@@ -106,6 +106,15 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     });
   };
 
+  const nmlBaseCurrencyChange = e => {
+    updatePreferences({
+      nmlBaseCurrency: e.target.value,
+      // HACK: If the initial content is updated to match the existing autosaveContent then the user will lose all changes
+      // since the file was read from the disk into memory.
+      editorContent: preferences.autosaveContent
+    });
+  };
+
   const navigateToNotes = e => {
     updatePreferences({
       editorContent: preferences.autosaveContent
@@ -122,8 +131,33 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     lineHeight,
     fontLigatures,
     autoLaunch,
-    nmlEnabled
+    nmlEnabled,
+    nmlBaseCurrency
   } = preferences;
+
+  const renderNmlOptions = () => {
+    return (
+      <Box
+        className={
+          nmlEnabled ? styles.smartOptionsActive : styles.smartOptionsHidden
+        }
+        mb="2"
+      >
+        <Label mt="2" mb="1">
+          Base Currency
+        </Label>
+        <Select
+          disabled={!nmlEnabled}
+          defaultValue={nmlBaseCurrency}
+          onChange={nmlBaseCurrencyChange}
+        >
+          <option value="USD">USD</option>
+          <option value="GBP">GBP</option>
+          <option value="EUR">EUR</option>
+        </Select>
+      </Box>
+    );
+  };
 
   return (
     <div className={styles.container} data-tid="container">
@@ -156,21 +190,24 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
             </Text>
 
             {/* Editor */}
-            <Box mb="3">
+            <Box mb="4">
               <Text mb="2" variant="group">
                 Editor
               </Text>
 
               <Label mt="2" mb="1">
-                NoteMaster Language
+                Smart Mode
               </Label>
               <Select
                 defaultValue={nmlEnabled ? 'true' : 'false'}
                 onChange={nmlEnabledChange}
               >
-                <option value="true">On</option>
-                <option value="false">Off</option>
+                <option value="true">Enabled</option>
+                <option value="false">Disabled</option>
               </Select>
+
+              {/* NoteMaster Language */}
+              {renderNmlOptions()}
 
               <Label mt="2" mb="1">
                 Line Numbers
@@ -184,7 +221,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
             </Box>
 
             {/* Typography Settings */}
-            <Box mb="3">
+            <Box mb="4">
               <Text mb="2" variant="group">
                 Typography
               </Text>
@@ -247,7 +284,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
               </Select>
             </Box>
 
-            <Box mb="3">
+            <Box mb="4">
               <Text mb="2" variant="group">
                 SYSTEM
               </Text>

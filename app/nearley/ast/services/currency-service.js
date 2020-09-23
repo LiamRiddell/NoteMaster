@@ -10,18 +10,29 @@ const fx = require('money');
 // LR: Currency Result
 const NMLCurrencyResult = require('../result/nml-currency-result');
 
+// LR: Redux Store
+const { store } = require('../../../store/store');
+
 class CurrencyService {
   lastUpdate = null;
 
   refreshInterval = 10 * 60 * 1000;
 
+  baseCurrency = 'USD'
   constructor() {
+    // LR: Get the state from redux
+    const state = store.getState();
+
+    // LR: Set the base currency
+    this.baseCurrency = state.preferences.nmlBaseCurrency;
+
+    // LR: Get the exchange rates relative to base currency
     this.getExchangeRates();
   }
 
   getExchangeRates = callback => {
     axios
-      .get('https://api.exchangeratesapi.io/latest?base=USD')
+      .get(`https://api.exchangeratesapi.io/latest?base=${this.baseCurrency}`)
       .then(response => {
         fx.base = response.data.base;
         fx.rates = response.data.rates;
@@ -35,7 +46,12 @@ class CurrencyService {
   convert = (value, fromMetric, toMetric) => {
     if (
       this.lastUpdate === null ||
-      Date.now() - this.lastUpdate < this.refreshInterval
+
+      // LR: More than 10 minutes old
+      Date.now() - this.lastUpdate < this.refreshInterval ||
+
+      // LR: Base currency has changed
+      store.getState().preferences.nmlBaseCurrency !== this.baseCurrency
     ) {
       this.getExchangeRates(() => {
         return fx(value)
@@ -44,6 +60,7 @@ class CurrencyService {
       });
     }
 
+    // LR: Return the converted value
     return fx(value)
       .from(fromMetric)
       .to(toMetric);

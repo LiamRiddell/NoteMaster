@@ -44,15 +44,20 @@ class CurrencyService {
   };
 
   convert = (value, fromMetric, toMetric) => {
+    // LR: Get the current currency from preferences
+    const preferencesBaseCurrency = store.getState().preferences.nmlBaseCurrency;
+    const baseCurrencyChanged = this.baseCurrency !== preferencesBaseCurrency;
+
     if (
       this.lastUpdate === null ||
-
-      // LR: More than 10 minutes old
-      Date.now() - this.lastUpdate < this.refreshInterval ||
-
-      // LR: Base currency has changed
-      store.getState().preferences.nmlBaseCurrency !== this.baseCurrency
+      Date.now() - this.lastUpdate < this.refreshInterval || // LR: More than 10 minutes old
+      baseCurrencyChanged
     ) {
+
+      // LR: Update the internal currency
+      this.baseCurrency = preferencesBaseCurrency;
+
+      // LR: Update exchange rates
       this.getExchangeRates(() => {
         return fx(value)
           .from(fromMetric)

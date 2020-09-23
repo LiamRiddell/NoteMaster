@@ -97,6 +97,15 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     });
   };
 
+  const fontLigaturesChange = e => {
+    updatePreferences({
+      fontLigatures: e.target.value === 'true',
+      // HACK: If the initial content is updated to match the existing autosaveContent then the user will lose all changes
+      // since the file was read from the disk into memory.
+      editorContent: preferences.autosaveContent
+    });
+  };
+
   const navigateToNotes = e => {
     updatePreferences({
       editorContent: preferences.autosaveContent
@@ -111,6 +120,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     fontWeight,
     lineNumbers,
     lineHeight,
+    fontLigatures,
     autoLaunch,
     nmlEnabled
   } = preferences;
@@ -224,6 +234,17 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 defaultValue={lineHeight}
                 onChange={lineHeightChange}
               />
+
+              <Label mt="2" mb="1">
+                Font Ligatures
+              </Label>
+              <Select
+                defaultValue={fontLigatures ? 'true' : 'false'}
+                onChange={fontLigaturesChange}
+              >
+                <option value="true">On</option>
+                <option value="false">Off</option>
+              </Select>
             </Box>
 
             <Box mb="3">

@@ -141,6 +141,7 @@ function MonacoEditorComponent({
     fontFamily,
     fontSize,
     fontWeight,
+    fontLigatures,
     lineHeight,
     lineNumbers,
     nmlEnabled
@@ -207,7 +208,7 @@ function MonacoEditorComponent({
           fontFamily,
           fontWeight,
           fontSize,
-          fontLigatures: true,
+          fontLigatures,
           lineHeight,
           overviewRulerBorder: false,
           hideCursorInOverviewRuler: true,

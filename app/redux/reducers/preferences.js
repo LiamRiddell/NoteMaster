@@ -27,6 +27,7 @@ const initialState = !isFirstLaunch
   ? {
       editorContent: preferences.editorContent || introductionNoteContent,
       autosaveContent: preferences.editorContent || introductionNoteContent,
+      fontFamily: preferences.fontFamily || 'Fira Code',
       fontSize: preferences.fontSize || 14,
       fontWeight: preferences.fontWeight || '400',
       lineHeight: preferences.lineHeight || 24,
@@ -37,6 +38,7 @@ const initialState = !isFirstLaunch
   : {
       editorContent: introductionNoteContent,
       autosaveContent: introductionNoteContent,
+      fontFamily: 'Fira Code',
       fontSize: 14,
       fontWeight: '400',
       lineHeight: 24,

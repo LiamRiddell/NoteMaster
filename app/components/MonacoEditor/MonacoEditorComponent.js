@@ -138,6 +138,7 @@ function MonacoEditorComponent({
   }
 
   const {
+    fontFamily,
     fontSize,
     fontWeight,
     lineHeight,
@@ -161,9 +162,15 @@ function MonacoEditorComponent({
       '--nm-var-fontsize',
       `${fontSize}px`
     );
+
     document.documentElement.style.setProperty(
       '--nm-var-lineheight',
       `${lineHeight}px`
+    );
+
+    document.documentElement.style.setProperty(
+      '--nm-var-fontfamily',
+      `'${fontFamily}'`
     );
   }
 
@@ -197,7 +204,7 @@ function MonacoEditorComponent({
           },
 
           // Font
-          fontFamily: 'Fira Code',
+          fontFamily,
           fontWeight,
           fontSize,
           fontLigatures: true,

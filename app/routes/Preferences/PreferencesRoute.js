@@ -34,6 +34,15 @@ import styles from './PreferencesRoute.css';
 const PreferencesRoute = ({ preferences, updatePreferences }) => {
   const history = useHistory();
 
+  const fontFamilyChange = e => {
+    updatePreferences({
+      fontFamily: e.target.value,
+      // HACK: If the initial content is updated to match the existing autosaveContent then the user will lose all changes
+      // since the file was read from the disk into memory.
+      editorContent: preferences.autosaveContent
+    });
+  };
+
   const fontSizeChange = e => {
     updatePreferences({
       fontSize: Number(e.target.value),
@@ -97,6 +106,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
   };
 
   const {
+    fontFamily,
     fontSize,
     fontWeight,
     lineNumbers,
@@ -169,7 +179,22 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 Typography
               </Text>
 
-              <Label mb="1">Font Size</Label>
+              <Label mt="2" mb="1">
+                Font Family
+              </Label>
+              <Select defaultValue={fontFamily} onChange={fontFamilyChange}>
+                <option value="Fira Code">Fira Code</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Arial">Arial</option>
+                <option value="Helvetica Neue">Helvetica Neue</option>
+                <option value="Monospace">Monospace</option>
+                <option value="Ubuntu">Ubuntu</option>
+                <option value="Segoe UI">Segoe UI</option>
+              </Select>
+
+              <Label mt="2" mb="1">
+                Font Size
+              </Label>
               <Input
                 type="number"
                 defaultValue={fontSize}
@@ -245,10 +270,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
               <Link href="https://github.com/LiamRiddell" target="_blank">
                 Liam Riddell
               </Link>{' '}
-              and{' '}
-              <Link href="https://github.com/RonanLenehan" target="_blank">
-                Ronan Lenehan
-              </Link>
+              ❤️
             </Box>
           </ContainerComponent>
         </ScrollableContentComponent>

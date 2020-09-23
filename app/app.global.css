@@ -157,7 +157,7 @@ body {
   font-size: var(--nm-var-fontsize);
   font-weight: 500;
   -webkit-font-smoothing: subpixel-antialiased;
-  font-family: 'Fira Code', 'Roboto', sans-serif;
+  font-family: var(--nm-var-fontfamily);
 
   /* Monaco Hacks */
   max-width: 100000px !important;

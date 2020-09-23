@@ -212,3 +212,7 @@ body {
   width: 1px;
   z-index: 10;
 }
+
+.nm-editor-results-seperator.hidden {
+  visibility: hidden;
+}

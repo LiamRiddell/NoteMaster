@@ -56,7 +56,8 @@ function MonacoEditorComponent({
       onDidChangeModelContentAutoSaveDebounced(e, content);
 
       // LR: Pass the event to the ContextEvaluationService.
-      contextEvaluationService.onDidChangeModelContent(e, content);
+      if (preferences.nmlEnabled)
+        contextEvaluationService.onDidChangeModelContent(e, content);
     };
 
     editor.onDidChangeModelContent(onDidChangeModelContent);
@@ -136,7 +137,13 @@ function MonacoEditorComponent({
     );
   }
 
-  const { fontSize, fontWeight, lineHeight, lineNumbers } = preferences;
+  const {
+    fontSize,
+    fontWeight,
+    lineHeight,
+    lineNumbers,
+    nmlEnabled
+  } = preferences;
 
   // HACK: LR - Fixes an issue when the preferences are loaded from the disk and the editor does not resize.
   // Window Updates will not cause the editor to layout.
@@ -144,8 +151,10 @@ function MonacoEditorComponent({
     // LR: Force monaco editor to re-layout
     monacoEditor.current.layout();
 
-    // LR: Add the content widgets
-    contextEvaluationService.manageContentWidgets(monacoEditor.current);
+    if (nmlEnabled) {
+      // LR: Add the content widgets
+      contextEvaluationService.manageContentWidgets(monacoEditor.current);
+    }
 
     // LR: Setup CSS vars
     document.documentElement.style.setProperty(
@@ -158,9 +167,15 @@ function MonacoEditorComponent({
     );
   }
 
+  const hiddenResultsSeperator = 'nm-editor-results-seperator hidden';
+
   return (
     <div className="nm-editor-wrapper">
-      <div className="nm-editor-results-seperator" />
+      <div
+        className={
+          nmlEnabled ? 'nm-editor-results-seperator' : hiddenResultsSeperator
+        }
+      />
       <Editor
         className="nm-editor"
         height="100%"

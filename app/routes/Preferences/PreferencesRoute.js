@@ -79,6 +79,15 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     });
   };
 
+  const nmlEnabledChange = e => {
+    updatePreferences({
+      nmlEnabled: e.target.value === 'true',
+      // HACK: If the initial content is updated to match the existing autosaveContent then the user will lose all changes
+      // since the file was read from the disk into memory.
+      editorContent: preferences.autosaveContent
+    });
+  };
+
   const navigateToNotes = e => {
     updatePreferences({
       editorContent: preferences.autosaveContent
@@ -92,7 +101,8 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     fontWeight,
     lineNumbers,
     lineHeight,
-    autoLaunch
+    autoLaunch,
+    nmlEnabled
   } = preferences;
 
   return (
@@ -125,10 +135,38 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
               .
             </Text>
 
-            {/* Text Editor */}
+            {/* Editor */}
             <Box mb="3">
               <Text mb="2" variant="group">
-                TEXT EDITOR
+                Editor
+              </Text>
+
+              <Label mt="2" mb="1">
+                NoteMaster Language
+              </Label>
+              <Select
+                defaultValue={nmlEnabled ? 'true' : 'false'}
+                onChange={nmlEnabledChange}
+              >
+                <option value="true">On</option>
+                <option value="false">Off</option>
+              </Select>
+
+              <Label mt="2" mb="1">
+                Line Numbers
+              </Label>
+              <Select defaultValue={lineNumbers} onChange={lineNumbersChange}>
+                <option value="off">Off</option>
+                <option value="on">On</option>
+                <option value="relative">Relative</option>
+                <option value="interval">Interval</option>
+              </Select>
+            </Box>
+
+            {/* Typography Settings */}
+            <Box mb="3">
+              <Text mb="2" variant="group">
+                Typography
               </Text>
 
               <Label mb="1">Font Size</Label>
@@ -161,16 +199,6 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 defaultValue={lineHeight}
                 onChange={lineHeightChange}
               />
-
-              <Label mt="2" mb="1">
-                Line Numbers
-              </Label>
-              <Select defaultValue={lineNumbers} onChange={lineNumbersChange}>
-                <option value="off">Off</option>
-                <option value="on">On</option>
-                <option value="relative">Relative</option>
-                <option value="interval">Interval</option>
-              </Select>
             </Box>
 
             <Box mb="3">

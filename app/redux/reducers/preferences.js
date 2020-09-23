@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/prefer-default-export */
 import store from '../../service/LocalStoreService';
 import { PREFERENCES_CONTENT_AUTOSAVE, PREFERENCES_SAVE } from '../actionTypes';
@@ -30,7 +31,8 @@ const initialState = !isFirstLaunch
       fontWeight: preferences.fontWeight || '400',
       lineHeight: preferences.lineHeight || 24,
       lineNumbers: preferences.lineNumbers || 'off',
-      autoLaunch: preferences.autoLaunch || true
+      autoLaunch: preferences.autoLaunch || true,
+      nmlEnabled: preferences.nmlEnabled || true
     }
   : {
       editorContent: introductionNoteContent,
@@ -39,7 +41,8 @@ const initialState = !isFirstLaunch
       fontWeight: '400',
       lineHeight: 24,
       lineNumbers: 'off',
-      autoLaunch: true
+      autoLaunch: true,
+      nmlEnabled: true
     };
 
 // Reducer

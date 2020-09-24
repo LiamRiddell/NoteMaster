@@ -19,6 +19,7 @@ class CurrencyService {
   refreshInterval = 10 * 60 * 1000;
 
   baseCurrency = 'USD'
+
   constructor() {
     // LR: Get the state from redux
     const state = store.getState();

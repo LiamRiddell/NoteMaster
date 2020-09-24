@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // import { Parser, Grammar } from 'nearley';
 import { store } from '../store/store';
-import lexer from '../nearley/lexer/Lexer';
+import lexer from '../nearley/lexer/lexer';
 import ContextualizedLine from './ContextualizedLine';
 import { contextEvaluationUpdateContextualisedLinesCache } from '../redux/actions/context-evaluation';
 // import grammar from '../nearley/arithmetic.ne';
@@ -425,13 +425,13 @@ class ContextEvaluationService {
       parentClientRect.width -
       // Column Width
       pixelWidth -
-      // Line Start padding
-      resultPaddingRight -
-      // Padding from column
-      resultPaddingRight * 2;
+      // Text Padding
+      8 -
+      // Sidebar Deadzone
+      32;
 
     // LR: Calculate the line length using character width and the line length
-    const wordWrapColumn = Math.ceil(lineLengthInPixels / maxDigitWidth);
+    const wordWrapColumn = Math.floor(lineLengthInPixels / maxDigitWidth);
 
     // LR: Update the monaco-editor word wrap
     monacoEditor.updateOptions({

@@ -115,6 +115,15 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     });
   };
 
+  const wrappingIndentChange = e => {
+    updatePreferences({
+      wrappingIndent: e.target.value,
+      // HACK: If the initial content is updated to match the existing autosaveContent then the user will lose all changes
+      // since the file was read from the disk into memory.
+      editorContent: preferences.autosaveContent
+    });
+  };
+
   const navigateToNotes = e => {
     updatePreferences({
       editorContent: preferences.autosaveContent
@@ -132,7 +141,8 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     fontLigatures,
     autoLaunch,
     nmlEnabled,
-    nmlBaseCurrency
+    nmlBaseCurrency,
+    wrappingIndent
   } = preferences;
 
   const renderNmlOptions = () => {
@@ -217,6 +227,19 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 <option value="on">On</option>
                 <option value="relative">Relative</option>
                 <option value="interval">Interval</option>
+              </Select>
+
+              <Label mt="2" mb="1">
+                Wrapping Indent
+              </Label>
+              <Select
+                defaultValue={wrappingIndent}
+                onChange={wrappingIndentChange}
+              >
+                <option value="same">Same</option>
+                <option value="indent">Indent</option>
+                <option value="deepIndent">Deep Indent</option>
+                <option value="none">none</option>
               </Select>
             </Box>
 

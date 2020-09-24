@@ -144,7 +144,8 @@ function MonacoEditorComponent({
     fontLigatures,
     lineHeight,
     lineNumbers,
-    nmlEnabled
+    nmlEnabled,
+    wrappingIndent
   } = preferences;
 
   // HACK: LR - Fixes an issue when the preferences are loaded from the disk and the editor does not resize.
@@ -219,7 +220,7 @@ function MonacoEditorComponent({
           wordWrap: 'bounded',
           // wordWrapColumn: 80,
           wrappingStratergy: 'advanced',
-          wrappingIndent: 'indent',
+          wrappingIndent,
 
           // Disable Suggestions
           quickSuggestions: false,

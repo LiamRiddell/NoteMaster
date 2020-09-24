@@ -1,4 +1,4 @@
-import lexer from '../nearley/lexer/Lexer';
+import lexer from '../nearley/lexer/lexer';
 import NMLParserService from '../nearley/NMLParserService';
 
 export default class ContextualizedLine {

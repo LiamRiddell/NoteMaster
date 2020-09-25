@@ -81,8 +81,8 @@ export default class ContextualizedLine {
     // TODO: Only parse if requested
     if (!this.shouldParse) {
       this.parsedSuccessful = false;
-      this.parsedValue = '';
-      this.parsedValueCharacterLength = 0;
+      this.unitResultValue = '';
+      this.unitResultValueCharacterLength = 0;
       this.isVisible = false;
       return;
     }
@@ -97,8 +97,8 @@ export default class ContextualizedLine {
       result.parsedSuccessful === false
     ) {
       this.parsedSuccessful = false;
-      this.parsedValue = '';
-      this.parsedValueCharacterLength = 0;
+      this.unitResultValue = '';
+      this.unitResultValueCharacterLength = 0;
       this.isVisible = false;
       return;
     }
@@ -120,8 +120,8 @@ export default class ContextualizedLine {
       this.isVisible = this.shouldBeVisible();
     } else {
       this.parsedSuccessful = false;
-      this.parsedValue = '';
-      this.parsedValueCharacterLength = 0;
+      this.unitResultValue = '';
+      this.unitResultValueCharacterLength = 0;
       this.isVisible = false;
     }
   };

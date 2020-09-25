@@ -17,8 +17,6 @@ class NMLParserService {
 
       // LR: Evaulate the results
       if (results.length > 1) {
-        console.log('NLP Result -> Ambigous Action');
-
         return {
           parsedSuccessful: false
         };
@@ -27,7 +25,6 @@ class NMLParserService {
       if (results.length === 1) {
         // LR: Get the result from the results array
         const ast = results[0];
-        console.log('NLP Result -> Valid Statement -> Result:', ast);
 
         return {
           parsedSuccessful: true,

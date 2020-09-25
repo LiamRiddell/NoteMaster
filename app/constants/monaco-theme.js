@@ -21,7 +21,7 @@ const NUMER_DARK_THEME = {
     { token: 'keyword', foreground: 'CD9965' },
     // Units
     { token: 'currency', foreground: '93C2F1' },
-    { token: 'date', foreground: '93C2F1' },
+    // { token: 'date', foreground: '93C2F1' },
     { token: 'hex', foreground: '93C2F1' },
     { token: 'unit', foreground: '93C2F1' },
     // Data Types

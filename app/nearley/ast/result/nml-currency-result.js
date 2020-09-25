@@ -4,6 +4,10 @@ const NMLBaseResult = require('./nml-base-result');
 
 class NMLCurrencyResult extends NMLBaseResult {
   prettify() {
+    // Omit NaN Results
+    if (isNaN(this.value) || isNaN(this.unitValue))
+      return null;
+
     if (this.unitToken.type === 'currencyCode')
       return this._prettifyCurrencyCode();
 

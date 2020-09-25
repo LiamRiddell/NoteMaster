@@ -61,6 +61,18 @@ class HexService {
         return new NMLHexResult(v1.value / v2.value);
     }
 
+    modulo = (v1, v2) => {
+        // LR: UoM
+        if (v1 instanceof NMLUnitResult)
+            return new NMLUnitResult(v1.value % v2.value, v1.unitToken);
+
+        // LR: Currency
+        if (v1 instanceof NMLCurrencyResult)
+            return new NMLCurrencyResult(v1.value % v2.value, v1.unitToken);
+
+        return new NMLHexResult(v1.value % v2.value);
+    }
+
     exponent = (v, exponent) => {
         return new NMLHexResult(v.value ** exponent.value);
     }
@@ -85,7 +97,7 @@ class HexService {
     divide64 = (v1, v2) => new NMLHex64Result(v1.value.divide(v2.value), v1.unitToken);
     bitwiseShiftLeft64 = (v1, bytes) => new NMLHex64Result(v1.value.shiftLeft(bytes.value), v1.unitToken);
     bitwiseShiftRight64 = (v1, bytes) => new NMLHex64Result(v1.value.shiftRight(bytes.value), v1.unitToken);
-
+    modulo64 = (v1, v2) => new NMLHex64Result(v1.value.modulo(v2.value), v1.unitToken);
 }
 
 const hexService = new HexService();

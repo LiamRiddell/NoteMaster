@@ -20,6 +20,7 @@ E -> P _ %exponent _ E    {% d => ast.exponent(d[0], d[4]) %}
 # Multiplication and division
 MD -> MD _ %multiply _ E  {% d => ast.multiply(d[0], d[4]) %}
     | MD _ %divide _ E  {% d => ast.divide(d[0], d[4]) %}
+    | MD _ %modulo _ E {% d => ast.modulo(d[0], d[4]) %}
     | E             {% id %}
 
 # Addition and subtraction

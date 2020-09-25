@@ -102,6 +102,30 @@ class PercentageService {
     return new NMLComputedResult(v1.value / percentageOfResult.value);
   };
 
+  modulo = (v1, v2) => {
+    if (v1 instanceof NMLPercentResult)
+      throw 'The left operand can not be a percentage when modulos';
+
+    // Calculate the percentage of the population
+    const percentageOfResult = this.percentOf(v2, v1);
+
+    // LR: UoM
+    if (percentageOfResult instanceof NMLUnitResult)
+      return new NMLUnitResult(
+        v1.value % percentageOfResult.value,
+        percentageOfResult.unitToken
+      );
+
+    // LR: Currency
+    if (percentageOfResult instanceof NMLCurrencyResult)
+      return new NMLCurrencyResult(
+        v1.value % percentageOfResult.value,
+        percentageOfResult.unitToken
+      );
+
+    return new NMLComputedResult(v1.value % percentageOfResult.value);
+  }
+
   percentOf = (v, population) => {
     const percentageOfValue = (population.value / 100) * v.value;
 

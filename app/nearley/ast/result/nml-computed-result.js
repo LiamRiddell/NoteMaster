@@ -6,6 +6,10 @@ class NMLComputedResult extends NMLBaseResult {
   }
 
   prettify() {
+    // Omit NaN Results
+    if (isNaN(this.value) || isNaN(this.unitValue))
+      return null;
+
     const thousandSepratedValue = Number(this.unitValue).toLocaleString();
     return String(`${thousandSepratedValue}`);
   }

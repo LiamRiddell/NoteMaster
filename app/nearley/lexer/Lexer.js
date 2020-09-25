@@ -41,7 +41,7 @@ const operators = {
   multiply: ['*', 'x', 'multiply', 'times'],
   divide: ['/', 'divide'],
   exponent: ['^', 'power', 'exponent'],
-  modulus: ['%', 'modulus', 'mod'],
+  modulo: ['%', 'modulus', 'modulo', 'mod'],
   bitwiserightunsigned: ['>>>'],
   bitwiseleft: ['<<'],
   bitwiseright: ['>>'],

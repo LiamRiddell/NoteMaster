@@ -165,8 +165,31 @@ class CurrencyService {
     }
   };
 
+  modulo = (v1, v2) => {
+    // LR: Both are currencies
+    if (v1 instanceof NMLCurrencyResult && v2 instanceof NMLCurrencyResult) {
+      const [v1Standardised, v2Standardised] = this.standardizeCurrencies(
+        v1,
+        v2
+      );
+      return new NMLCurrencyResult(
+        v1Standardised % v2Standardised,
+        v1.unitToken
+      );
+    }
+
+    // LR: We'll use whichever value, which type is a currency, as the base currency to add too.
+    if (v1 instanceof NMLCurrencyResult) {
+      return new NMLCurrencyResult(v1.value % v2.value, v1.unitToken);
+    }
+
+    if (v2 instanceof NMLCurrencyResult) {
+      return new NMLCurrencyResult(v1.value % v2.value, v2.unitToken);
+    }
+  };
+
   exponent = (v, exponent) => {
-    return new NMLCurrencyResult(v.value ** exponent, v.unitToken);
+    return new NMLCurrencyResult(v.value ** exponent.value, v.unitToken);
   };
 
   sin = v => {

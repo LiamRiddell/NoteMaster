@@ -79,8 +79,25 @@ class UnitService {
     }
   };
 
+  modulo = (v1, v2) => {
+    // LR: Both are UoM
+    if (v1 instanceof NMLUnitResult && v2 instanceof NMLUnitResult) {
+      const [v1Standardised, v2Standardised] = this.standardizeUnits(v1, v2);
+      return new NMLUnitResult(v1Standardised % v2Standardised, v1.unitToken);
+    }
+
+    // LR: We'll use whichever value, which type is a unit, as the base unit to add too.
+    if (v1 instanceof NMLUnitResult) {
+      return new NMLUnitResult(v1.value % v2.value, v1.unitToken);
+    }
+
+    if (v2 instanceof NMLUnitResult) {
+      return new NMLUnitResult(v1.value % v2.value, v2.unitToken);
+    }
+  };
+
   exponent = (v, exponent) => {
-    return new NMLUnitResult(v.value ** exponent, v.unitToken);
+    return new NMLUnitResult(v.value ** exponent.value, v.unitToken);
   };
 
   sin = v => {

@@ -182,6 +182,33 @@ class AST {
     return new NMLComputedResult(v1.value / v2.value);
   };
 
+  modulo = (v1, v2) => {
+     // LR: Hex 64-Bit
+    if (v1 instanceof NMLHex64Result && v2 instanceof NMLHex64Result)
+      return hexService.modulo64(v1, v2);
+
+    if (v1 instanceof NMLHex64Result || v2 instanceof NMLHex64Result)
+      throw 'You cannot mix 64-Bit with 32-Bit Types!';
+
+    // LR: Percentages
+    if (v2 instanceof NMLPercentResult)
+      return percentageService.modulo(v1, v2);
+
+    // LR: UoM
+    if (v1 instanceof NMLUnitResult || v2 instanceof NMLUnitResult)
+      return unitService.modulo(v1, v2);
+
+    // LR: Currency
+    if (v1 instanceof NMLCurrencyResult || v2 instanceof NMLCurrencyResult)
+      return currencyService.modulo(v1, v2);
+
+    // LR: Hex 32-bit
+    if (v1 instanceof NMLHexResult || v2 instanceof NMLHexResult)
+      return hexService.modulo(v1, v2);
+
+    return new NMLComputedResult(v1.value % v2.value);
+  }
+
   exponent = (v, exponent) => {
     // LR: Hex 32/64-Bit
     if (v instanceof NMLHex64Result)
@@ -195,10 +222,10 @@ class AST {
       return currencyService.exponent(v, exponent);
 
     // LR: Hex
-    if (v1 instanceof NMLHexResult)
+    if (v instanceof NMLHexResult)
       return hexService.exponent(v, exponent);
 
-    return new NMLComputedResult(Math.pow(v.value, exponent));
+    return new NMLComputedResult(v.value ** exponent.value);
   };
 
   sin = v => {

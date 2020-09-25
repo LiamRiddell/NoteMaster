@@ -64,7 +64,8 @@ export default class ContextualizedLine {
     if (
       result === null ||
       typeof result === 'undefined' ||
-      result.unitResult === null
+      result.unitResult === null ||
+      result.parsedSuccessful === false
     ) {
       this.parsedSuccessful = false;
       this.parsedValue = '';

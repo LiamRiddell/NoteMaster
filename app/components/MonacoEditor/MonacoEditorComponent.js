@@ -130,6 +130,11 @@ function MonacoEditorComponent({
     const editor = monacoEditor.current;
     editor.layout();
 
+    // LR: Manage content widgets only if nml is enabled
+    if (preferences.nmlEnabled) {
+      contextEvaluationService.manageContentWidgets(monacoEditor.current);
+    }
+
     // LR: Get the line width - used for results
     document.documentElement.style.setProperty(
       '--nm-var-linewidth',
@@ -151,9 +156,9 @@ function MonacoEditorComponent({
   // HACK: LR - Fixes an issue when the preferences are loaded from the disk and the editor does not resize.
   // Window Updates will not cause the editor to layout.
   if (monacoEditor.current) {
-    // LR: Force monaco editor to re-layout
     monacoEditor.current.layout();
 
+    // LR: Manage content widgets only if nml is enabled
     if (nmlEnabled) {
       // LR: Add the content widgets
       contextEvaluationService.manageContentWidgets(monacoEditor.current);
@@ -217,7 +222,7 @@ function MonacoEditorComponent({
           renderLineHighlight: 'all',
 
           // Word Wrapping
-          wordWrap: 'bounded',
+          wordWrap: 'wordWrapColumn',
           // wordWrapColumn: 80,
           wrappingStratergy: 'advanced',
           wrappingIndent,

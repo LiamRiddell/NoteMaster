@@ -428,10 +428,15 @@ class ContextEvaluationService {
       // Text Padding
       8 -
       // Sidebar Deadzone
-      32;
+      90;
 
     // LR: Calculate the line length using character width and the line length
-    const wordWrapColumn = Math.floor(lineLengthInPixels / maxDigitWidth);
+    let wordWrapColumn = Math.floor(lineLengthInPixels / maxDigitWidth);
+
+    if (wordWrapColumn > 90) wordWrapColumn = 90;
+
+    // LR: Prevent memory issues with monaco
+    if (wordWrapColumn < 8) return;
 
     // LR: Update the monaco-editor word wrap
     monacoEditor.updateOptions({
@@ -445,14 +450,12 @@ class ContextEvaluationService {
       `${pixelWidth}px`
     );
 
-    // LR: Re-layout monaco editor
+    // LR: Re-layout monaco
     monacoEditor.layout();
   };
 
   // Redux
   updateContextEvaluationReduxState = () => {
-    console.debug('[ContextEvaluation] Updating Redux State');
-
     // LR Dispatch the newly updated cached results to the front-end. This means we can update the ui in one pass opposed to multiple mini-edits.
     store.dispatch(
       contextEvaluationUpdateContextualisedLinesCache(

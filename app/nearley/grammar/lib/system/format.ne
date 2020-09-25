@@ -6,7 +6,6 @@
 FormatSystem
     -> header {% v => null %}
     |  comment {% v => null %}
-    |  text {% v => null %}
 
 # Basic Types
 header -> _ %header

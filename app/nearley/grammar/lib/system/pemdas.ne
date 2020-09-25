@@ -46,7 +46,7 @@ N ->  unit          {% id %}
     | "atan" _ P    {% d => ast.atan(d[2]) %}
 
     # Constants
-    | "pi"          {% d => Math.PI %}
-    | "e"           {% d => Math.E %}
+    | "Pi"          {% d => ast.constant(Math.PI) %}
+    | "E"           {% d => ast.constant(Math.E) %}
     | "sqrt" _ P    {% d => ast.sqrt(d[2]) %}
     | "ln" _ P      {% d => ast.logarithm(d[2])  %}

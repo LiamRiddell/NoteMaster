@@ -63,8 +63,14 @@ const functions = {
 
 // Constants
 const constants = {
-  pi: 'pi',
-  e: 'e'
+  pi: {
+    match: 'Pi',
+    value: v => Math.PI
+  },
+  e: {
+    match: 'E',
+    value: v => Math.E
+  },
 };
 
 const unitsOfMeasurement = {

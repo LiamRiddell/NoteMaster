@@ -38,6 +38,13 @@ class AST {
   };
 
   // ResultFactories
+  constant = value => {
+    if (typeof token !== 'NMLUnitResult')
+      return new NMLNumberResult(value, null);
+
+    return value;
+  };
+
   number = token => {
     if (typeof token !== 'NMLUnitResult')
       return new NMLNumberResult(token.value, token);

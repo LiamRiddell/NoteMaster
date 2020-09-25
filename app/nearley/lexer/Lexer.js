@@ -803,6 +803,7 @@ const lexer = moo.compile({
   nl: { match: /\n/, lineBreaks: true },
 
   // Comments overule everything
+  header: /^#.*?$/,
   comment: /\/\/.*?$/,
 
   // Parenthesis
@@ -848,7 +849,7 @@ const lexer = moo.compile({
 
   // Catch-all
   word: /[a-zA-Z|-]+/,
-  undefined: /[^\s]+/
+  undefinedCharacter: /.+?/
 });
 
 export default lexer;

@@ -12,8 +12,11 @@ class NMLParserService {
       // LR: Feed the line to the nearley parser
       parser.feed(content);
 
+      // LR: Results without null's
+      const results = parser.results.filter(e => e);
+
       // LR: Evaulate the results
-      if (parser.results.length > 1) {
+      if (results.length > 1) {
         console.log('NLP Result -> Ambigous Action');
 
         return {
@@ -21,9 +24,9 @@ class NMLParserService {
         };
       }
 
-      if (parser.results.length === 1) {
+      if (results.length === 1) {
         // LR: Get the result from the results array
-        const ast = parser.results[0];
+        const ast = results[0];
         console.log('NLP Result -> Valid Statement -> Result:', ast);
 
         return {

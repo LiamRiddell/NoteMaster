@@ -21,6 +21,7 @@
 @include "./lib/type/conversion.ne"
 
 # Grammar Systems
+@include "./lib/system/format.ne"
 @include "./lib/system/variable.ne"
 @include "./lib/system/pemdas.ne"
 @include "./lib/system/uom.ne"
@@ -30,7 +31,8 @@
 
 # Grammar Entry
 main
-    -> VariableSystem {% id %}
+    -> FormatSystem {% id %}
+    | VariableSystem {% id %}
     | PemdasSystem {% id %}
     | PercentageSystem {% id %}
     | UoMSystem {% id %}

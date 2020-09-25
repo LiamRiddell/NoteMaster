@@ -183,7 +183,7 @@ class AST {
   };
 
   modulo = (v1, v2) => {
-     // LR: Hex 64-Bit
+    // LR: Hex 64-Bit
     if (v1 instanceof NMLHex64Result && v2 instanceof NMLHex64Result)
       return hexService.modulo64(v1, v2);
 

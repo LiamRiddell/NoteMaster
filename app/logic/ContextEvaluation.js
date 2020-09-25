@@ -428,7 +428,7 @@ class ContextEvaluationService {
       // Text Padding
       8 -
       // Sidebar Deadzone
-      90;
+      100;
 
     // LR: Calculate the line length using character width and the line length
     let wordWrapColumn = Math.floor(lineLengthInPixels / maxDigitWidth);

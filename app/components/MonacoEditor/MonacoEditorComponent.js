@@ -127,9 +127,6 @@ function MonacoEditorComponent({
   }
 
   function hookEditorResize(e) {
-    const editor = monacoEditor.current;
-    editor.layout();
-
     // LR: Manage content widgets only if nml is enabled
     if (preferences.nmlEnabled) {
       contextEvaluationService.manageContentWidgets(monacoEditor.current);
@@ -146,7 +143,7 @@ function MonacoEditorComponent({
     fontFamily,
     fontSize,
     fontWeight,
-    fontLigatures,
+    // fontLigatures,
     lineHeight,
     lineNumbers,
     nmlEnabled,
@@ -214,7 +211,7 @@ function MonacoEditorComponent({
           fontFamily,
           fontWeight,
           fontSize,
-          fontLigatures,
+          fontLigatures: false, // BUG: when enabled - monaco-editor does not calculate text wrapping properly
           lineHeight,
           overviewRulerBorder: false,
           hideCursorInOverviewRuler: true,

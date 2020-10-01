@@ -27,6 +27,7 @@ const initialState = !isFirstLaunch
   ? {
       editorContent: preferences.editorContent || introductionNoteContent,
       autosaveContent: preferences.editorContent || introductionNoteContent,
+      editorTheme: preferences.editorTheme || 'notemaster-dark-nml-enabled',
       fontFamily: preferences.fontFamily || 'Roboto',
       fontSize: preferences.fontSize || 14,
       fontWeight: preferences.fontWeight || '400',
@@ -41,6 +42,7 @@ const initialState = !isFirstLaunch
   : {
       editorContent: introductionNoteContent,
       autosaveContent: introductionNoteContent,
+      editorTheme: 'notemaster-dark-nml-enabled',
       fontFamily: 'Roboto',
       fontSize: 14,
       fontWeight: '400',

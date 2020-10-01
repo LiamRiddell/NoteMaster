@@ -124,6 +124,15 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
     });
   };
 
+  const editorThemeChange = e => {
+    updatePreferences({
+      editorTheme: e.target.value,
+      // HACK: If the initial content is updated to match the existing autosaveContent then the user will lose all changes
+      // since the file was read from the disk into memory.
+      editorContent: preferences.autosaveContent
+    });
+  };
+
   const navigateToNotes = e => {
     updatePreferences({
       editorContent: preferences.autosaveContent
@@ -240,6 +249,14 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 <option value="indent">Indent</option>
                 <option value="deepIndent">Deep Indent</option>
                 <option value="none">none</option>
+              </Select>
+
+              <Label mt="2" mb="1">
+                Theme
+              </Label>
+              <Select onChange={editorThemeChange}>
+                <option value="notemaster-dark-nml-enabled">Dark</option>
+                <option value="notemaster-dark-nml-disabled">Dark Basic</option>
               </Select>
             </Box>
 

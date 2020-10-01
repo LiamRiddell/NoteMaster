@@ -140,6 +140,7 @@ function MonacoEditorComponent({
   }
 
   const {
+    editorTheme,
     fontFamily,
     fontSize,
     fontWeight,
@@ -192,11 +193,7 @@ function MonacoEditorComponent({
         height="100%"
         width="100%"
         language="notemaster"
-        theme={
-          nmlEnabled
-            ? 'notemaster-dark-nml-enabled'
-            : 'notemaster-dark-nml-disabled'
-        }
+        theme={nmlEnabled ? editorTheme : 'notemaster-dark-nml-disabled'}
         value={preferences.editorContent}
         editorDidMount={handleEditorDidMount}
         automaticLayout

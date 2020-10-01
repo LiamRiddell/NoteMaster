@@ -142,6 +142,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
   };
 
   const {
+    editorTheme,
     fontFamily,
     fontSize,
     fontWeight,
@@ -254,7 +255,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
               <Label mt="2" mb="1">
                 Theme
               </Label>
-              <Select onChange={editorThemeChange}>
+              <Select defaultValue={editorTheme} onChange={editorThemeChange}>
                 <option value="notemaster-dark-nml-enabled">Dark</option>
                 <option value="notemaster-dark-nml-disabled">Dark Basic</option>
               </Select>

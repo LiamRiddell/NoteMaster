@@ -24,7 +24,7 @@ class AST {
       try {
         return this.variables[name].value;
       } catch (error) {
-        return 0;
+        return new NMLComputedResult(0);
       }
     }
 
@@ -362,6 +362,38 @@ class AST {
       throw 'You cannot mix 64-Bit with 32-Bit Types!';
 
     return hexService.bitwiseShiftRightUnsigned(hex, bits);
+  }
+
+  // Helpers
+  removeUnassignedVariables = assignedVariables => {
+    const newVariables = {};
+
+    // LR: Interate the assigned variables and only use return new object
+    for (let index = 0; index < assignedVariables.length; index++) {
+      const variableName = assignedVariables[index];
+
+      if (this.variableDefinitionExists(variableName)) {
+
+        // LR: Get the existing variable value
+        const variable = this.variables[variableName];
+
+        // LR: Add the existing variable to the new variable object
+        newVariables[variableName] = variable;
+      }
+    }
+
+    // LR: Assign the new variable object
+    this.variables = newVariables;
+  }
+
+  variableDefinitionExists(name) {
+    if (name === null || typeof name === 'undefined') return false;
+
+    try {
+      return this.variables.hasOwnProperty(name);
+    } catch (error) {
+      return false;
+    }
   }
 }
 

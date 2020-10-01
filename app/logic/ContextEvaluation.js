@@ -4,6 +4,7 @@ import { store } from '../store/store';
 import lexer from '../nearley/lexer/lexer';
 import ContextualizedLine from './ContextualizedLine';
 import { contextEvaluationUpdateContextualisedLinesCache } from '../redux/actions/context-evaluation';
+import ast from '../nearley/ast/ast';
 // import grammar from '../nearley/arithmetic.ne';
 
 class ContextEvaluationService {
@@ -28,6 +29,15 @@ class ContextEvaluationService {
   // Stores the active content widgets on editor
   editorActiveContentWidgets = [];
 
+  // Stores all the previous content defined variables
+  previousContentDefinedVariables = [];
+
+  // Stores all the current content defined variables
+  currentContentDefinedVariables = [];
+
+  // Stores whether the current assigned variables has changed
+  definedVariablesChanged = false;
+
   // Event is propogated from MonacoEditor and debounced for 100ms to increase performance
   onDidChangeModelContent = (e, content) => {
     // LR: Null Content? -> Ignore
@@ -48,6 +58,21 @@ class ContextEvaluationService {
 
     this.editorLinesEqual =
       this.currentContentLines.length === this.previousContentLines.length;
+
+    // LR: Set the previous variables
+    this.previousContentDefinedVariables = this.currentContentDefinedVariables;
+
+    // LR: Get all the variables defined in the content
+    this.currentContentDefinedVariables = this.getAllAssignedVariables(content);
+
+    // LR: Remove unassigned variables from the AST
+    // NOTE: This is to prevent the AST's internal memory "remembering" non defined variables
+    ast.removeUnassignedVariables(this.currentContentDefinedVariables);
+
+    // LR: Calculate the variable count movement e.g. bigger length or greater?
+    this.definedVariablesChanged =
+      this.currentContentDefinedVariables.length !==
+      this.previousContentDefinedVariables.length;
 
     // LR: Null Event? The editor has just been instantiated
     if (e === null || typeof e === 'undefined') {
@@ -80,6 +105,17 @@ class ContextEvaluationService {
     // LR: Line count decreased?
     if (this.editorLinesDecreased) {
       console.debug('Destroyed Cache -> Line Count Decreased');
+      this.destroyAndRebuildParserCache();
+      return;
+    }
+
+    // LR: Variables have changed
+    if (this.definedVariablesChanged) {
+      console.debug(
+        'Destroyed Cache -> Variables Changed',
+        this.previousContentDefinedVariables,
+        this.currentContentDefinedVariables
+      );
       this.destroyAndRebuildParserCache();
       return;
     }
@@ -462,6 +498,24 @@ class ContextEvaluationService {
     );
   };
 
+  // Variables
+  getAllAssignedVariables = content => {
+    // LR: Variable assigment regex e.g. `$varName =`
+    const variableAssignmentRegex = /(\$[a-zA-Z][a-zA-Z_0-9]*)(\s?|\s+)(=)/g;
+
+    // LR: Search the content for all variable assignments
+    const allMatches = this.regexMatchAll(variableAssignmentRegex, content);
+
+    // LR: No Matches = Not Defined
+    if (allMatches.length < 1) return false;
+
+    // LR: Return an array of the variable names
+    const array = allMatches.map(assigment => assigment[1].replace('$', ''));
+
+    // LR: Only distinct variable names
+    return [...new Set(array)];
+  };
+
   // Helpers
   stringContainsVariable = line => {
     // LR: Lex the line content
@@ -474,6 +528,49 @@ class ContextEvaluationService {
     }
 
     return false;
+  };
+
+  stringGetVariableName = line => {
+    // LR: Lex the line content
+    lexer.reset(line);
+
+    // LR: Search for variable
+    let variableName = '';
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const token of lexer) {
+      if (token.type === 'identifier') {
+        variableName = token.value;
+        break;
+      }
+    }
+
+    // LR: If the line contains a variable assigment
+    if (line.indexOf('=') > -1) return variableName;
+
+    return null;
+  };
+
+  regexMatchAll = (regexPattern, sourceString) => {
+    const output = [];
+    let match;
+
+    // LR: Make sure the pattern has the global flag
+    const regexPatternWithGlobal = RegExp(
+      regexPattern,
+      [...new Set(`g${regexPattern.flags}`)].join('')
+    );
+
+    // eslint-disable-next-line no-cond-assign
+    while ((match = regexPatternWithGlobal.exec(sourceString))) {
+      // get rid of the string copy
+      delete match.input;
+
+      // store the match data
+      output.push(match);
+    }
+
+    return output;
   };
 }
 

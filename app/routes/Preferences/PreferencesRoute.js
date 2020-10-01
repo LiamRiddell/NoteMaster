@@ -196,15 +196,13 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
               Preferences
             </Heading>
             <Text mt="1" mb="3" variant="muted">
-              Customize NoteMaster to your desire (coming soon). This page is
-              reserved for editable options that are coming soon. You can view
-              the upcoming features on{' '}
+              Customize NoteMaster to your desire. You can request features on{' '}
               <Link
-                href="https://github.com/LiamRiddell/NoteMaster/projects"
+                href="https://github.com/LiamRiddell/NoteMaster"
                 target="_blank"
                 rel="noreferer"
               >
-                NoteMaster Roadmap
+                NoteMaster GitHub
               </Link>
               .
             </Text>

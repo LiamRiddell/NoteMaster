@@ -192,7 +192,11 @@ function MonacoEditorComponent({
         height="100%"
         width="100%"
         language="notemaster"
-        theme="notemaster-dark"
+        theme={
+          nmlEnabled
+            ? 'notemaster-dark-nml-enabled'
+            : 'notemaster-dark-nml-disabled'
+        }
         value={preferences.editorContent}
         editorDidMount={handleEditorDidMount}
         automaticLayout
@@ -219,8 +223,7 @@ function MonacoEditorComponent({
           renderLineHighlight: 'all',
 
           // Word Wrapping
-          wordWrap: 'wordWrapColumn',
-          // wordWrapColumn: 80,
+          wordWrap: nmlEnabled ? 'wordWrapColumn' : 'on',
           wrappingStratergy: 'advanced',
           wrappingIndent,
 

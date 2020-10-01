@@ -253,7 +253,6 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 Font Family
               </Label>
               <Select defaultValue={fontFamily} onChange={fontFamilyChange}>
-                <option value="Fira Code">Fira Code</option>
                 <option value="Roboto">Roboto</option>
                 <option value="Arial">Arial</option>
                 <option value="Helvetica Neue">Helvetica Neue</option>
@@ -294,7 +293,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 defaultValue={lineHeight}
                 onChange={lineHeightChange}
               />
-
+              {/*
               <Label mt="2" mb="1">
                 Font Ligatures
               </Label>
@@ -304,7 +303,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
               >
                 <option value="true">On</option>
                 <option value="false">Off</option>
-              </Select>
+              </Select> */}
             </Box>
 
             <Box mb="4">

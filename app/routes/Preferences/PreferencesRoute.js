@@ -248,7 +248,7 @@ const PreferencesRoute = ({ preferences, updatePreferences }) => {
                 <option value="same">Same</option>
                 <option value="indent">Indent</option>
                 <option value="deepIndent">Deep Indent</option>
-                <option value="none">none</option>
+                <option value="none">None</option>
               </Select>
 
               <Label mt="2" mb="1">

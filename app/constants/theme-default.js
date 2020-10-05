@@ -264,8 +264,7 @@ export default {
         display: 'block',
         fontFamily: "'remixicon' !important",
         fontStyle: 'normal',
-        '-webkit-font-smoothing': 'antialiased',
-        '-moz-osx-font-smoothing': 'grayscale',
+        WebkitFontSmoothing: 'antialiased',
         content: '"\\ee22"', // <i class="ri-information-line"></i>
         // fontSize: 11,
         height: 24,

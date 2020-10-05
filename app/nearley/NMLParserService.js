@@ -9,8 +9,11 @@ class NMLParserService {
       // LR: Create Parser
       const parser = new nearley.Parser(grammar);
 
+      // LR: Trim illegal characters
+      const safeContent = content.replace('\n','').trim();
+
       // LR: Feed the line to the nearley parser
-      parser.feed(content);
+      parser.feed(safeContent);
 
       // LR: Results without null's
       const results = parser.results.filter(e => e);

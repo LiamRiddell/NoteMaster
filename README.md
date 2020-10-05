@@ -76,6 +76,22 @@ NoteMaster can be downloaded via [GitHub Releases](https://github.com/LiamRiddel
 
 ## Contribute features to NoteMaster
 
+## Lost Note? Blank Screen? Reset NoteMaster?
+
+We're sorry this happened! NoteMaster is still in Alpha, please make sure you backup important notes external of NoteMaster. Create a ticket on [NoteMaster Issue Tracker](https://github.com/LiamRiddell/NoteMaster/issues).
+
+**IMPORTANT: THIS WILL REMOVE ANY PREFERENCES OR NOTES!**
+
+Resetting NoteMaster is easy and only takes a few steps. Please follow the guide specific your operating system.
+
+**Windows:**
+
+1. Close NoteMaster Completely
+2. Delete the `%appdata%\Roaming\NoteMaster` directory.
+3. NoteMaster will now be reset on the next launch.
+
+## Make NoteMaster Better
+
 NoteMaster is built on top of [Electron React Boilerplate](https://electron-react-boilerplate.js.org/docs/installation). To setup up local development workbench follow a few simple steps:
 
 First, clone the repo via Git:

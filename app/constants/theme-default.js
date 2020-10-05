@@ -200,8 +200,10 @@ export default {
     group: {
       fontWeight: '700',
       fontSize: 12,
-      color: '#5F6872',
-      textTransform: 'uppercase'
+      color: '#9BA4AB',
+      textTransform: 'uppercase',
+      paddingBottom: '4px',
+      borderBottom: 'dashed 1px #27292C'
     },
     fieldDescription: {
       fontWeight: '400',
@@ -226,6 +228,7 @@ export default {
       }
     },
     select: {
+      minWidth: '120px',
       border: 'solid 2px',
       borderColor: 'secondary',
       outline: 'none',
@@ -250,6 +253,27 @@ export default {
       fontFamily: 'body',
       lineHeight: 'body',
       fontWeight: 'body'
+    },
+    labelTooltip: {
+      fontFamily: 'body',
+      lineHeight: 'body',
+      fontWeight: 'body',
+      // textDecoration: 'underline dotted',
+      '::after': {
+        // position: 'absolute',
+        display: 'block',
+        fontFamily: "'remixicon' !important",
+        fontStyle: 'normal',
+        '-webkit-font-smoothing': 'antialiased',
+        '-moz-osx-font-smoothing': 'grayscale',
+        content: '"\\ee22"', // <i class="ri-information-line"></i>
+        // fontSize: 11,
+        height: 24,
+        width: 24,
+        margin: '2px 0 0 4px',
+        textDecoration: 'unset',
+        color: '#9BA4AB'
+      }
     }
   }
 };

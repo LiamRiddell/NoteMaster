@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable import/prefer-default-export */
@@ -5,7 +6,7 @@
 import { jsx } from 'theme-ui';
 
 // eslint-disable-next-line no-unused-vars
-export const ContainerComponent = (props: object) => {
+export const ContainerComponent = props => {
   return (
     <div
       sx={{

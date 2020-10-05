@@ -34,6 +34,7 @@ const requiredByDLLConfig = module.parent.filename.includes(
  * Warn if the DLL is not built
  */
 if (!requiredByDLLConfig && !(fs.existsSync(dll) && fs.existsSync(manifest))) {
+  // eslint-disable-next-line no-console
   console.log(
     chalk.black.bgYellow.bold(
       'The DLL files are missing. Sit back while we build them for you with "yarn build-dll"'
@@ -269,6 +270,7 @@ export default merge.smart(baseConfig, {
     },
     before() {
       if (process.env.START_HOT) {
+        // eslint-disable-next-line no-console
         console.log('Starting Main Process...');
         spawn('npm', ['run', 'start-main-dev'], {
           shell: true,
@@ -276,6 +278,7 @@ export default merge.smart(baseConfig, {
           stdio: 'inherit'
         })
           .on('close', code => process.exit(code))
+          // eslint-disable-next-line no-console
           .on('error', spawnError => console.error(spawnError));
       }
     }

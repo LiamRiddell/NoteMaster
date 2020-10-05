@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import LocalStore from 'electron-store';
 
 const localStoreSchema = {

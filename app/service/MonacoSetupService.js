@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 // LR: Imports
 import path from 'path';
 import { monaco } from '@monaco-editor/react';

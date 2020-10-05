@@ -11,7 +11,6 @@ const rootReducer = createRootReducer(history);
 const router = routerMiddleware(history);
 const enhancer = applyMiddleware(thunk, router);
 
-// eslint-disable-next-line flowtype/no-weak-types
 function configureStore(initialState?: any) {
   return createStore<*, {}, *>(rootReducer, initialState, enhancer);
 }

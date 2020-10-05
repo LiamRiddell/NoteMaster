@@ -74,8 +74,6 @@ NoteMaster is now available on the following platforms:
 
 NoteMaster can be downloaded via [GitHub Releases](https://github.com/LiamRiddell/NoteMaster/releases). Please only download versions of NoteMaster that are hosted on GitHub.
 
-## Contribute features to NoteMaster
-
 ## Lost Note? Blank Screen? Reset NoteMaster?
 
 We're sorry this happened! NoteMaster is still in Alpha, please make sure you backup important notes external of NoteMaster. Create a ticket on [NoteMaster Issue Tracker](https://github.com/LiamRiddell/NoteMaster/issues).

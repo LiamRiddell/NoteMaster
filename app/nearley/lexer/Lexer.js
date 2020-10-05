@@ -64,11 +64,11 @@ const functions = {
 // Constants
 const constants = {
   pi: {
-    match: 'Pi',
+    match: /(?:Pi)\b/,
     value: v => Math.PI
   },
   e: {
-    match: 'E',
+    match: /(?:E)\b/,
     value: v => Math.E
   },
 };

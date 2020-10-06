@@ -63,7 +63,6 @@ NoteMaster is continuously being developed. Our vision is to create the best ope
 - Emoji Support - Yes... amazing, and absolutely essential - we know. You can now have so much fire in your notes.
 
 ## Supported Operating Systems
-
 NoteMaster is now available on the following platforms:
 
 - Windows

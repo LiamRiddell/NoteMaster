@@ -26,20 +26,32 @@ const initialState = !isFirstLaunch
   ? {
       editorContent: preferences.editorContent || introductionNoteContent,
       autosaveContent: preferences.editorContent || introductionNoteContent,
-      fontSize: preferences.fontSize || 14,
+      editorTheme: preferences.editorTheme || 'notemaster-dark-nml-enabled',
+      fontFamily: preferences.fontFamily || 'Roboto',
+      fontSize: preferences.fontSize || 16,
       fontWeight: preferences.fontWeight || '400',
+      fontLigatures: preferences.fontLigatures || false,
       lineHeight: preferences.lineHeight || 24,
       lineNumbers: preferences.lineNumbers || 'off',
-      autoLaunch: preferences.autoLaunch || true
+      autoLaunch: preferences.autoLaunch || true,
+      nmlEnabled: preferences.nmlEnabled || true,
+      nmlBaseCurrency: preferences.nmlBaseCurrency || 'USD',
+      wrappingIndent: preferences.wrappingIndent || 'same'
     }
   : {
       editorContent: introductionNoteContent,
       autosaveContent: introductionNoteContent,
-      fontSize: 14,
+      editorTheme: 'notemaster-dark-nml-enabled',
+      fontFamily: 'Roboto',
+      fontSize: 16,
       fontWeight: '400',
+      fontLigatures: false,
       lineHeight: 24,
       lineNumbers: 'off',
-      autoLaunch: true
+      autoLaunch: true,
+      nmlEnabled: true,
+      nmlBaseCurrency: 'USD',
+      wrappingIndent: 'same'
     };
 
 // Reducer
@@ -51,7 +63,7 @@ export function preferencesReducer(state = initialState, action: string) {
     case PREFERENCES_CONTENT_AUTOSAVE:
       return {
         ...state,
-        autosaveContent: action.payload
+        autosaveContent: payload
       };
 
     case PREFERENCES_SAVE:

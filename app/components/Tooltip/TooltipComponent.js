@@ -4,6 +4,7 @@
 import React from 'react';
 import Tippy from '@tippyjs/react';
 
-export const TooltipComponent = (props: object) => {
+export const TooltipComponent = props => {
+  // eslint-disable-next-line react/prop-types
   return <Tippy {...props}>{props.children}</Tippy>;
 };

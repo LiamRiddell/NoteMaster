@@ -4,36 +4,32 @@ import { monaco } from '@monaco-editor/react';
 import { uriFromPath } from '../utils/pathUtils';
 import { updateMonacoInstance } from '../redux/actions/monaco';
 
-import NOTEMASTER_DARK_THEME from '../constants/monaco-theme';
+import {
+  NUMER_DARK_THEME_NML_ENABLED,
+  NUMER_DARK_THEME_NML_DISABLED
+} from '../constants/monaco-theme';
 import NOTEMASTER_LANGUAGE from '../constants/monaco-language';
 
 const { app } = require('electron').remote;
 
 // LR: Export global monaco instance... ideally this should be passed to redux
-// eslint-disable-next-line flowtype/no-weak-types
-export default function RegisterMonacoService(store: any) {
+export default function RegisterMonacoService(store) {
   // LR: Monaco Editor Paths
-  const monacoLoaderPath = path.join(
-    app.getAppPath(),
-    '/node_modules/monaco-editor/min/vs/loader.js'
-  );
   const monacoBasePath = path.join(
     app.getAppPath(),
     '/node_modules/monaco-editor/min/vs'
   );
 
   // LR: Initialise monaco
+  monaco.config({
+    paths: {
+      vs: uriFromPath(monacoBasePath)
+    }
+  });
+
   monaco
-    .config({
-      urls: {
-        monacoLoader: uriFromPath(monacoLoaderPath),
-        monacoBase: uriFromPath(monacoBasePath)
-      }
-    })
     .init()
     .then(monacoInstance => {
-      console.log('[Global]', 'Setting up monaco', monacoInstance);
-
       // LR: Register language
       monacoInstance.languages.register({ id: 'notemaster' });
       monacoInstance.languages.setMonarchTokensProvider(
@@ -46,10 +42,17 @@ export default function RegisterMonacoService(store: any) {
 
       // LR: Register theme
       monacoInstance.editor.defineTheme(
-        'notemaster-dark',
-        NOTEMASTER_DARK_THEME
+        'notemaster-dark-nml-enabled',
+        NUMER_DARK_THEME_NML_ENABLED
       );
-      monacoInstance.editor.setTheme('notemaster-dark');
+
+      monacoInstance.editor.defineTheme(
+        'notemaster-dark-nml-disabled',
+        NUMER_DARK_THEME_NML_DISABLED
+      );
+
+      // LR: Default theme
+      monacoInstance.editor.setTheme('notemaster-dark-nml-enabled');
 
       // LR: Dispatch state change
       store.dispatch(updateMonacoInstance(monacoInstance));
@@ -58,6 +61,7 @@ export default function RegisterMonacoService(store: any) {
       return monacoInstance;
     })
     .catch(error =>
+      // eslint-disable-next-line no-console
       console.error(
         'An error occurred during initialization of Monaco: ',
         error

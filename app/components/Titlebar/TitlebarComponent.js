@@ -1,4 +1,4 @@
-/* eslint-disable flowtype/no-weak-types */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -62,12 +62,10 @@ const NoteMasterDropdown = (props: Object) => {
 
 const TitlebarComponent = (props: Object) => {
   // eslint-disable-next-line no-unused-vars
-  const toggleMenu = () => {
-    console.log('toggle menu');
-  };
+  const toggleMenu = () => {};
 
   // eslint-disable-next-line no-unused-vars
-  const exportNote = () => {
+  function exportNote() {
     dialog
       .showSaveDialog({
         title: 'Export Note',
@@ -82,6 +80,7 @@ const TitlebarComponent = (props: Object) => {
         // eslint-disable-next-line promise/always-return
         if (result.canceled) return;
 
+        // eslint-disable-next-line consistent-return
         return fs.writeFileSync(
           result.filePath,
           props.preferences.autosaveContent,
@@ -89,9 +88,10 @@ const TitlebarComponent = (props: Object) => {
         );
       })
       .catch(err => {
-        console.log(err);
+        // eslint-disable-next-line no-console
+        console.error(err);
       });
-  };
+  }
 
   // eslint-disable-next-line no-unused-vars
   const minimize = () => {
@@ -190,10 +190,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  windowUpdate: (payload: Object) => dispatch(windowUpdate(payload))
+  windowUpdate: payload => dispatch(windowUpdate(payload))
 });
 
-export default connect(
-  (mapStateToProps: OP),
-  (mapDispatchToProps: OP)
-)(TitlebarComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(TitlebarComponent);

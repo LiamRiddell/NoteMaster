@@ -9,7 +9,6 @@ const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
 
-// eslint-disable-next-line flowtype/no-weak-types
 const configureStore = (initialState?: any) => {
   // Redux Configuration
   const middleware = [];

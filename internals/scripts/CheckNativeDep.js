@@ -23,6 +23,7 @@ import { dependencies } from '../../package.json';
     );
     if (filteredRootDependencies.length > 0) {
       const plural = filteredRootDependencies.length > 1;
+      // eslint-disable-next-line no-console
       console.log(`
  ${chalk.whiteBright.bgYellow.bold(
    'Webpack does not work with native dependencies.'
@@ -46,6 +47,7 @@ ${chalk.bold(
       process.exit(1);
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log('Native dependencies could not be checked');
   }
 })();

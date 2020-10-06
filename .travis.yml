@@ -26,6 +26,10 @@ matrix:
             - xz-utils
             - xorriso
             - rpm
+    - os: windows
+      language: node_js
+      node_js:
+        - node
 
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
@@ -33,9 +37,6 @@ before_cache:
 cache:
   yarn: true
   directories:
-    - node_modules
-    - $(npm config get prefix)/lib/node_modules
-    - flow-typed
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 

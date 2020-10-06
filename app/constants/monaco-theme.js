@@ -1,25 +1,36 @@
 // https://github.com/Microsoft/vscode/blob/master/src/vs/editor/standalone/common/themes.ts
 
-const NUMER_DARK_THEME = {
+export const NUMER_DARK_THEME_NML_ENABLED = {
   base: 'vs-dark',
   inherit: false,
   rules: [
-    { token: '', foreground: 'C5C6C7' }, // Default
-    { token: 'comment', foreground: '5F6872' },
+    // Default
+    { token: '', foreground: 'C5C6C7' },
+    { token: 'header', foreground: '9EA4AE' },
+    { token: 'comment', foreground: '74B478' },
     { token: 'link', foreground: '358FEB' },
-    { token: 'date', foreground: 'F58F63' },
-    { token: 'hex', foreground: '22CE99' },
-    { token: 'decimal', foreground: 'FFFFFF' },
-    { token: 'integer', foreground: 'FFFFFF' },
-    { token: 'integer.posneg', foreground: 'FF3131' },
-    { token: 'percent', foreground: 'FFFFFF' },
-    { token: 'currency', foreground: 'D0D0D0' },
-    {
-      token: 'keyword',
-      foreground: 'ffa500',
-      background: '#ffa500',
-      fontStyle: 'underline'
-    }
+    { token: 'variable', foreground: 'F2C94C' },
+    { token: 'label', foreground: 'F2C94C' },
+    // Operators
+    { token: 'operator', foreground: 'C5C6C7' },
+    // Constant
+    { token: 'constant', foreground: 'E9C273' },
+    // Functions
+    { token: 'function', foreground: 'F2C94C' },
+    // Keywords
+    { token: 'keyword', foreground: 'CD9965' },
+    // Units
+    { token: 'currency', foreground: '93C2F1' },
+    // { token: 'date', foreground: '93C2F1' },
+    { token: 'hex', foreground: '93C2F1' },
+    { token: 'unit', foreground: '93C2F1' },
+    // Data Types
+    { token: 'decimal', foreground: 'C5C6C7' },
+    { token: 'integer', foreground: 'C5C6C7' },
+    { token: 'integer.posneg', foreground: 'C5C6C7' },
+    { token: 'percent', foreground: 'C5C6C7' },
+    // Underline
+    { token: 'underline', foreground: 'F2C94C', fontStyle: 'underline' }
   ],
   colors: {
     'editor.background': '#15181C',
@@ -30,7 +41,7 @@ const NUMER_DARK_THEME = {
     // Line Numbers
     'editorGutter.background': '#27292C',
     'editor.lineHighlightBackground': '#ffffff08',
-    'editorLineNumber.foreground': '#6D7985',
+    'editorLineNumber.foreground': '#9CA5AB',
 
     // Cursor
     'editorCursor.foreground': '#666666',
@@ -51,7 +62,67 @@ const NUMER_DARK_THEME = {
   }
 };
 
-export default NUMER_DARK_THEME;
+export const NUMER_DARK_THEME_NML_DISABLED = {
+  base: 'vs-dark',
+  inherit: false,
+  rules: [
+    // Default
+    { token: '', foreground: 'C5C6C7' },
+    { token: 'header', foreground: '9EA4AE' },
+    { token: 'comment', foreground: '74B478' },
+    { token: 'link', foreground: '358FEB' },
+    { token: 'variable', foreground: 'C5C6C7' },
+    { token: 'label', foreground: 'F2C94C' },
+    // Operators
+    { token: 'operator', foreground: 'C5C6C7' },
+    // Constant
+    { token: 'constant', foreground: 'C5C6C7' },
+    // Functions
+    { token: 'function', foreground: 'C5C6C7' },
+    // Keywords
+    { token: 'keyword', foreground: 'C5C6C7' },
+    // Units
+    { token: 'currency', foreground: 'C5C6C7' },
+    // { token: 'date', foreground: '93C2F1' },
+    { token: 'hex', foreground: 'C5C6C7' },
+    { token: 'unit', foreground: 'C5C6C7' },
+    // Data Types
+    { token: 'decimal', foreground: 'C5C6C7' },
+    { token: 'integer', foreground: 'C5C6C7' },
+    { token: 'integer.posneg', foreground: 'C5C6C7' },
+    { token: 'percent', foreground: 'C5C6C7' },
+    // Underline
+    { token: 'underline', foreground: 'F2C94C', fontStyle: 'underline' }
+  ],
+  colors: {
+    'editor.background': '#15181C',
+
+    // Selecttion
+    'editor.selectionBackground': '#162A4E',
+
+    // Line Numbers
+    'editorGutter.background': '#27292C',
+    'editor.lineHighlightBackground': '#ffffff08',
+    'editorLineNumber.foreground': '#9CA5AB',
+
+    // Cursor
+    'editorCursor.foreground': '#666666',
+    'editorWhitespace.foreground': '#ffffff08',
+
+    // Scrolling Shadow
+    'scrollbar.shadow': '#00000000',
+
+    // Links
+    'textLink.foreground': '#358FEB', // Foreground color for links in text.
+    'textLink.activeForeground': '#358FEB', // Foreground color for active links in text.
+    'editorLink.activeForeground': '#358FEB',
+
+    // Context Menu
+    'dropdown.background': '#202225', // Dropdown background.
+    'dropdown.foreground': '#d0d0d0', // Dropdown foreground.
+    'dropdown.border': '#202225' // Dropdown border.
+  }
+};
 
 // rules: [
 //   { token: '', foreground: 'D4D4D4', background: '1E1E1E' },

@@ -49,3 +49,9 @@ main.js.map
 
 .idea
 npm-debug.log.*
+
+flow-typed/
+
+*.lock
+
+app/nearley/grammar/grammar.html

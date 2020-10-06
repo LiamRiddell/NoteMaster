@@ -8,8 +8,7 @@ import Routes from '../Routes';
 import theme from '../constants/theme-default';
 
 type Props = {
-  // eslint-disable-next-line flowtype/no-weak-types
-  store: any,
+  store: {},
   history: {}
 };
 

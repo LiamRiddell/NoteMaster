@@ -43,17 +43,26 @@ body {
 }
 
 /* Offset Padding */
-.monaco-editor .overflow-guard > .margin {
-  /* padding-top: 10px; */
-}
-.monaco-editor .overflow-guard > .monaco-scrollable-element {
-  /* top: 10px; */
+
+/* .monaco-editor .overflow-guard > .margin {
+  padding-top: 10px;
+} */
+
+/* .monaco-editor .overflow-guard > .monaco-scrollable-element {
+  top: 10px;
+}  */
+
+.monaco-editor .margin {
+  /* background-color: #27292c; */
+  background-color: transparent !important;
+  border-right: dotted 1px #27292c;
 }
 .monaco-editor .overflow-guard .lines-content {
-  padding-left: 10px;
+  padding-left: 8px;
 }
 .monaco-editor .view-overlays .current-line {
-  transform: translateX(-10px);
+  position: absolute;
+  transform: translateX(-8px);
 }
 .monaco-editor .margin-view-overlays .line-numbers,
 .monaco-editor
@@ -82,6 +91,7 @@ body {
   .monaco-action-bar {
   background: #202225 !important;
   padding: 0 !important;
+  line-height: var(--nm-var-lineheight);
 }
 
 /* Menu Item */
@@ -128,4 +138,80 @@ body {
 
 ::-webkit-scrollbar-thumb:window-inactive {
   background: #43494f;
+}
+
+/* NoteMaster result styling */
+.nm-result {
+  position: absolute;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  /* This is set in the MonacoEditor */
+  width: var(--nm-var-linewidth);
+
+  /* Match the text editor lineheight */
+  height: var(--nm-var-lineheight);
+  font-size: var(--nm-var-fontsize);
+  font-weight: 500;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-family: var(--nm-var-fontfamily) !important;
+
+  /* Monaco Hacks */
+  max-width: 100000px !important;
+
+  /* Make this div 100% width of the editor and clickable */
+  pointer-events: none;
+  user-select: none;
+}
+
+.nm-result > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: rgba(34, 206, 153, 0.05);
+  color: #16d499;
+  height: var(--nm-var-lineheight);
+  letter-spacing: 0.07pt;
+  width: var(--nm-results-column-width);
+  margin: 0;
+  padding: 0 0 0 8px;
+  margin-right: 7px;
+  text-align: left;
+  border-left: solid 1px #00cd7b;
+
+  /* Make this selectable */
+  pointer-events: all;
+  user-select: all;
+}
+
+/* Emulates the sidebar of editor */
+
+.nm-editor-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.nm-editor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.nm-editor-results-seperator {
+  position: fixed;
+  top: 1px;
+  right: var(--nm-results-column-width);
+  bottom: 1px;
+  background-color: transparent !important;
+  border-right: dotted 1px #27292c;
+  width: 1px;
+  z-index: 10;
+}
+
+.nm-editor-results-seperator.hidden {
+  visibility: hidden;
 }

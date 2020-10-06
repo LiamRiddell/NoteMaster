@@ -1,4 +1,4 @@
-/* eslint-disable flowtype/no-weak-types */
+/* eslint-disable react/display-name */
 /* eslint-disable no-unused-vars */
 // @flow
 import React, { Component } from 'react';
@@ -10,7 +10,7 @@ import MonacoEditorComponent from '../../components/MonacoEditor/MonacoEditorCom
 // LR: Import styles
 import styles from './DefaultRoute.css';
 
-export default (props: Object) => {
+export default props => {
   return (
     <div className={styles.container} data-tid="container">
       <div className={styles.header}>

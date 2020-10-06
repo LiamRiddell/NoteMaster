@@ -3,7 +3,7 @@ import store from '../../service/LocalStoreService';
 import { PREFERENCES_CONTENT_AUTOSAVE, PREFERENCES_SAVE } from '../actionTypes';
 
 // Action creators
-export const preferencesContentAutosave = (payload: object) => {
+export const preferencesContentAutosave = payload => {
   // Save the content to disk
   store.set('preferences.editorContent', payload);
   return {
@@ -12,7 +12,7 @@ export const preferencesContentAutosave = (payload: object) => {
   };
 };
 
-export const preferencesSave = (payload: object) => {
+export const preferencesSave = payload => {
   // TODO: Save the preferences to disk
   const newPreferences = {
     ...store.get('preferences'),

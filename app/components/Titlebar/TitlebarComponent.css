@@ -14,7 +14,7 @@
 }
 
 .brand {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 0 0;
@@ -26,7 +26,7 @@
 .menu {
   display: inline-flex;
   justify-content: flex-start;
-  padding: 0 8px 0 8px;
+  padding: 0 10px 0 11px; /* Includes 1px for the side bar */
 }
 
 .menu:hover {
@@ -46,7 +46,7 @@
   justify-content: center;
   height: 100%;
   width: 24px;
-  color: #68747e;
+  color: #9aa5ac;
   transition: all 200ms ease;
   -webkit-app-region: no-drag;
 }
@@ -67,7 +67,7 @@
 }
 
 .action:hover {
-  color: #d0d0d0;
+  color: #fff;
   cursor: pointer;
 }
 
@@ -76,6 +76,7 @@
   font-size: 14px;
   margin: 0;
   padding: 0;
+  background: transparent;
 }
 
 .navigation ul {
@@ -95,7 +96,7 @@
   align-items: center;
   padding: 4px 8px 4px 8px;
   text-decoration: none;
-  color: #c3c4c4;
+  color: #bfced4;
 }
 
 .navigation ul li span {
@@ -107,7 +108,7 @@
 
 .navigation ul li a i {
   margin: 0 8px 0 0;
-  color: #68747e;
+  color: #bfced4;
   font-size: 18px;
 }
 

@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useRef } from 'react';
@@ -9,6 +12,9 @@ import { debounce } from '../../utils/eventUtils';
 // LR: Actions
 import { preferencesContentAutosave } from '../../redux/actions/preferences';
 
+// LR Services
+import contextEvaluationService from '../../logic/ContextEvaluation';
+
 const { dialog } = require('electron').remote;
 const fs = require('fs');
 
@@ -16,13 +22,14 @@ function MonacoEditorComponent({
   // eslint-disable-next-line no-unused-vars
   window,
   preferences,
+  // contextEvaluation,
   autosaveContent
-}: object) {
+}) {
   // eslint-disable-next-line no-unused-vars
   const [isEditorReady, setIsEditorReady] = useState(false);
-  // const [viewportColumnWidth, setViewportColumnWidth] = useState(true);
   const monacoEditor = useRef(null);
   const valueGetter = useRef(null);
+  // eslint-disable-next-line no-use-before-define
   const viewZoneObserver = new MutationObserver(hookEditorResize);
 
   // LR: Monaco editor has mounted
@@ -36,13 +43,24 @@ function MonacoEditorComponent({
       attributes: true
     });
 
-    // Listen to model (content) changes from monaco
-    const onDidChangeModelContentDebounced = debounce(() => {
-      const content = valueGetter.current();
+    // LR: Auto Save debounce 300ms
+    const onDidChangeModelContentAutoSaveDebounced = debounce((e, content) => {
       autosaveContent(content);
     }, 300);
 
-    editor.onDidChangeModelContent(onDidChangeModelContentDebounced);
+    // Listen to model (content) changes from monaco
+    const onDidChangeModelContent = e => {
+      const content = valueGetter.current();
+
+      // LR: Debounce the auto save
+      onDidChangeModelContentAutoSaveDebounced(e, content);
+
+      // LR: Pass the event to the ContextEvaluationService.
+      if (preferences.nmlEnabled)
+        contextEvaluationService.onDidChangeModelContent(e, content);
+    };
+
+    editor.onDidChangeModelContent(onDidChangeModelContent);
 
     // LR: Register Actions to context menu
     editor.addAction({
@@ -91,38 +109,91 @@ function MonacoEditorComponent({
           .then(result => {
             // eslint-disable-next-line promise/always-return
             if (result.canceled) return;
-
-            return fs.writeFileSync(result.filePath, noteContent, 'utf8');
+            fs.writeFileSync(result.filePath, noteContent, 'utf8');
           })
           .catch(err => {
-            console.log(err);
+            throw err;
           });
 
         return null;
       }
     });
+
+    // LR: Trigger parse on intial render
+    contextEvaluationService.onDidChangeModelContent(
+      null,
+      valueGetter.current()
+    );
   }
 
-  function hookEditorResize() {
-    const editor = monacoEditor.current;
-    editor.layout();
+  function hookEditorResize(e) {
+    // LR: Manage content widgets only if nml is enabled
+    if (preferences.nmlEnabled) {
+      contextEvaluationService.manageContentWidgets(monacoEditor.current);
+    }
+
+    // LR: Get the line width - used for results
+    document.documentElement.style.setProperty(
+      '--nm-var-linewidth',
+      `${e[0].target.clientWidth}px`
+    );
   }
 
-  const { fontSize, fontWeight, lineHeight, lineNumbers } = preferences;
+  const {
+    editorTheme,
+    fontFamily,
+    fontSize,
+    fontWeight,
+    // fontLigatures,
+    lineHeight,
+    lineNumbers,
+    nmlEnabled,
+    wrappingIndent
+  } = preferences;
 
   // HACK: LR - Fixes an issue when the preferences are loaded from the disk and the editor does not resize.
   // Window Updates will not cause the editor to layout.
   if (monacoEditor.current) {
     monacoEditor.current.layout();
+
+    // LR: Manage content widgets only if nml is enabled
+    if (nmlEnabled) {
+      // LR: Add the content widgets
+      contextEvaluationService.manageContentWidgets(monacoEditor.current);
+    }
+
+    // LR: Setup CSS vars
+    document.documentElement.style.setProperty(
+      '--nm-var-fontsize',
+      `${fontSize}px`
+    );
+
+    document.documentElement.style.setProperty(
+      '--nm-var-lineheight',
+      `${lineHeight}px`
+    );
+
+    document.documentElement.style.setProperty(
+      '--nm-var-fontfamily',
+      `'${fontFamily}'`
+    );
   }
 
+  const hiddenResultsSeperator = 'nm-editor-results-seperator hidden';
+
   return (
-    <>
+    <div className="nm-editor-wrapper">
+      <div
+        className={
+          nmlEnabled ? 'nm-editor-results-seperator' : hiddenResultsSeperator
+        }
+      />
       <Editor
+        className="nm-editor"
         height="100%"
         width="100%"
         language="notemaster"
-        theme="notemaster-dark"
+        theme={nmlEnabled ? editorTheme : 'notemaster-dark-nml-disabled'}
         value={preferences.editorContent}
         editorDidMount={handleEditorDidMount}
         automaticLayout
@@ -138,9 +209,10 @@ function MonacoEditorComponent({
           },
 
           // Font
-          fontFamily: 'Roboto',
+          fontFamily,
           fontWeight,
           fontSize,
+          fontLigatures: false, // BUG: when enabled - monaco-editor does not calculate text wrapping properly
           lineHeight,
           overviewRulerBorder: false,
           hideCursorInOverviewRuler: true,
@@ -148,8 +220,9 @@ function MonacoEditorComponent({
           renderLineHighlight: 'all',
 
           // Word Wrapping
-          wordWrap: 'on', // 'wordWrapColumn',
-          // wordWrapColumn: viewportColumnWidth,
+          wordWrap: nmlEnabled ? 'wordWrapColumn' : 'on',
+          wrappingStratergy: 'advanced',
+          wrappingIndent,
 
           // Disable Suggestions
           quickSuggestions: false,
@@ -163,18 +236,18 @@ function MonacoEditorComponent({
           lineNumbersMinChars: 3 // Default: 3
         }}
       />
-    </>
+    </div>
   );
 }
 
 const mapStateToProps = state => ({
   window: state.window,
-  preferences: state.preferences
+  preferences: state.preferences,
+  contextEvaluation: state.contextEvaluation
 });
 
 const mapDispatchToProps = dispatch => ({
-  autosaveContent: (content: string) =>
-    dispatch(preferencesContentAutosave(content))
+  autosaveContent: content => dispatch(preferencesContentAutosave(content))
 });
 
 export default connect(

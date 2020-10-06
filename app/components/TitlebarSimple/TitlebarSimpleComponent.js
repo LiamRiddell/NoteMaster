@@ -1,4 +1,3 @@
-/* eslint-disable flowtype/no-weak-types */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -93,10 +92,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  windowUpdate: (payload: object) => dispatch(windowUpdate(payload))
+  windowUpdate: payload => dispatch(windowUpdate(payload))
 });
 
 export default connect(
-  (mapStateToProps: OP),
-  (mapDispatchToProps: OP)
+  mapStateToProps,
+  mapDispatchToProps
 )(TitlebarSimpleComponent);

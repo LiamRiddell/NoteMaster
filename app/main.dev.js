@@ -1,4 +1,3 @@
-/* eslint-disable flowtype/no-weak-types */
 /* eslint global-require: off */
 
 /**
@@ -14,6 +13,11 @@
 import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import installExtension, {
+  REDUX_DEVTOOLS,
+  REACT_DEVELOPER_TOOLS,
+  REACT_PERF
+} from 'electron-devtools-installer';
 import AppTray from './tray';
 import { debounce } from './utils/eventUtils';
 import {
@@ -68,13 +72,17 @@ app.setLoginItemSettings({
 });
 
 const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+  // eslint-disable-next-line no-console
+  console.log('Installing Dev Addons');
 
-  return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload))
-  ).catch(console.log);
+  installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS, REACT_PERF])
+    // eslint-disable-next-line no-console
+    .then(name => console.log(`Added Extension:  ${name}`))
+    // eslint-disable-next-line no-console
+    .catch(err => console.log('An error occurred: ', err));
+
+  // eslint-disable-next-line no-console
+  console.log('Finished Installing Dev Addons');
 };
 
 const createWindow = async () => {
@@ -315,12 +323,6 @@ const createWindow = async () => {
       mainWindow.hide();
     }
   });
-
-  // TODO: Remove this shortcut
-  // globalShortcut.register('Shift+Alt+N', () => {
-  //   console.log('[DEBUG] Clearing Store Data');
-  //   store.clear();
-  // });
 
   // LR: Make external links open in browser
   mainWindow.webContents.on('new-window', (e, url) => {

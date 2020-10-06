@@ -75,7 +75,7 @@ NoteMaster can be downloaded via [GitHub Releases](https://github.com/LiamRiddel
 
 ## Lost Note? Blank Screen? Reset NoteMaster?
 
-We're sorry this happened! NoteMaster is still in Alpha, please make sure you backup important notes external of NoteMaster. Create a ticket on [NoteMaster Issue Tracker](https://github.com/LiamRiddell/NoteMaster/issues).
+We're sorry this happened! NoteMaster is still in early development, please make sure you backup important notes external of NoteMaster. Create a ticket on [NoteMaster Issue Tracker](https://github.com/LiamRiddell/NoteMaster/issues).
 
 **IMPORTANT: THIS WILL REMOVE ANY PREFERENCES OR NOTES!**
 

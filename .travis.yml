@@ -28,9 +28,8 @@ matrix:
             - rpm
     - os: windows
       language: node_js
-        node_js:
+      node_js:
         - node
-
 
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine

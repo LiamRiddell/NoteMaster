@@ -65,6 +65,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sleep 3; fi
 
 script:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm -rf ./release; fi
   - yarn package-ci
   - yarn lint
   # TODO: LR -> Remove Flow type issues for now. We can fix this later.

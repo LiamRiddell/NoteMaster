@@ -13,6 +13,7 @@
 
 <p align="center">
   <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiamRiddell/NoteMaster&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/879120a5ade548ba8d93519622a62309"/></a>
+    <a href="https://travis-ci.org/LiamRiddell/NoteMaster"><img src="https://travis-ci.org/LiamRiddell/NoteMaster.svg?branch=master"/></a>
 </p>
 
 ## Introducing Smart Mode

@@ -17,6 +17,8 @@
 
 ## Introducing Smart Mode
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/11acea1f2d9d4a08805441a007354e1e)](https://app.codacy.com/gh/LiamRiddell/NoteMaster?utm_source=github.com&utm_medium=referral&utm_content=LiamRiddell/NoteMaster&utm_campaign=Badge_Grade)
+
 NoteMaster Beta introduces the first key feature that makes NoteMaster unique. Smart Mode automatically recognizes keywords, and intelligently provides results as you type, for example:
 
 Arithmetic

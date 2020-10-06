@@ -3,7 +3,9 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': 'off',
     'react/display-name': 'off',
-    'react/jsx-filename-extension': 'off'
+    'react/jsx-filename-extension': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
   },
   settings: {
     'import/resolver': {

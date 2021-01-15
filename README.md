@@ -44,7 +44,7 @@ Percentages
 10% of 100 -> 10
 ```
 
-That's not all! Head over to [our documentation](https://www.google.com) for a list of all of the statements that NoteMaster can recognize.
+That's not all! Head over to [our documentation](https://github.com/LiamRiddell/NoteMaster/wiki) for a list of all of the statements that NoteMaster can recognize.
 
 ## Additional Features
 
